@@ -153,10 +153,10 @@ export const PHOTO_POSITIONS: Vector3[] = WAYPOINTS.slice(1).map((wp, i) =>
 
 // Performance config
 export const CONFIG = {
-    STAR_COUNT: 15000,
+    STAR_COUNT: 8000,        // Reduced for performance
     PIXEL_RATIO: 1.5,
     TARGET_FPS: 60,
     PHOTO_SCALE: 45,
-    LERP_SPEED: 0.04,
-    COLOR_LERP_SPEED: 0.025
+    LERP_SPEED: 0.12,        // Much faster response (was 0.04)
+    COLOR_LERP_SPEED: 0.08   // Faster color transitions
 };

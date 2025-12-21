@@ -1,11 +1,11 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// STARFIELD - 15K Instanced Stars with Color Tinting
+// STARFIELD - Optimized instanced stars
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { useRef, useMemo, useEffect } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useScrollStore } from '@/store/scrollStore';
 import { PHOTOS, CONFIG } from '@/lib/constants';
@@ -14,77 +14,65 @@ export default function StarField() {
     const meshRef = useRef<THREE.InstancedMesh>(null);
     const materialRef = useRef<THREE.MeshBasicMaterial>(null);
     const currentPhotoIndex = useScrollStore(state => state.currentPhotoIndex);
-    const progress = useScrollStore(state => state.progress);
-    const { invalidate } = useThree();
 
-    // Generate star positions once
-    const { matrices, colors } = useMemo(() => {
+    // Generate star data once
+    const starData = useMemo(() => {
         const matrices: THREE.Matrix4[] = [];
         const colors: THREE.Color[] = [];
         const matrix = new THREE.Matrix4();
         const color = new THREE.Color();
 
         for (let i = 0; i < CONFIG.STAR_COUNT; i++) {
-            // Cylindrical distribution around camera path
-            const radius = 60 + Math.random() * 180;
+            const radius = 50 + Math.random() * 150;
             const theta = Math.random() * Math.PI * 2;
 
             const x = radius * Math.cos(theta);
             const y = radius * Math.sin(theta);
-            const z = 150 - Math.random() * 450;
+            const z = 120 - Math.random() * 400;
 
-            const scale = 0.3 + Math.random() * 1.0;
+            const scale = 0.2 + Math.random() * 0.8;
             matrix.makeScale(scale, scale, scale);
             matrix.setPosition(x, y, z);
             matrices.push(matrix.clone());
 
-            // Varied star colors
-            const brightness = 0.6 + Math.random() * 0.4;
-            color.setRGB(brightness, brightness, brightness * 1.05);
+            const brightness = 0.5 + Math.random() * 0.5;
+            color.setRGB(brightness, brightness, brightness);
             colors.push(color.clone());
         }
 
         return { matrices, colors };
     }, []);
 
-    // Initialize instanced mesh
+    // Initialize mesh
     useEffect(() => {
         if (!meshRef.current) return;
 
-        matrices.forEach((matrix, i) => {
+        starData.matrices.forEach((matrix, i) => {
             meshRef.current!.setMatrixAt(i, matrix);
-            meshRef.current!.setColorAt(i, colors[i]);
+            meshRef.current!.setColorAt(i, starData.colors[i]);
         });
 
         meshRef.current.instanceMatrix.needsUpdate = true;
         if (meshRef.current.instanceColor) {
             meshRef.current.instanceColor.needsUpdate = true;
         }
+    }, [starData]);
 
-        // Trigger initial render
-        invalidate();
-    }, [matrices, colors, invalidate]);
-
-    // Trigger render when scene changes
-    useEffect(() => {
-        invalidate();
-    }, [currentPhotoIndex, invalidate]);
-
-    // Update star tint based on current scene
+    // Tint stars based on scene
     useFrame(() => {
         if (!materialRef.current) return;
 
         const photo = PHOTOS[currentPhotoIndex];
         if (photo) {
             const targetTint = new THREE.Color(photo.starTint);
-            materialRef.current.color.lerp(targetTint, 0.02);
+            materialRef.current.color.lerp(targetTint, 0.05);
         }
     });
 
     return (
         <instancedMesh ref={meshRef} args={[undefined, undefined, CONFIG.STAR_COUNT]} frustumCulled={false}>
-            <sphereGeometry args={[0.08, 4, 4]} />
-            <meshBasicMaterial ref={materialRef} color="#ffffff" transparent opacity={0.9} />
+            <sphereGeometry args={[0.06, 3, 3]} />
+            <meshBasicMaterial ref={materialRef} color="#ffffff" transparent opacity={0.85} />
         </instancedMesh>
     );
 }

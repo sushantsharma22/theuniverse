@@ -1,74 +1,15 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// PHOTO PLANE - Large immersive photos with soft-edge shader
+// PHOTO PLANE - Simple, performant photo display
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { useRef, useMemo, useEffect } from 'react';
-import { useFrame, useThree, extend } from '@react-three/fiber';
-import { useTexture, shaderMaterial } from '@react-three/drei';
+import { useRef, useMemo } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
+import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import { PhotoData } from '@/lib/types';
 import { PHOTO_POSITIONS, CONFIG } from '@/lib/constants';
-import { useScrollStore } from '@/store/scrollStore';
-
-// Custom shader material for soft edges
-const PhotoMaterial = shaderMaterial(
-    {
-        uTexture: null,
-        uOpacity: 0,
-        uTint: new THREE.Color(1, 1, 1),
-    },
-  // Vertex shader
-  /*glsl*/`
-    varying vec2 vUv;
-    void main() {
-      vUv = uv;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-    }
-  `,
-  // Fragment shader with radial gradient fade
-  /*glsl*/`
-    uniform sampler2D uTexture;
-    uniform float uOpacity;
-    uniform vec3 uTint;
-    varying vec2 vUv;
-
-    void main() {
-      vec4 tex = texture2D(uTexture, vUv);
-      
-      // Radial fade - smooth edges
-      vec2 center = vec2(0.5);
-      float dist = distance(vUv, center);
-      float fade = 1.0 - smoothstep(0.35, 0.52, dist);
-      
-      // Apply subtle tint
-      vec3 color = mix(tex.rgb, tex.rgb * uTint, 0.1);
-      
-      float alpha = tex.a * uOpacity * fade;
-      gl_FragColor = vec4(color, alpha);
-    }
-  `
-);
-
-// Extend R3F with custom material
-extend({ PhotoMaterial });
-
-// Type declaration for custom material
-declare module '@react-three/fiber' {
-    interface ThreeElements {
-        photoMaterial: {
-            ref?: React.Ref<THREE.ShaderMaterial>;
-            uTexture?: THREE.Texture | null;
-            uOpacity?: number;
-            uTint?: THREE.Color;
-            transparent?: boolean;
-            side?: THREE.Side;
-            depthWrite?: boolean;
-            attach?: string;
-        };
-    }
-}
 
 interface PhotoPlaneProps {
     data: PhotoData;
@@ -77,10 +18,8 @@ interface PhotoPlaneProps {
 
 export default function PhotoPlane({ data, index }: PhotoPlaneProps) {
     const meshRef = useRef<THREE.Mesh>(null);
-    const materialRef = useRef<THREE.ShaderMaterial>(null);
-    const { camera, invalidate } = useThree();
-    const isScrolling = useScrollStore(state => state.isScrolling);
-    const progress = useScrollStore(state => state.progress);
+    const materialRef = useRef<THREE.MeshBasicMaterial>(null);
+    const { camera } = useThree();
 
     // Load texture
     const texture = useTexture(data.src);
@@ -97,65 +36,48 @@ export default function PhotoPlane({ data, index }: PhotoPlaneProps) {
         return 1.6;
     }, [texture]);
 
-    // Trigger render when progress changes
-    useEffect(() => {
-        invalidate();
-    }, [progress, invalidate]);
-
-    // Dispose texture on unmount
-    useEffect(() => {
-        return () => {
-            if (texture) {
-                texture.dispose();
-            }
-        };
-    }, [texture]);
-
     useFrame(() => {
         if (!meshRef.current || !materialRef.current) return;
 
         const dist = camera.position.distanceTo(meshRef.current.position);
 
-        // Visibility based on distance
+        // Simple visibility based on distance
         let targetOpacity: number;
-        if (dist > 55) {
+        if (dist > 50) {
             targetOpacity = 0;
-        } else if (dist > 35) {
-            targetOpacity = (55 - dist) / 20;
-        } else if (dist > 12) {
+        } else if (dist > 30) {
+            targetOpacity = (50 - dist) / 20;
+        } else if (dist > 10) {
             targetOpacity = 1.0;
-        } else if (dist > 4) {
-            targetOpacity = (dist - 4) / 8;
+        } else if (dist > 3) {
+            targetOpacity = (dist - 3) / 7;
         } else {
             targetOpacity = 0;
         }
 
-        // Smooth opacity transition
-        const currentOpacity = materialRef.current.uniforms.uOpacity.value;
-        const newOpacity = THREE.MathUtils.lerp(currentOpacity, targetOpacity, 0.1);
-        materialRef.current.uniforms.uOpacity.value = newOpacity;
+        // Fast opacity transition
+        materialRef.current.opacity = THREE.MathUtils.lerp(
+            materialRef.current.opacity,
+            targetOpacity,
+            0.15
+        );
 
-        // Scale up as approach
-        const scale = THREE.MathUtils.clamp(1.0 + (45 - dist) / 35, 0.9, 1.6);
+        // Scale effect
+        const scale = THREE.MathUtils.clamp(1.0 + (40 - dist) / 30, 0.9, 1.5);
         meshRef.current.scale.setScalar(scale);
 
-        // Billboard - always face camera
+        // Billboard - face camera
         meshRef.current.lookAt(camera.position);
-
-        // Update tint
-        const targetTint = new THREE.Color(data.starTint);
-        materialRef.current.uniforms.uTint.value.lerp(targetTint, 0.03);
     });
 
     return (
         <mesh ref={meshRef} position={[position.x, position.y, position.z]}>
             <planeGeometry args={[CONFIG.PHOTO_SCALE * aspect, CONFIG.PHOTO_SCALE]} />
-            <photoMaterial
+            <meshBasicMaterial
                 ref={materialRef}
-                uTexture={texture}
-                uOpacity={0}
-                uTint={new THREE.Color(1, 1, 1)}
+                map={texture}
                 transparent
+                opacity={0}
                 side={THREE.DoubleSide}
                 depthWrite={false}
             />

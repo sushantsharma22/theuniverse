@@ -1,30 +1,19 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// POST-PROCESSING EFFECTS - With conditional rendering
+// POST-PROCESSING EFFECTS - Minimal for performance
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
-import { useScrollStore } from '@/store/scrollStore';
+import { EffectComposer, Vignette } from '@react-three/postprocessing';
 
 export default function Effects() {
-    const isScrolling = useScrollStore(state => state.isScrolling);
-
-    // ✅ Disable effects when idle to save GPU
-    // Note: Effects still render but are lightweight when scene is static
-
+    // Minimal effects for better performance
     return (
-        <EffectComposer enabled={true}>
-            <Bloom
-                intensity={0.15}
-                luminanceThreshold={0.9}
-                luminanceSmoothing={0.9}
-                mipmapBlur
-            />
+        <EffectComposer>
             <Vignette
                 eskil={false}
-                offset={0.15}
-                darkness={0.3}
+                offset={0.2}
+                darkness={0.4}
             />
         </EffectComposer>
     );
