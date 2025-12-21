@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   UNIVERSE JOURNEY - Global Styles
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --space-black: #000005;
+  --space-blue: #001155;
+  --nebula-purple: #221133;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-geist-sans, system-ui, -apple-system, sans-serif);
+  background: var(--space-black);
+  color: #ffffff;
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hide scrollbar but keep functionality */
+body::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(100, 150, 255, 0.3);
+  color: #fff;
+}
+
+/* Ensure canvas is full screen */
+canvas {
+  display: block;
+  touch-action: pan-y;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   UTILITIES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.text-glow {
+  text-shadow: 0 0 40px rgba(100, 150, 255, 0.25);
+}
+
+.backdrop-blur-subtle {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}

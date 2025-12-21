@@ -1,78 +1,233 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   THE UNIVERSE - Zero-Lag Cosmic Journey
-   Aggressive Heat Optimization | Zoom/Blend Transitions | 60 FPS Cap
+   THE UNIVERSE - Seamless Photorealistic Cosmic Journey
+   ═══════════════════════════════════════════════════════════════════════════
+   
+   A continuous glide through 13.8 billion years of cosmic history.
+   Photos blend INTO the environment - you travel THROUGH them.
+   NO FOG - pure visibility. Background matches each scene's colors.
+   
    ═══════════════════════════════════════════════════════════════════════════ */
 
 import * as THREE from 'three';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// AGGRESSIVE OPTIMIZATION CONFIG
+// CONFIGURATION
 // ═══════════════════════════════════════════════════════════════════════════
 
 const CONFIG = {
-    STAR_COUNT: 20000,              // Reduced for heat
-    PIXEL_RATIO: 1.0,               // Capped at 1.0 for laptops
+    // Performance
+    STAR_COUNT: 15000,
+    PIXEL_RATIO: 1.0,
     TARGET_FPS: 60,
-    FOG_DENSITY: 0.008,
-    CAMERA_FOV: 55,
+    IDLE_TIMEOUT: 200,
+
+    // Camera
+    CAMERA_FOV: 60,
     CAMERA_NEAR: 0.1,
-    CAMERA_FAR: 300,
-    LERP_SPEED: 0.05,
-    TEXTURE_LOAD_RANGE: 2,          // Only 2 ahead/behind
-    PHOTO_SCALE: 18,                // Large enough to fill screen
-    IDLE_TIMEOUT: 150               // Stop rendering after 150ms idle
+    CAMERA_FAR: 600,
+
+    // Smooth transitions
+    LERP_SPEED: 0.035,
+    COLOR_LERP_SPEED: 0.02,
+
+    // Photo planes (large scale for immersion)
+    PHOTO_SCALE: 50,
+    TEXTURE_LOAD_RANGE: 3
 };
 
-// NASA Photos
-const PHOTOS = [
-    { src: 'photos/52002778380_50e6f859aa_o.jpg', title: 'The Big Bang', time: 'T = 0', desc: '13.8 billion years ago, spacetime exploded from infinite density.', temp: '∞' },
-    { src: 'photos/28098134687_621b8e892c_o.jpg', title: 'Cosmic Inflation', time: '10⁻³² seconds', desc: 'The universe expands faster than light.', temp: '10³²' },
-    { src: 'photos/52717339847_02c257ca4a_o.jpg', title: 'First Light', time: '380,000 years', desc: 'Atoms form. Light escapes for the first time.', temp: '3000' },
-    { src: 'photos/27990761686_2819382262_o.jpg', title: 'The Dark Ages', time: '200 million years', desc: 'Before stars, only darkness and gravity.', temp: '50' },
-    { src: 'photos/28109219377_0f21f3e0fd_o.jpg', title: 'First Stars', time: '400 million years', desc: 'Blue giants ignite, ending the dark ages.', temp: '10⁵' },
-    { src: 'photos/49576591521_1f37d717d0_o.jpg', title: 'Galaxies Form', time: '1 billion years', desc: 'Stars orbit black holes, forming spirals.', temp: '10⁶' },
-    { src: 'photos/52515250436_4618b5216e_k.jpg', title: 'Stellar Alchemy', time: '5 billion years', desc: 'Stars forge elements. Supernovae scatter them.', temp: '10⁸' },
-    { src: 'photos/53231853596_906631a521_o.jpg', title: 'Our Solar System', time: '9.2 billion years', desc: 'Our Sun and planets take shape.', temp: '5778' },
-    { src: 'photos/45738608235_952889a838_o.jpg', title: 'Planets Form', time: '4.6 billion years ago', desc: 'Saturn emerges from the disk.', temp: '1500' },
-    { src: 'photos/52001270447_027d7a8692_o.jpg', title: 'Cosmic Nurseries', time: 'Present Day', desc: 'Where new stars are born.', temp: '288' },
-    { src: 'photos/52675793824_c407411765_o.png', title: 'Heat Death', time: '10¹⁰⁰ years', desc: 'The universe fades to silence.', temp: '0' }
+// ═══════════════════════════════════════════════════════════════════════════
+// SCENE DATA - Each scene is a moment in cosmic history
+// ═══════════════════════════════════════════════════════════════════════════
+
+const SCENES = [
+    {
+        src: 'photos/52002778380_50e6f859aa_o.jpg',
+        title: 'The Big Bang',
+        time: 'T = 0',
+        desc: '13.8 billion years ago, spacetime exploded from infinite density.',
+        temp: '∞',
+        bgColor: 0x1a0800,      // Dark orange-brown
+        starTint: 0xffccaa,
+        exposure: 1.5
+    },
+    {
+        src: 'photos/28098134687_621b8e892c_o.jpg',
+        title: 'Cosmic Inflation',
+        time: '10⁻³² seconds',
+        desc: 'The universe expands faster than light.',
+        temp: '10³²',
+        bgColor: 0x000a1a,      // Deep space blue
+        starTint: 0xaaccff,
+        exposure: 1.2
+    },
+    {
+        src: 'photos/52717339847_02c257ca4a_o.jpg',
+        title: 'First Light',
+        time: '380,000 years',
+        desc: 'Atoms form. Light escapes for the first time.',
+        temp: '3000',
+        bgColor: 0x120818,      // Purple-black
+        starTint: 0xddccff,
+        exposure: 1.3
+    },
+    {
+        src: 'photos/27990761686_2819382262_o.jpg',
+        title: 'The Dark Ages',
+        time: '200 million years',
+        desc: 'Before stars, only darkness and gravity.',
+        temp: '50',
+        bgColor: 0x000208,      // Near black
+        starTint: 0x556677,
+        exposure: 0.7
+    },
+    {
+        src: 'photos/28109219377_0f21f3e0fd_o.jpg',
+        title: 'First Stars',
+        time: '400 million years',
+        desc: 'Blue giants ignite, ending the dark ages.',
+        temp: '10⁵',
+        bgColor: 0x001020,      // Dark blue
+        starTint: 0x88ccff,
+        exposure: 1.4
+    },
+    {
+        src: 'photos/49576591521_1f37d717d0_o.jpg',
+        title: 'Galaxies Form',
+        time: '1 billion years',
+        desc: 'Stars orbit black holes, forming spirals.',
+        temp: '10⁶',
+        bgColor: 0x0d0800,      // Dark gold
+        starTint: 0xffddaa,
+        exposure: 1.3
+    },
+    {
+        src: 'photos/52515250436_4618b5216e_k.jpg',
+        title: 'Stellar Alchemy',
+        time: '5 billion years',
+        desc: 'Stars forge elements. Supernovae scatter them.',
+        temp: '10⁸',
+        bgColor: 0x150500,      // Dark red
+        starTint: 0xffaaaa,
+        exposure: 1.5
+    },
+    {
+        src: 'photos/53231853596_906631a521_o.jpg',
+        title: 'Our Solar System',
+        time: '9.2 billion years',
+        desc: 'Our Sun and planets take shape.',
+        temp: '5778',
+        bgColor: 0x0f0a00,      // Dark yellow-brown
+        starTint: 0xffffcc,
+        exposure: 1.4
+    },
+    {
+        src: 'photos/45738608235_952889a838_o.jpg',
+        title: 'Planets Form',
+        time: '4.6 billion years ago',
+        desc: 'Saturn emerges from the disk.',
+        temp: '1500',
+        bgColor: 0x080502,      // Dark brown
+        starTint: 0xeeddcc,
+        exposure: 1.3
+    },
+    {
+        src: 'photos/52001270447_027d7a8692_o.jpg',
+        title: 'Cosmic Nurseries',
+        time: 'Present Day',
+        desc: 'Where new stars are born.',
+        temp: '288',
+        bgColor: 0x000a0d,      // Dark teal
+        starTint: 0xaaffee,
+        exposure: 1.4
+    },
+    {
+        src: 'photos/52675793824_c407411765_o.png',
+        title: 'Heat Death',
+        time: '10¹⁰⁰ years',
+        desc: 'The universe fades to silence.',
+        temp: '0',
+        bgColor: 0x000002,      // Almost pure black
+        starTint: 0x222233,
+        exposure: 0.5
+    }
 ];
 
-// Camera waypoints with X/Y/Z movement
-const CAMERA_WAYPOINTS = [
-    new THREE.Vector3(0, 0, 60),        // START
-    new THREE.Vector3(-18, 10, 48),     // Big Bang
-    new THREE.Vector3(15, -8, 36),      // Inflation
-    new THREE.Vector3(-12, 12, 24),     // First Light
-    new THREE.Vector3(14, -10, 12),     // Dark Ages
-    new THREE.Vector3(-16, 8, 0),       // First Stars
-    new THREE.Vector3(12, -10, -12),    // Galaxies
-    new THREE.Vector3(-10, 10, -24),    // Stellar Alchemy
-    new THREE.Vector3(10, -6, -36),     // Solar System
-    new THREE.Vector3(-14, 10, -48),    // Planets
-    new THREE.Vector3(0, 0, -60)        // END
+// Camera path waypoints - smooth curve through space
+const WAYPOINTS = [
+    new THREE.Vector3(0, 0, 100),        // START - far out
+    new THREE.Vector3(-8, 5, 70),        // Toward Big Bang
+    new THREE.Vector3(6, -4, 40),        // Inflation
+    new THREE.Vector3(-5, 6, 10),        // First Light
+    new THREE.Vector3(7, -5, -20),       // Dark Ages
+    new THREE.Vector3(-6, 4, -50),       // First Stars
+    new THREE.Vector3(5, -6, -80),       // Galaxies
+    new THREE.Vector3(-4, 5, -110),      // Stellar Alchemy
+    new THREE.Vector3(6, -4, -140),      // Solar System
+    new THREE.Vector3(-5, 6, -170),      // Planets
+    new THREE.Vector3(4, -5, -200),      // Cosmic Nurseries
+    new THREE.Vector3(0, 0, -240)        // END - Heat Death
 ];
 
-// Photo positions (offset from camera path)
-const PHOTO_POSITIONS = CAMERA_WAYPOINTS.map((wp, i) => {
-    if (i === 0) return new THREE.Vector3(0, 0, 52);
-    return new THREE.Vector3(wp.x * 0.7, wp.y * 0.7, wp.z - 6);
-});
+// ═══════════════════════════════════════════════════════════════════════════
+// PHOTO SHADER - Soft edges that blend into space
+// ═══════════════════════════════════════════════════════════════════════════
+
+const PhotoShader = {
+    vertexShader: `
+        varying vec2 vUv;
+        void main() {
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+    `,
+    fragmentShader: `
+        uniform sampler2D uTexture;
+        uniform float uOpacity;
+        uniform vec3 uTint;
+        
+        varying vec2 vUv;
+        
+        void main() {
+            vec4 tex = texture2D(uTexture, vUv);
+            
+            // Soft radial fade - center visible, edges blend to space
+            vec2 center = vec2(0.5, 0.5);
+            float dist = distance(vUv, center);
+            
+            // Gentle falloff - visible until 40% from center, then smooth fade
+            float fade = 1.0 - smoothstep(0.35, 0.5, dist);
+            
+            // Apply tint for color harmony with background
+            vec3 color = mix(tex.rgb, tex.rgb * uTint, 0.15);
+            
+            float alpha = tex.a * uOpacity * fade;
+            gl_FragColor = vec4(color, alpha);
+        }
+    `
+};
 
 // ═══════════════════════════════════════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════════════════════════════════════
 
 let scene, camera, renderer;
-let starField;
+let starField, starMaterial;
 let photoMeshes = [];
 let cameraPath;
 let scrollProgress = 0;
 let targetScrollProgress = 0;
-let currentPhotoIndex = 0;
-let textureLoadStatus = new Array(PHOTOS.length).fill(false);
+let currentSceneIndex = 0;
+let textureLoadStatus = new Array(SCENES.length).fill(false);
 
-// Lazy rendering state
+// Color state
+let currentBgColor = new THREE.Color(0x000208);
+let targetBgColor = new THREE.Color(0x000208);
+let currentStarTint = new THREE.Color(0xffffff);
+let targetStarTint = new THREE.Color(0xffffff);
+let currentExposure = 1.0;
+let targetExposure = 1.0;
+
+// Rendering control
 let isScrolling = false;
 let scrollTimeout;
 let lastFrameTime = 0;
@@ -87,16 +242,15 @@ const progressBar = document.getElementById('progress-bar');
 const loadingPhase = document.getElementById('loading-phase');
 const startScreen = document.getElementById('start-screen');
 
-// ═══════════════════════════════════════════════════════════════════════════
-// TEXTURE LOADER (Optimized - No Mipmaps)
-// ═══════════════════════════════════════════════════════════════════════════
-
 const textureLoader = new THREE.TextureLoader();
+
+// ═══════════════════════════════════════════════════════════════════════════
+// TEXTURE LOADER
+// ═══════════════════════════════════════════════════════════════════════════
 
 function loadTexture(url) {
     return new Promise((resolve, reject) => {
         textureLoader.load(url, (texture) => {
-            // Disable mipmaps for less GPU memory
             texture.generateMipmaps = false;
             texture.minFilter = THREE.LinearFilter;
             texture.magFilter = THREE.LinearFilter;
@@ -107,65 +261,86 @@ function loadTexture(url) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// STARFIELD (20K stars, spherical distribution)
+// STARFIELD - Tinted to match environment
 // ═══════════════════════════════════════════════════════════════════════════
 
 function createStarField() {
-    const geometry = new THREE.SphereGeometry(0.06, 3, 3);
-    const material = new THREE.MeshBasicMaterial({
+    const geometry = new THREE.SphereGeometry(0.1, 4, 4);
+
+    starMaterial = new THREE.MeshBasicMaterial({
         color: 0xffffff,
         transparent: true,
         opacity: 0.85
     });
 
-    starField = new THREE.InstancedMesh(geometry, material, CONFIG.STAR_COUNT);
-    starField.frustumCulled = true;
+    starField = new THREE.InstancedMesh(geometry, starMaterial, CONFIG.STAR_COUNT);
+    starField.frustumCulled = false;
 
     const matrix = new THREE.Matrix4();
+    const color = new THREE.Color();
 
     for (let i = 0; i < CONFIG.STAR_COUNT; i++) {
-        // Spherical distribution around camera path
-        const radius = 80 + Math.random() * 120;
+        // Spread stars in a cylinder around the camera path
+        const radius = 80 + Math.random() * 200;
         const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos(2 * Math.random() - 1);
 
-        const x = radius * Math.sin(phi) * Math.cos(theta);
-        const y = radius * Math.sin(phi) * Math.sin(theta);
-        const z = (Math.random() - 0.5) * 200; // Spread along Z
+        const x = radius * Math.cos(theta);
+        const y = radius * Math.sin(theta);
+        const z = 150 - Math.random() * 450; // From start to end
 
-        const scale = 0.5 + Math.random() * 1.2;
+        const scale = 0.3 + Math.random() * 1.2;
         matrix.makeScale(scale, scale, scale);
         matrix.setPosition(x, y, z);
         starField.setMatrixAt(i, matrix);
+
+        // Varied brightness
+        const brightness = 0.5 + Math.random() * 0.5;
+        color.setRGB(brightness, brightness, brightness * 1.1);
+        starField.setColorAt(i, color);
     }
 
     starField.instanceMatrix.needsUpdate = true;
+    if (starField.instanceColor) starField.instanceColor.needsUpdate = true;
+
     scene.add(starField);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// PHOTO MESHES (With zoom/blend material)
+// PHOTO PLANES - Large, immersive, with soft edges
 // ═══════════════════════════════════════════════════════════════════════════
 
 function createPhotoMeshes() {
-    for (let i = 0; i < PHOTOS.length; i++) {
-        // Large plane to fill screen when close
+    for (let i = 0; i < SCENES.length; i++) {
+        const sceneData = SCENES[i];
+
+        // Large plane for immersive effect
         const geometry = new THREE.PlaneGeometry(CONFIG.PHOTO_SCALE * 1.6, CONFIG.PHOTO_SCALE);
 
-        const material = new THREE.MeshBasicMaterial({
-            color: 0x111111,
+        // Shader material with soft edges
+        const material = new THREE.ShaderMaterial({
+            uniforms: {
+                uTexture: { value: null },
+                uOpacity: { value: 0 },
+                uTint: { value: new THREE.Color(1, 1, 1) }
+            },
+            vertexShader: PhotoShader.vertexShader,
+            fragmentShader: PhotoShader.fragmentShader,
             transparent: true,
-            opacity: 0,
             side: THREE.DoubleSide,
-            depthWrite: false  // Proper blending
+            depthWrite: false
         });
 
         const mesh = new THREE.Mesh(geometry, material);
-        mesh.position.copy(PHOTO_POSITIONS[i]);
-        mesh.userData = { index: i, loaded: false, baseScale: 1 };
 
-        // Face toward camera path
-        mesh.lookAt(CAMERA_WAYPOINTS[Math.min(i, CAMERA_WAYPOINTS.length - 1)]);
+        // Position at waypoint
+        const wp = WAYPOINTS[i + 1] || WAYPOINTS[WAYPOINTS.length - 1];
+        mesh.position.set(wp.x, wp.y, wp.z);
+
+        mesh.userData = {
+            index: i,
+            loaded: false,
+            sceneData: sceneData
+        };
 
         scene.add(mesh);
         photoMeshes.push(mesh);
@@ -173,44 +348,44 @@ function createPhotoMeshes() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// PROGRESSIVE TEXTURE LOADING (Only 2 ahead/behind)
+// PROGRESSIVE TEXTURE LOADING
 // ═══════════════════════════════════════════════════════════════════════════
 
 async function updateTextures() {
-    const current = Math.floor(currentPhotoIndex);
+    const current = Math.floor(currentSceneIndex);
 
-    for (let i = 0; i < PHOTOS.length; i++) {
+    for (let i = 0; i < SCENES.length; i++) {
         const distance = Math.abs(current - i);
         const mesh = photoMeshes[i];
 
-        // Load if within range
         if (distance <= CONFIG.TEXTURE_LOAD_RANGE && !textureLoadStatus[i]) {
             textureLoadStatus[i] = true;
             try {
-                const texture = await loadTexture(PHOTOS[i].src);
-                mesh.material.map = texture;
-                mesh.material.color.setHex(0xffffff);
-                mesh.material.needsUpdate = true;
+                const texture = await loadTexture(SCENES[i].src);
+                mesh.material.uniforms.uTexture.value = texture;
                 mesh.userData.loaded = true;
 
                 // Adjust aspect ratio
                 if (texture.image) {
                     const aspect = texture.image.width / texture.image.height;
                     mesh.geometry.dispose();
-                    mesh.geometry = new THREE.PlaneGeometry(CONFIG.PHOTO_SCALE * aspect, CONFIG.PHOTO_SCALE);
+                    mesh.geometry = new THREE.PlaneGeometry(
+                        CONFIG.PHOTO_SCALE * aspect,
+                        CONFIG.PHOTO_SCALE
+                    );
                 }
             } catch (e) {
+                console.warn(`Failed: ${SCENES[i].src}`);
                 textureLoadStatus[i] = false;
             }
         }
 
-        // Unload if too far (memory management)
-        if (distance > CONFIG.TEXTURE_LOAD_RANGE + 1 && mesh.userData.loaded) {
-            if (mesh.material.map) {
-                mesh.material.map.dispose();
-                mesh.material.map = null;
-                mesh.material.color.setHex(0x111111);
-                mesh.material.needsUpdate = true;
+        // Unload distant textures
+        if (distance > CONFIG.TEXTURE_LOAD_RANGE + 2 && mesh.userData.loaded) {
+            const tex = mesh.material.uniforms.uTexture.value;
+            if (tex) {
+                tex.dispose();
+                mesh.material.uniforms.uTexture.value = null;
             }
             mesh.userData.loaded = false;
             textureLoadStatus[i] = false;
@@ -219,35 +394,87 @@ async function updateTextures() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// PHOTO ZOOM & BLEND LOGIC
+// PHOTO VISIBILITY - Fade in as approach, fade out as pass
 // ═══════════════════════════════════════════════════════════════════════════
 
-function updatePhotoZoomBlend() {
+function updatePhotos() {
     photoMeshes.forEach((mesh, i) => {
-        const distance = camera.position.distanceTo(mesh.position);
+        const dist = camera.position.distanceTo(mesh.position);
 
-        // ZOOM: Scale increases as camera approaches
-        const zoomFactor = THREE.MathUtils.clamp(1.0 + (25 - distance) / 15, 0.8, 2.5);
-        mesh.scale.setScalar(mesh.userData.baseScale * zoomFactor);
-
-        // BLEND: Opacity based on distance
         let opacity;
-        if (distance > 25) {
-            opacity = 0;  // Too far - invisible
-        } else if (distance > 18) {
-            opacity = (25 - distance) / 7;  // Fade in (approaching)
-        } else if (distance > 8) {
-            opacity = 1.0;  // Full screen
+
+        // Visibility based on distance
+        if (dist > 60) {
+            opacity = 0;
+        } else if (dist > 40) {
+            // Fade in from distance
+            opacity = (60 - dist) / 20;
+        } else if (dist > 15) {
+            // Full visibility zone
+            opacity = 1.0;
+        } else if (dist > 5) {
+            // Fade out as passing through
+            opacity = (dist - 5) / 10;
         } else {
-            opacity = distance / 8;  // Fade out (passing through)
+            opacity = 0;
         }
 
-        // Smooth opacity transition
-        mesh.material.opacity += (opacity - mesh.material.opacity) * 0.15;
+        // Smooth transition
+        const current = mesh.material.uniforms.uOpacity.value;
+        mesh.material.uniforms.uOpacity.value = THREE.MathUtils.lerp(current, opacity, 0.12);
 
-        // Billboard: Always face camera
+        // Scale up slightly as we approach
+        const scale = THREE.MathUtils.clamp(1.0 + (50 - dist) / 40, 0.8, 1.8);
+        mesh.scale.setScalar(scale);
+
+        // Always face camera
         mesh.lookAt(camera.position);
+
+        // Tint to match scene colors
+        const sceneData = mesh.userData.sceneData;
+        if (sceneData) {
+            const tint = new THREE.Color(sceneData.starTint);
+            mesh.material.uniforms.uTint.value.lerp(tint, 0.05);
+        }
     });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ENVIRONMENT - Background color changes per scene (NO FOG!)
+// ═══════════════════════════════════════════════════════════════════════════
+
+function updateEnvironment() {
+    // Find which scenes we're between
+    let nearestIdx = 0;
+    let nearestDist = Infinity;
+
+    photoMeshes.forEach((mesh, i) => {
+        const d = camera.position.distanceTo(mesh.position);
+        if (d < nearestDist) {
+            nearestDist = d;
+            nearestIdx = i;
+        }
+    });
+
+    currentSceneIndex = nearestIdx;
+    const sceneData = SCENES[nearestIdx];
+
+    if (sceneData) {
+        // Target colors from nearest scene
+        targetBgColor.set(sceneData.bgColor);
+        targetStarTint.set(sceneData.starTint);
+        targetExposure = sceneData.exposure;
+    }
+
+    // Smooth transitions
+    currentBgColor.lerp(targetBgColor, CONFIG.COLOR_LERP_SPEED);
+    currentStarTint.lerp(targetStarTint, CONFIG.COLOR_LERP_SPEED);
+    currentExposure = THREE.MathUtils.lerp(currentExposure, targetExposure, CONFIG.LERP_SPEED);
+
+    // Apply
+    scene.background = currentBgColor.clone();
+    starMaterial.color.copy(currentStarTint);
+    renderer.toneMappingExposure = currentExposure;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -255,11 +482,11 @@ function updatePhotoZoomBlend() {
 // ═══════════════════════════════════════════════════════════════════════════
 
 function createCameraPath() {
-    cameraPath = new THREE.CatmullRomCurve3(CAMERA_WAYPOINTS, false, 'catmullrom', 0.5);
+    cameraPath = new THREE.CatmullRomCurve3(WAYPOINTS, false, 'catmullrom', 0.5);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// SCROLL HANDLING
+// SCROLL
 // ═══════════════════════════════════════════════════════════════════════════
 
 function handleScroll() {
@@ -267,13 +494,11 @@ function handleScroll() {
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     targetScrollProgress = docHeight > 0 ? scrollTop / docHeight : 0;
 
-    // Hide start screen on first scroll
     if (!hasScrolled && scrollTop > 50) {
         hasScrolled = true;
         if (startScreen) startScreen.classList.add('hidden');
     }
 
-    // Lazy render trigger
     isScrolling = true;
     needsRender = true;
     clearTimeout(scrollTimeout);
@@ -283,27 +508,23 @@ function handleScroll() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// UI UPDATES
+// UI
 // ═══════════════════════════════════════════════════════════════════════════
 
 function updateUI() {
-    const index = Math.min(Math.floor(currentPhotoIndex), PHOTOS.length - 1);
+    const idx = Math.min(Math.floor(currentSceneIndex), SCENES.length - 1);
 
-    // Timeline
     document.querySelectorAll('.timeline-dot').forEach((dot, i) => {
-        dot.classList.toggle('active', i <= index);
+        dot.classList.toggle('active', i <= idx);
     });
 
-    // Temperature
     const tempEl = document.getElementById('temp-value');
-    if (tempEl && PHOTOS[index]) tempEl.textContent = PHOTOS[index].temp;
+    if (tempEl && SCENES[idx]) tempEl.textContent = SCENES[idx].temp;
 
-    // Sections
     document.querySelectorAll('section').forEach((section, i) => {
-        section.classList.toggle('active', Math.abs(currentPhotoIndex - i) < 0.6);
+        section.classList.toggle('active', Math.abs(currentSceneIndex - i) < 0.7);
     });
 
-    // End screen
     const endScreen = document.getElementById('end-screen');
     if (endScreen) endScreen.classList.toggle('visible', scrollProgress > 0.95);
 }
@@ -313,17 +534,41 @@ function updateProgress(percent, phase) {
     if (loadingPhase && phase) loadingPhase.textContent = phase;
 }
 
+function setupTimeline() {
+    const timeline = document.getElementById('timeline');
+    if (!timeline) return;
+
+    timeline.innerHTML = '';
+    for (let i = 0; i < SCENES.length; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'timeline-dot';
+        dot.title = SCENES[i].title;
+        dot.addEventListener('click', () => {
+            const targetScroll = (i / (SCENES.length - 1)) *
+                (document.documentElement.scrollHeight - window.innerHeight);
+            window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+        });
+        timeline.appendChild(dot);
+    }
+}
+
+function onResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    needsRender = true;
+}
+
 // ═══════════════════════════════════════════════════════════════════════════
-// INITIALIZATION
+// INIT
 // ═══════════════════════════════════════════════════════════════════════════
 
 async function init() {
     updateProgress(5, 'Initializing...');
 
-    // Scene
+    // Scene - NO FOG!
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000005);
-    scene.fog = new THREE.FogExp2(0x000005, CONFIG.FOG_DENSITY);
+    scene.background = new THREE.Color(0x000208);
 
     // Camera
     camera = new THREE.PerspectiveCamera(
@@ -333,17 +578,19 @@ async function init() {
         CONFIG.CAMERA_FAR
     );
 
-    // Renderer (OPTIMIZED FOR HEAT)
+    // Renderer with ACES tone mapping
     const canvas = document.getElementById('universe-canvas');
     renderer = new THREE.WebGLRenderer({
         canvas,
-        antialias: false,              // DISABLED for performance
-        powerPreference: 'low-power',  // Prefer integrated GPU
+        antialias: false,
+        powerPreference: 'low-power',
         alpha: false
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(CONFIG.PIXEL_RATIO);  // Capped at 1.0
+    renderer.setPixelRatio(CONFIG.PIXEL_RATIO);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.0;
 
     updateProgress(15, 'Creating starfield...');
     createStarField();
@@ -355,33 +602,34 @@ async function init() {
     updateProgress(35, 'Creating photo frames...');
     createPhotoMeshes();
 
-    updateProgress(45, 'Loading first photos...');
+    updateProgress(45, 'Loading photos...');
 
-    // Preload first 3 textures
-    for (let i = 0; i < 3; i++) {
+    // Preload first 3
+    for (let i = 0; i < Math.min(3, SCENES.length); i++) {
         try {
-            const texture = await loadTexture(PHOTOS[i].src);
+            const texture = await loadTexture(SCENES[i].src);
             const mesh = photoMeshes[i];
-            mesh.material.map = texture;
-            mesh.material.color.setHex(0xffffff);
-            mesh.material.needsUpdate = true;
+            mesh.material.uniforms.uTexture.value = texture;
             mesh.userData.loaded = true;
             textureLoadStatus[i] = true;
 
             if (texture.image) {
                 const aspect = texture.image.width / texture.image.height;
                 mesh.geometry.dispose();
-                mesh.geometry = new THREE.PlaneGeometry(CONFIG.PHOTO_SCALE * aspect, CONFIG.PHOTO_SCALE);
+                mesh.geometry = new THREE.PlaneGeometry(
+                    CONFIG.PHOTO_SCALE * aspect,
+                    CONFIG.PHOTO_SCALE
+                );
             }
-            updateProgress(45 + (i + 1) * 15, `Loaded ${PHOTOS[i].title}...`);
+            updateProgress(45 + (i + 1) * 15, `Loaded ${SCENES[i].title}...`);
         } catch (e) {
-            console.warn(`Failed: ${PHOTOS[i].src}`);
+            console.warn(`Failed: ${SCENES[i].src}`);
         }
     }
 
     updateProgress(95, 'Ready');
 
-    // Event listeners
+    // Events
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', onResize);
 
@@ -394,7 +642,7 @@ async function init() {
         });
     }
 
-    // Hide loading, start animation
+    // Start
     setTimeout(() => {
         if (loadingScreen) loadingScreen.classList.add('hidden');
         needsRender = true;
@@ -403,78 +651,41 @@ async function init() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// TIMELINE
-// ═══════════════════════════════════════════════════════════════════════════
-
-function setupTimeline() {
-    const timeline = document.getElementById('timeline');
-    if (!timeline) return;
-
-    timeline.innerHTML = '';
-    for (let i = 0; i < PHOTOS.length; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'timeline-dot';
-        dot.title = PHOTOS[i].title;
-        dot.addEventListener('click', () => {
-            const targetScroll = (i / (PHOTOS.length - 1)) *
-                (document.documentElement.scrollHeight - window.innerHeight);
-            window.scrollTo({ top: targetScroll, behavior: 'smooth' });
-        });
-        timeline.appendChild(dot);
-    }
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// RESIZE
-// ═══════════════════════════════════════════════════════════════════════════
-
-function onResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    needsRender = true;
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// ANIMATION LOOP (FPS CAPPED + LAZY RENDERING)
+// ANIMATION
 // ═══════════════════════════════════════════════════════════════════════════
 
 function animate(currentTime) {
     requestAnimationFrame(animate);
 
-    // FPS cap - skip frame if too soon
+    // FPS cap
     if (currentTime - lastFrameTime < frameInterval) return;
     lastFrameTime = currentTime;
 
-    // LAZY RENDER: Only render when scrolling or needs update
+    // Lazy render
     if (!isScrolling && !needsRender) return;
 
-    // Smooth scroll interpolation
+    // Smooth scroll
     scrollProgress += (targetScrollProgress - scrollProgress) * CONFIG.LERP_SPEED;
-    currentPhotoIndex = scrollProgress * (PHOTOS.length - 1);
 
-    // Camera movement
-    const targetPos = cameraPath.getPointAt(Math.min(Math.max(scrollProgress, 0), 1));
+    // Camera follows path
+    const t = Math.min(Math.max(scrollProgress, 0), 1);
+    const targetPos = cameraPath.getPointAt(t);
     camera.position.lerp(targetPos, CONFIG.LERP_SPEED);
 
-    // Look ahead on path
-    const lookT = Math.min(scrollProgress + 0.05, 1);
+    // Look ahead
+    const lookT = Math.min(t + 0.04, 1);
     const lookTarget = cameraPath.getPointAt(lookT);
     camera.lookAt(lookTarget);
 
-    // Update photo zoom & blend
-    updatePhotoZoomBlend();
-
-    // Load/unload textures
+    // Updates
+    updateEnvironment();
+    updatePhotos();
     if (isScrolling) updateTextures();
-
-    // UI
     updateUI();
 
     // Render
     renderer.render(scene, camera);
 
-    // After first render, only render on scroll
     if (!isScrolling) needsRender = false;
 }
 
