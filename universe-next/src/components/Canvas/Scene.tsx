@@ -45,21 +45,19 @@ export default function Scene() {
             <ambientLight intensity={0.4} />
 
             {/* Content */}
+            <StarField />
+            <CameraRig />
+            <Effects />
+
+            {/* Photo planes - Individual suspense for granular loading */}
+            {PHOTOS.map((photo, i) => (
+                <Suspense key={i} fallback={null}>
+                    <PhotoPlane data={photo} index={i} />
+                </Suspense>
+            ))}
+
+            {/* Texture preloading */}
             <Suspense fallback={null}>
-                <StarField />
-
-                {/* Photo planes */}
-                {PHOTOS.map((photo, i) => (
-                    <PhotoPlane key={i} data={photo} index={i} />
-                ))}
-
-                {/* Camera controller */}
-                <CameraRig />
-
-                {/* Post-processing */}
-                <Effects />
-
-                {/* Preload textures */}
                 <Preload all />
             </Suspense>
         </Canvas>
