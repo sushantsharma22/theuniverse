@@ -1,15 +1,16 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// PHOTO PLANE - Large immersive photos with soft-edge shader
+// PHOTO PLANE - With proper texture/geometry disposal
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import { useFrame, useThree, extend } from '@react-three/fiber';
 import { useTexture, shaderMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 import { PhotoData } from '@/lib/types';
 import { PHOTO_POSITIONS, CONFIG } from '@/lib/constants';
+import { useScrollStore } from '@/store/scrollStore';
 
 // Custom shader material for soft edges
 const PhotoMaterial = shaderMaterial(
@@ -53,7 +54,7 @@ const PhotoMaterial = shaderMaterial(
 // Extend R3F with custom material
 extend({ PhotoMaterial });
 
-// Add type declaration for custom material
+// Type declaration for custom material
 declare module '@react-three/fiber' {
     interface ThreeElements {
         photoMaterial: {
@@ -67,7 +68,7 @@ declare module '@react-three/fiber' {
             attach?: string;
         };
     }
-};
+}
 
 interface PhotoPlaneProps {
     data: PhotoData;
@@ -77,7 +78,9 @@ interface PhotoPlaneProps {
 export default function PhotoPlane({ data, index }: PhotoPlaneProps) {
     const meshRef = useRef<THREE.Mesh>(null);
     const materialRef = useRef<THREE.ShaderMaterial>(null);
-    const { camera } = useThree();
+    const geometryRef = useRef<THREE.PlaneGeometry | null>(null);
+    const { camera, invalidate } = useThree();
+    const isScrolling = useScrollStore(state => state.isScrolling);
 
     // Load texture
     const texture = useTexture(data.src);
@@ -85,7 +88,7 @@ export default function PhotoPlane({ data, index }: PhotoPlaneProps) {
     // Get position
     const position = PHOTO_POSITIONS[index] || new THREE.Vector3(0, 0, -index * 30);
 
-    // Calculate aspect ratio
+    // Calculate aspect ratio and create geometry ONCE
     const aspect = useMemo(() => {
         const img = texture.image as HTMLImageElement | undefined;
         if (img && img.width && img.height) {
@@ -94,7 +97,31 @@ export default function PhotoPlane({ data, index }: PhotoPlaneProps) {
         return 1.6;
     }, [texture]);
 
+    // Create geometry once
+    useEffect(() => {
+        geometryRef.current = new THREE.PlaneGeometry(CONFIG.PHOTO_SCALE * aspect, CONFIG.PHOTO_SCALE);
+
+        // ✅ CRITICAL: Dispose geometry on unmount - prevents memory leaks
+        return () => {
+            if (geometryRef.current) {
+                geometryRef.current.dispose();
+                geometryRef.current = null;
+            }
+        };
+    }, [aspect]);
+
+    // ✅ CRITICAL: Dispose texture on unmount
+    useEffect(() => {
+        return () => {
+            if (texture) {
+                texture.dispose();
+            }
+        };
+    }, [texture]);
+
     useFrame(() => {
+        // ✅ Skip if not scrolling
+        if (!isScrolling) return;
         if (!meshRef.current || !materialRef.current) return;
 
         const dist = camera.position.distanceTo(meshRef.current.position);
@@ -131,6 +158,9 @@ export default function PhotoPlane({ data, index }: PhotoPlaneProps) {
         // Update tint
         const targetTint = new THREE.Color(data.starTint);
         materialRef.current.uniforms.uTint.value.lerp(targetTint, 0.03);
+
+        // Request next frame
+        invalidate();
     });
 
     return (

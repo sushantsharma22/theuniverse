@@ -1,29 +1,35 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// CAMERA RIG - Smooth camera movement along CatmullRom path
+// CAMERA RIG - Conditional updates only when scrolling (GPU idles otherwise)
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { useRef, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useScrollStore } from '@/store/scrollStore';
 import { WAYPOINTS, PHOTOS, CONFIG } from '@/lib/constants';
 
-export default function CameraRig() {
-    const { camera, scene } = useThree();
-    const scrollProgress = useScrollStore(state => state.progress);
-    const currentColorRef = useRef(new THREE.Color('#000208'));
-    const targetColorRef = useRef(new THREE.Color('#000208'));
+// Pre-create colors to avoid GC churn
+const currentColor = new THREE.Color('#000208');
+const targetColor = new THREE.Color('#000208');
 
-    // Create smooth camera path from waypoints
+export default function CameraRig() {
+    const { camera, scene, invalidate } = useThree();
+    const progress = useScrollStore(state => state.progress);
+    const isScrolling = useScrollStore(state => state.isScrolling);
+
+    // Create smooth camera path from waypoints (ONCE)
     const cameraPath = useMemo(() => {
         return new THREE.CatmullRomCurve3(WAYPOINTS, false, 'catmullrom', 0.5);
     }, []);
 
     useFrame(() => {
+        // ✅ CRITICAL: Skip frame if not scrolling = GPU idles
+        if (!isScrolling) return;
+
         // Clamp progress
-        const t = Math.max(0, Math.min(1, scrollProgress));
+        const t = Math.max(0, Math.min(1, progress));
 
         // Get target position on path
         const targetPos = cameraPath.getPointAt(t);
@@ -37,18 +43,16 @@ export default function CameraRig() {
         camera.lookAt(lookTarget);
 
         // Update scene theme based on progress
-        updateSceneTheme(t, scene, currentColorRef.current, targetColorRef.current);
+        updateSceneTheme(t, scene);
+
+        // ✅ Request ONE more frame while scrolling
+        invalidate();
     });
 
     return null;
 }
 
-function updateSceneTheme(
-    progress: number,
-    scene: THREE.Scene,
-    currentColor: THREE.Color,
-    targetColor: THREE.Color
-) {
+function updateSceneTheme(progress: number, scene: THREE.Scene) {
     // Calculate which scene we're in
     const totalScenes = PHOTOS.length;
     const sceneProgress = progress * (totalScenes - 1);
@@ -71,20 +75,5 @@ function updateSceneTheme(
 
         // Apply to scene background (no fog!)
         scene.background = currentColor.clone();
-
-        // Dynamic exposure
-        const renderer = scene.userData.renderer;
-        if (renderer) {
-            const targetExposure = THREE.MathUtils.lerp(
-                currentScene.exposure,
-                nextScene.exposure,
-                blend
-            );
-            renderer.toneMappingExposure = THREE.MathUtils.lerp(
-                renderer.toneMappingExposure,
-                targetExposure,
-                0.03
-            );
-        }
     }
 }

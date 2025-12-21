@@ -1,11 +1,11 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// STARFIELD - 15K Instanced Stars with Color Tinting
+// STARFIELD - With conditional rendering and proper disposal
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { useRef, useMemo } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useRef, useMemo, useEffect } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useScrollStore } from '@/store/scrollStore';
 import { PHOTOS, CONFIG } from '@/lib/constants';
@@ -13,7 +13,10 @@ import { PHOTOS, CONFIG } from '@/lib/constants';
 export default function StarField() {
     const meshRef = useRef<THREE.InstancedMesh>(null);
     const materialRef = useRef<THREE.MeshBasicMaterial>(null);
+    const geometryRef = useRef<THREE.SphereGeometry | null>(null);
     const currentPhotoIndex = useScrollStore(state => state.currentPhotoIndex);
+    const isScrolling = useScrollStore(state => state.isScrolling);
+    const { invalidate } = useThree();
 
     // Generate star positions once
     const { matrices, colors } = useMemo(() => {
@@ -29,7 +32,7 @@ export default function StarField() {
 
             const x = radius * Math.cos(theta);
             const y = radius * Math.sin(theta);
-            const z = 150 - Math.random() * 450; // From start to end
+            const z = 150 - Math.random() * 450;
 
             const scale = 0.3 + Math.random() * 1.0;
             matrix.makeScale(scale, scale, scale);
@@ -46,7 +49,7 @@ export default function StarField() {
     }, []);
 
     // Initialize instanced mesh
-    useMemo(() => {
+    useEffect(() => {
         if (!meshRef.current) return;
 
         matrices.forEach((matrix, i) => {
@@ -60,8 +63,25 @@ export default function StarField() {
         }
     }, [matrices, colors]);
 
+    // ✅ CRITICAL: Dispose geometry on unmount
+    useEffect(() => {
+        geometryRef.current = new THREE.SphereGeometry(0.08, 4, 4);
+
+        return () => {
+            if (geometryRef.current) {
+                geometryRef.current.dispose();
+                geometryRef.current = null;
+            }
+            if (materialRef.current) {
+                materialRef.current.dispose();
+            }
+        };
+    }, []);
+
     // Update star tint based on current scene
     useFrame(() => {
+        // ✅ Skip if not scrolling
+        if (!isScrolling) return;
         if (!materialRef.current) return;
 
         const photo = PHOTOS[currentPhotoIndex];
@@ -69,6 +89,8 @@ export default function StarField() {
             const targetTint = new THREE.Color(photo.starTint);
             materialRef.current.color.lerp(targetTint, 0.02);
         }
+
+        invalidate();
     });
 
     return (

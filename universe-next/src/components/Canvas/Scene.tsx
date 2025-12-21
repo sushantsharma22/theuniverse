@@ -1,10 +1,10 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// MAIN 3D SCENE - React Three Fiber Canvas
+// MAIN 3D SCENE - frameloop="demand" = GPU idles when not needed
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { Suspense, useRef, useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Preload } from '@react-three/drei';
 import * as THREE from 'three';
@@ -13,13 +13,25 @@ import PhotoPlane from './PhotoPlane';
 import CameraRig from './CameraRig';
 import Effects from './Effects';
 import { PHOTOS } from '@/lib/constants';
+import { useScrollStore } from '@/store/scrollStore';
+
+// Component that triggers initial render
+function InitialRender() {
+    const { invalidate } = require('@react-three/fiber').useThree();
+
+    useEffect(() => {
+        // Trigger initial render
+        invalidate();
+    }, [invalidate]);
+
+    return null;
+}
 
 export default function Scene() {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-
     return (
         <Canvas
-            ref={canvasRef}
+            // ✅ CRITICAL: frameloop="demand" = GPU only renders when invalidate() called
+            frameloop="demand"
             gl={{
                 antialias: false,
                 powerPreference: 'low-power',
@@ -29,14 +41,14 @@ export default function Scene() {
             }}
             dpr={[1, 1.5]}
             camera={{ fov: 60, near: 0.1, far: 500 }}
-            onCreated={({ gl, scene }) => {
+            onCreated={({ gl, scene, invalidate }) => {
                 gl.toneMapping = THREE.ACESFilmicToneMapping;
                 gl.toneMappingExposure = 1.2;
                 gl.outputColorSpace = THREE.SRGBColorSpace;
                 scene.background = new THREE.Color('#000208');
 
-                // Store renderer reference for dynamic exposure
-                scene.userData.renderer = gl;
+                // Trigger initial render
+                invalidate();
             }}
             className="fixed inset-0 z-0"
             style={{ touchAction: 'pan-y' }}
@@ -44,10 +56,11 @@ export default function Scene() {
             {/* Ambient light for base visibility */}
             <ambientLight intensity={0.4} />
 
-            {/* Content */}
+            {/* Non-suspending components render immediately */}
             <StarField />
             <CameraRig />
             <Effects />
+            <InitialRender />
 
             {/* Photo planes - Individual suspense for granular loading */}
             {PHOTOS.map((photo, i) => (

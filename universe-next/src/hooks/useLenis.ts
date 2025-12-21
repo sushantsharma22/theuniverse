@@ -1,7 +1,7 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// LENIS SMOOTH SCROLL HOOK
+// LENIS SMOOTH SCROLL HOOK - With proper cleanup
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { useEffect, useRef } from 'react';
@@ -13,6 +13,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function useLenis() {
     const lenisRef = useRef<Lenis | null>(null);
+    const rafIdRef = useRef<number | null>(null);
 
     useEffect(() => {
         const lenis = new Lenis({
@@ -29,14 +30,24 @@ export function useLenis() {
         lenis.on('scroll', ScrollTrigger.update);
 
         // Use GSAP ticker for RAF
-        gsap.ticker.add((time) => {
+        const tickerCallback = (time: number) => {
             lenis.raf(time * 1000);
-        });
+        };
 
+        gsap.ticker.add(tickerCallback);
         gsap.ticker.lagSmoothing(0);
 
+        // ✅ CRITICAL: Cleanup on unmount - prevents memory leaks
         return () => {
+            gsap.ticker.remove(tickerCallback);
             lenis.destroy();
+            lenisRef.current = null;
+
+            // Cancel any pending RAF
+            if (rafIdRef.current) {
+                cancelAnimationFrame(rafIdRef.current);
+                rafIdRef.current = null;
+            }
         };
     }, []);
 
