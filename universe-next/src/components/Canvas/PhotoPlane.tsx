@@ -1,7 +1,7 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// PHOTO PLANE - With proper texture/geometry disposal
+// PHOTO PLANE - Large immersive photos with soft-edge shader
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { useRef, useMemo, useEffect } from 'react';
@@ -78,9 +78,9 @@ interface PhotoPlaneProps {
 export default function PhotoPlane({ data, index }: PhotoPlaneProps) {
     const meshRef = useRef<THREE.Mesh>(null);
     const materialRef = useRef<THREE.ShaderMaterial>(null);
-    const geometryRef = useRef<THREE.PlaneGeometry | null>(null);
     const { camera, invalidate } = useThree();
     const isScrolling = useScrollStore(state => state.isScrolling);
+    const progress = useScrollStore(state => state.progress);
 
     // Load texture
     const texture = useTexture(data.src);
@@ -88,7 +88,7 @@ export default function PhotoPlane({ data, index }: PhotoPlaneProps) {
     // Get position
     const position = PHOTO_POSITIONS[index] || new THREE.Vector3(0, 0, -index * 30);
 
-    // Calculate aspect ratio and create geometry ONCE
+    // Calculate aspect ratio
     const aspect = useMemo(() => {
         const img = texture.image as HTMLImageElement | undefined;
         if (img && img.width && img.height) {
@@ -97,20 +97,12 @@ export default function PhotoPlane({ data, index }: PhotoPlaneProps) {
         return 1.6;
     }, [texture]);
 
-    // Create geometry once
+    // Trigger render when progress changes
     useEffect(() => {
-        geometryRef.current = new THREE.PlaneGeometry(CONFIG.PHOTO_SCALE * aspect, CONFIG.PHOTO_SCALE);
+        invalidate();
+    }, [progress, invalidate]);
 
-        // ✅ CRITICAL: Dispose geometry on unmount - prevents memory leaks
-        return () => {
-            if (geometryRef.current) {
-                geometryRef.current.dispose();
-                geometryRef.current = null;
-            }
-        };
-    }, [aspect]);
-
-    // ✅ CRITICAL: Dispose texture on unmount
+    // Dispose texture on unmount
     useEffect(() => {
         return () => {
             if (texture) {
@@ -120,8 +112,6 @@ export default function PhotoPlane({ data, index }: PhotoPlaneProps) {
     }, [texture]);
 
     useFrame(() => {
-        // ✅ Skip if not scrolling
-        if (!isScrolling) return;
         if (!meshRef.current || !materialRef.current) return;
 
         const dist = camera.position.distanceTo(meshRef.current.position);
@@ -142,11 +132,8 @@ export default function PhotoPlane({ data, index }: PhotoPlaneProps) {
 
         // Smooth opacity transition
         const currentOpacity = materialRef.current.uniforms.uOpacity.value;
-        materialRef.current.uniforms.uOpacity.value = THREE.MathUtils.lerp(
-            currentOpacity,
-            targetOpacity,
-            0.1
-        );
+        const newOpacity = THREE.MathUtils.lerp(currentOpacity, targetOpacity, 0.1);
+        materialRef.current.uniforms.uOpacity.value = newOpacity;
 
         // Scale up as approach
         const scale = THREE.MathUtils.clamp(1.0 + (45 - dist) / 35, 0.9, 1.6);
@@ -158,9 +145,6 @@ export default function PhotoPlane({ data, index }: PhotoPlaneProps) {
         // Update tint
         const targetTint = new THREE.Color(data.starTint);
         materialRef.current.uniforms.uTint.value.lerp(targetTint, 0.03);
-
-        // Request next frame
-        invalidate();
     });
 
     return (

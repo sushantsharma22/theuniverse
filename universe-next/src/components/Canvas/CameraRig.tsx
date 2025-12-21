@@ -1,10 +1,10 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// CAMERA RIG - Conditional updates only when scrolling (GPU idles otherwise)
+// CAMERA RIG - Smooth camera movement along the journey path
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { useMemo } from 'react';
+import { useMemo, useRef, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useScrollStore } from '@/store/scrollStore';
@@ -18,18 +18,32 @@ export default function CameraRig() {
     const { camera, scene, invalidate } = useThree();
     const progress = useScrollStore(state => state.progress);
     const isScrolling = useScrollStore(state => state.isScrolling);
+    const lastProgress = useRef(0);
+    const needsAnimation = useRef(true);
 
     // Create smooth camera path from waypoints (ONCE)
     const cameraPath = useMemo(() => {
         return new THREE.CatmullRomCurve3(WAYPOINTS, false, 'catmullrom', 0.5);
     }, []);
 
+    // Trigger initial render and when scrolling starts
+    useEffect(() => {
+        needsAnimation.current = true;
+        invalidate();
+    }, [progress, invalidate]);
+
     useFrame(() => {
-        // ✅ CRITICAL: Skip frame if not scrolling = GPU idles
-        if (!isScrolling) return;
+        // Calculate if we need to animate (position changed or still lerping)
+        const progressDelta = Math.abs(progress - lastProgress.current);
+        const isLerping = progressDelta > 0.0001 || needsAnimation.current;
+
+        if (!isLerping && !isScrolling) {
+            return; // GPU idles
+        }
 
         // Clamp progress
         const t = Math.max(0, Math.min(1, progress));
+        lastProgress.current = progress;
 
         // Get target position on path
         const targetPos = cameraPath.getPointAt(t);
@@ -45,7 +59,14 @@ export default function CameraRig() {
         // Update scene theme based on progress
         updateSceneTheme(t, scene);
 
-        // ✅ Request ONE more frame while scrolling
+        // Check if camera is close enough to target
+        const distanceToTarget = camera.position.distanceTo(targetPos);
+        if (distanceToTarget < 0.01 && !isScrolling) {
+            needsAnimation.current = false;
+            return; // Stop animating
+        }
+
+        // Request next frame
         invalidate();
     });
 
@@ -73,7 +94,7 @@ function updateSceneTheme(progress: number, scene: THREE.Scene) {
         // Smooth transition
         currentColor.lerp(targetColor, CONFIG.COLOR_LERP_SPEED);
 
-        // Apply to scene background (no fog!)
+        // Apply to scene background
         scene.background = currentColor.clone();
     }
 }

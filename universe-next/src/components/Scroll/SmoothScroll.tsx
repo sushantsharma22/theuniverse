@@ -1,7 +1,7 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// SMOOTH SCROLL - With proper cleanup to prevent memory leaks
+// SMOOTH SCROLL - Creates scrollable sections for the journey
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { useEffect, useRef } from 'react';
@@ -37,7 +37,10 @@ export default function SmoothScroll() {
 
         window.addEventListener('scroll', handleScroll, { passive: true });
 
-        // ✅ CRITICAL: Cleanup on unmount - prevents memory leaks
+        // Initial call to set progress on load
+        handleScroll();
+
+        // ✅ CRITICAL: Cleanup on unmount
         return () => {
             window.removeEventListener('scroll', handleScroll);
             if (timeoutRef.current) {
@@ -46,11 +49,18 @@ export default function SmoothScroll() {
         };
     }, [setProgress, setIsScrolling]);
 
-    // Create scroll sections for each photo
+    // ✅ FIX: Use RELATIVE positioning to create actual scroll height
+    // Each section is 100vh, creating 11 * 100vh = 1100vh of scrollable content
     return (
-        <div className="fixed top-0 left-0 w-full pointer-events-none z-0">
-            {PHOTOS.map((_, i) => (
-                <section key={i} className="h-screen" aria-hidden="true" />
+        <div className="relative w-full" style={{ pointerEvents: 'auto' }}>
+            {PHOTOS.map((photo, i) => (
+                <section
+                    key={i}
+                    className="h-screen w-full"
+                    data-scene={i}
+                >
+                    {/* Invisible section - Canvas renders the visuals */}
+                </section>
             ))}
         </div>
     );

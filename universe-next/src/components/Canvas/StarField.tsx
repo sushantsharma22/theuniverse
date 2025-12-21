@@ -1,7 +1,7 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// STARFIELD - With conditional rendering and proper disposal
+// STARFIELD - 15K Instanced Stars with Color Tinting
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { useRef, useMemo, useEffect } from 'react';
@@ -13,9 +13,8 @@ import { PHOTOS, CONFIG } from '@/lib/constants';
 export default function StarField() {
     const meshRef = useRef<THREE.InstancedMesh>(null);
     const materialRef = useRef<THREE.MeshBasicMaterial>(null);
-    const geometryRef = useRef<THREE.SphereGeometry | null>(null);
     const currentPhotoIndex = useScrollStore(state => state.currentPhotoIndex);
-    const isScrolling = useScrollStore(state => state.isScrolling);
+    const progress = useScrollStore(state => state.progress);
     const { invalidate } = useThree();
 
     // Generate star positions once
@@ -61,27 +60,18 @@ export default function StarField() {
         if (meshRef.current.instanceColor) {
             meshRef.current.instanceColor.needsUpdate = true;
         }
-    }, [matrices, colors]);
 
-    // ✅ CRITICAL: Dispose geometry on unmount
+        // Trigger initial render
+        invalidate();
+    }, [matrices, colors, invalidate]);
+
+    // Trigger render when scene changes
     useEffect(() => {
-        geometryRef.current = new THREE.SphereGeometry(0.08, 4, 4);
-
-        return () => {
-            if (geometryRef.current) {
-                geometryRef.current.dispose();
-                geometryRef.current = null;
-            }
-            if (materialRef.current) {
-                materialRef.current.dispose();
-            }
-        };
-    }, []);
+        invalidate();
+    }, [currentPhotoIndex, invalidate]);
 
     // Update star tint based on current scene
     useFrame(() => {
-        // ✅ Skip if not scrolling
-        if (!isScrolling) return;
         if (!materialRef.current) return;
 
         const photo = PHOTOS[currentPhotoIndex];
@@ -89,8 +79,6 @@ export default function StarField() {
             const targetTint = new THREE.Color(photo.starTint);
             materialRef.current.color.lerp(targetTint, 0.02);
         }
-
-        invalidate();
     });
 
     return (

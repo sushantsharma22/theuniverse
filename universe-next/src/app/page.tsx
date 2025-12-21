@@ -1,7 +1,7 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// UNIVERSE JOURNEY - Main Page with Texture Preloading
+// UNIVERSE JOURNEY - Main Page
 // ═══════════════════════════════════════════════════════════════════════════
 
 import dynamic from 'next/dynamic';
@@ -58,21 +58,23 @@ export default function UniversePage() {
   }
 
   return (
-    <main className="relative w-screen min-h-screen">
-      {/* 3D Canvas */}
-      <Suspense fallback={<LoadingScreen progress={90} />}>
-        <Scene />
-      </Suspense>
+    <>
+      {/* 3D Canvas - Fixed background */}
+      <div className="fixed inset-0 z-0">
+        <Suspense fallback={<LoadingScreen progress={90} />}>
+          <Scene />
+        </Suspense>
+      </div>
 
-      {/* Smooth scroll container */}
+      {/* Scrollable content - Creates document height */}
       <SmoothScroll />
 
-      {/* UI Overlays */}
+      {/* UI Overlays - Fixed on top */}
       <StartScreen />
       <Timeline />
       <TextOverlay />
       <TemperatureDisplay />
       <EndScreen />
-    </main>
+    </>
   );
 }
