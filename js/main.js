@@ -1,71 +1,63 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   UNIVERSE - Performance-Optimized Cosmic Journey
-   60 FPS minimum | Photorealistic | Zero Lag
+   THE UNIVERSE - Zero-Lag Cosmic Journey
+   Aggressive Heat Optimization | Zoom/Blend Transitions | 60 FPS Cap
    ═══════════════════════════════════════════════════════════════════════════ */
 
 import * as THREE from 'three';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// CONFIGURATION
+// AGGRESSIVE OPTIMIZATION CONFIG
 // ═══════════════════════════════════════════════════════════════════════════
 
 const CONFIG = {
-    STAR_COUNT: 35000,              // Optimized star count
-    TEXTURE_MAX_SIZE: 2048,         // Max texture resolution
-    PIXEL_RATIO_CAP: 1.5,           // Limit for retina displays
-    FOG_DENSITY: 0.012,             // Exponential fog for depth
-    CAMERA_FOV: 55,                 // Cinematic FOV
+    STAR_COUNT: 20000,              // Reduced for heat
+    PIXEL_RATIO: 1.0,               // Capped at 1.0 for laptops
+    TARGET_FPS: 60,
+    FOG_DENSITY: 0.008,
+    CAMERA_FOV: 55,
     CAMERA_NEAR: 0.1,
-    CAMERA_FAR: 500,
-    LERP_SPEED: 0.06,               // Camera smoothing
-    TEXTURE_LOAD_DISTANCE: 3,       // Waypoints ahead to preload
-    TEXTURE_UNLOAD_DISTANCE: 5      // Waypoints behind to unload
+    CAMERA_FAR: 300,
+    LERP_SPEED: 0.05,
+    TEXTURE_LOAD_RANGE: 2,          // Only 2 ahead/behind
+    PHOTO_SCALE: 18,                // Large enough to fill screen
+    IDLE_TIMEOUT: 150               // Stop rendering after 150ms idle
 };
 
-// All 11 NASA/Hubble photos with metadata
+// NASA Photos
 const PHOTOS = [
-    { src: 'photos/52002778380_50e6f859aa_o.jpg', title: 'The Big Bang', time: 'T = 0', desc: '13.8 billion years ago, all of spacetime exploded from an infinitely dense singularity.', temp: '∞' },
-    { src: 'photos/28098134687_621b8e892c_o.jpg', title: 'Cosmic Inflation', time: 'T = 10⁻³² seconds', desc: 'The universe expands faster than light, stretching quantum fluctuations across the cosmos.', temp: '10³²' },
-    { src: 'photos/52717339847_02c257ca4a_o.jpg', title: 'First Light', time: 'T = 380,000 years', desc: 'Atoms form. The universe becomes transparent. Light escapes for the first time.', temp: '3000' },
-    { src: 'photos/27990761686_2819382262_o.jpg', title: 'The Dark Ages', time: 'T = 200 million years', desc: 'Before the first stars, only darkness. Gravity slowly pulls matter together.', temp: '50' },
-    { src: 'photos/28109219377_0f21f3e0fd_o.jpg', title: 'First Stars', time: 'T = 400 million years', desc: 'Massive blue giants ignite, ending the cosmic dark ages with brilliant light.', temp: '10⁵' },
-    { src: 'photos/49576591521_1f37d717d0_o.jpg', title: 'Galaxies Form', time: 'T = 1 billion years', desc: 'Billions of stars orbit supermassive black holes, forming spiral galaxies.', temp: '10⁶' },
-    { src: 'photos/52515250436_4618b5216e_k.jpg', title: 'Stellar Alchemy', time: 'T = 5 billion years', desc: 'Stars forge carbon, oxygen, iron. Supernovae scatter elements across space.', temp: '10⁸' },
-    { src: 'photos/53231853596_906631a521_o.jpg', title: 'Our Solar System', time: 'T = 9.2 billion years', desc: 'From a spinning disk of gas and dust, our Sun and planets take shape.', temp: '5778' },
-    { src: 'photos/45738608235_952889a838_o.jpg', title: 'Planets Form', time: '4.6 billion years ago', desc: 'Saturn and other worlds emerge from the protoplanetary disk.', temp: '1500' },
-    { src: 'photos/52001270447_027d7a8692_o.jpg', title: 'Cosmic Nurseries', time: 'Present Day', desc: 'Pillars of Creation - where new stars are born from cosmic dust.', temp: '288' },
-    { src: 'photos/52675793824_c407411765_o.png', title: 'The Far Future', time: '10¹⁰⁰ years', desc: 'Black holes evaporate. The universe fades to silence. Heat Death.', temp: '0' }
+    { src: 'photos/52002778380_50e6f859aa_o.jpg', title: 'The Big Bang', time: 'T = 0', desc: '13.8 billion years ago, spacetime exploded from infinite density.', temp: '∞' },
+    { src: 'photos/28098134687_621b8e892c_o.jpg', title: 'Cosmic Inflation', time: '10⁻³² seconds', desc: 'The universe expands faster than light.', temp: '10³²' },
+    { src: 'photos/52717339847_02c257ca4a_o.jpg', title: 'First Light', time: '380,000 years', desc: 'Atoms form. Light escapes for the first time.', temp: '3000' },
+    { src: 'photos/27990761686_2819382262_o.jpg', title: 'The Dark Ages', time: '200 million years', desc: 'Before stars, only darkness and gravity.', temp: '50' },
+    { src: 'photos/28109219377_0f21f3e0fd_o.jpg', title: 'First Stars', time: '400 million years', desc: 'Blue giants ignite, ending the dark ages.', temp: '10⁵' },
+    { src: 'photos/49576591521_1f37d717d0_o.jpg', title: 'Galaxies Form', time: '1 billion years', desc: 'Stars orbit black holes, forming spirals.', temp: '10⁶' },
+    { src: 'photos/52515250436_4618b5216e_k.jpg', title: 'Stellar Alchemy', time: '5 billion years', desc: 'Stars forge elements. Supernovae scatter them.', temp: '10⁸' },
+    { src: 'photos/53231853596_906631a521_o.jpg', title: 'Our Solar System', time: '9.2 billion years', desc: 'Our Sun and planets take shape.', temp: '5778' },
+    { src: 'photos/45738608235_952889a838_o.jpg', title: 'Planets Form', time: '4.6 billion years ago', desc: 'Saturn emerges from the disk.', temp: '1500' },
+    { src: 'photos/52001270447_027d7a8692_o.jpg', title: 'Cosmic Nurseries', time: 'Present Day', desc: 'Where new stars are born.', temp: '288' },
+    { src: 'photos/52675793824_c407411765_o.png', title: 'Heat Death', time: '10¹⁰⁰ years', desc: 'The universe fades to silence.', temp: '0' }
 ];
 
-// 3D Camera path waypoints (X, Y, Z movement)
+// Camera waypoints with X/Y/Z movement
 const CAMERA_WAYPOINTS = [
-    new THREE.Vector3(0, 0, 50),          // Big Bang: center start
-    new THREE.Vector3(-15, 8, 38),        // Inflation: swoop left-up
-    new THREE.Vector3(12, -5, 26),        // First Light: right-down
-    new THREE.Vector3(-8, 12, 14),        // Dark Ages: left-up
-    new THREE.Vector3(16, -10, 2),        // First Stars: dive right-down
-    new THREE.Vector3(-12, 6, -10),       // Galaxies: left-up-forward
-    new THREE.Vector3(10, -4, -22),       // Stellar Alchemy: right-down
-    new THREE.Vector3(0, 8, -34),         // Solar System: rise center
-    new THREE.Vector3(-14, -6, -46),      // Planets: left-down
-    new THREE.Vector3(8, 10, -58),        // Cosmic Nurseries: right-up
-    new THREE.Vector3(0, 0, -70)          // Heat Death: center end
+    new THREE.Vector3(0, 0, 60),        // START
+    new THREE.Vector3(-18, 10, 48),     // Big Bang
+    new THREE.Vector3(15, -8, 36),      // Inflation
+    new THREE.Vector3(-12, 12, 24),     // First Light
+    new THREE.Vector3(14, -10, 12),     // Dark Ages
+    new THREE.Vector3(-16, 8, 0),       // First Stars
+    new THREE.Vector3(12, -10, -12),    // Galaxies
+    new THREE.Vector3(-10, 10, -24),    // Stellar Alchemy
+    new THREE.Vector3(10, -6, -36),     // Solar System
+    new THREE.Vector3(-14, 10, -48),    // Planets
+    new THREE.Vector3(0, 0, -60)        // END
 ];
 
-// Photo positions (offset from camera path for parallax)
-const PHOTO_POSITIONS = [
-    new THREE.Vector3(0, 0, 42),
-    new THREE.Vector3(-18, 10, 30),
-    new THREE.Vector3(16, -8, 18),
-    new THREE.Vector3(-12, 14, 6),
-    new THREE.Vector3(20, -12, -6),
-    new THREE.Vector3(-16, 8, -18),
-    new THREE.Vector3(14, -6, -30),
-    new THREE.Vector3(0, 10, -42),
-    new THREE.Vector3(-18, -8, -54),
-    new THREE.Vector3(12, 12, -66),
-    new THREE.Vector3(0, 0, -78)
-];
+// Photo positions (offset from camera path)
+const PHOTO_POSITIONS = CAMERA_WAYPOINTS.map((wp, i) => {
+    if (i === 0) return new THREE.Vector3(0, 0, 52);
+    return new THREE.Vector3(wp.x * 0.7, wp.y * 0.7, wp.z - 6);
+});
 
 // ═══════════════════════════════════════════════════════════════════════════
 // STATE
@@ -77,113 +69,103 @@ let photoMeshes = [];
 let cameraPath;
 let scrollProgress = 0;
 let targetScrollProgress = 0;
-let currentWaypoint = 0;
+let currentPhotoIndex = 0;
 let textureLoadStatus = new Array(PHOTOS.length).fill(false);
+
+// Lazy rendering state
 let isScrolling = false;
 let scrollTimeout;
+let lastFrameTime = 0;
+let hasScrolled = false;
+let needsRender = true;
 
-// DOM Elements
+const frameInterval = 1000 / CONFIG.TARGET_FPS;
+
+// DOM
 const loadingScreen = document.getElementById('loading-screen');
 const progressBar = document.getElementById('progress-bar');
 const loadingPhase = document.getElementById('loading-phase');
+const startScreen = document.getElementById('start-screen');
 
 // ═══════════════════════════════════════════════════════════════════════════
-// TEXTURE LOADER WITH OPTIMIZATION
+// TEXTURE LOADER (Optimized - No Mipmaps)
 // ═══════════════════════════════════════════════════════════════════════════
 
 const textureLoader = new THREE.TextureLoader();
 
-function loadOptimizedTexture(url) {
+function loadTexture(url) {
     return new Promise((resolve, reject) => {
-        textureLoader.load(
-            url,
-            (texture) => {
-                // Apply performance optimizations
-                texture.minFilter = THREE.LinearMipmapLinearFilter;
-                texture.magFilter = THREE.LinearFilter;
-                texture.generateMipmaps = true;
-                texture.colorSpace = THREE.SRGBColorSpace;
-
-                // Anisotropic filtering applied after renderer exists
-                if (renderer) {
-                    texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
-                }
-
-                resolve(texture);
-            },
-            undefined,
-            reject
-        );
+        textureLoader.load(url, (texture) => {
+            // Disable mipmaps for less GPU memory
+            texture.generateMipmaps = false;
+            texture.minFilter = THREE.LinearFilter;
+            texture.magFilter = THREE.LinearFilter;
+            texture.colorSpace = THREE.SRGBColorSpace;
+            resolve(texture);
+        }, undefined, reject);
     });
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// STARFIELD (Optimized InstancedMesh)
+// STARFIELD (20K stars, spherical distribution)
 // ═══════════════════════════════════════════════════════════════════════════
 
 function createStarField() {
-    // Low-poly sphere for each star - single draw call
-    const starGeometry = new THREE.SphereGeometry(0.03, 4, 4);
-    const starMaterial = new THREE.MeshBasicMaterial({
+    const geometry = new THREE.SphereGeometry(0.06, 3, 3);
+    const material = new THREE.MeshBasicMaterial({
         color: 0xffffff,
         transparent: true,
-        opacity: 0.9
+        opacity: 0.85
     });
 
-    starField = new THREE.InstancedMesh(starGeometry, starMaterial, CONFIG.STAR_COUNT);
+    starField = new THREE.InstancedMesh(geometry, material, CONFIG.STAR_COUNT);
     starField.frustumCulled = true;
 
     const matrix = new THREE.Matrix4();
-    const color = new THREE.Color();
 
     for (let i = 0; i < CONFIG.STAR_COUNT; i++) {
-        // Distribute stars in a large volume around camera path
-        const x = (Math.random() - 0.5) * 200;
-        const y = (Math.random() - 0.5) * 150;
-        const z = (Math.random() - 0.5) * 300 - 20;
+        // Spherical distribution around camera path
+        const radius = 80 + Math.random() * 120;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
 
-        // Random size variation
-        const scale = 0.5 + Math.random() * 1.5;
+        const x = radius * Math.sin(phi) * Math.cos(theta);
+        const y = radius * Math.sin(phi) * Math.sin(theta);
+        const z = (Math.random() - 0.5) * 200; // Spread along Z
+
+        const scale = 0.5 + Math.random() * 1.2;
         matrix.makeScale(scale, scale, scale);
         matrix.setPosition(x, y, z);
         starField.setMatrixAt(i, matrix);
-
-        // Subtle color variation (white to blue-white)
-        const colorVariation = 0.9 + Math.random() * 0.1;
-        color.setRGB(colorVariation, colorVariation, 1);
-        starField.setColorAt(i, color);
     }
 
     starField.instanceMatrix.needsUpdate = true;
-    if (starField.instanceColor) starField.instanceColor.needsUpdate = true;
-
     scene.add(starField);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// PHOTO MESHES (Optimized with MeshBasicMaterial)
+// PHOTO MESHES (With zoom/blend material)
 // ═══════════════════════════════════════════════════════════════════════════
 
-function createPhotoPlaceholders() {
-    // Create placeholder meshes for all photos
-    // Textures will be loaded progressively
-
+function createPhotoMeshes() {
     for (let i = 0; i < PHOTOS.length; i++) {
-        const geometry = new THREE.PlaneGeometry(16, 10);  // 16:10 aspect ratio
+        // Large plane to fill screen when close
+        const geometry = new THREE.PlaneGeometry(CONFIG.PHOTO_SCALE * 1.6, CONFIG.PHOTO_SCALE);
+
         const material = new THREE.MeshBasicMaterial({
             color: 0x111111,
             transparent: true,
             opacity: 0,
-            side: THREE.DoubleSide
+            side: THREE.DoubleSide,
+            depthWrite: false  // Proper blending
         });
 
         const mesh = new THREE.Mesh(geometry, material);
         mesh.position.copy(PHOTO_POSITIONS[i]);
-        mesh.userData = { index: i, loaded: false };
+        mesh.userData = { index: i, loaded: false, baseScale: 1 };
 
         // Face toward camera path
-        const lookTarget = CAMERA_WAYPOINTS[i];
-        mesh.lookAt(lookTarget);
+        mesh.lookAt(CAMERA_WAYPOINTS[Math.min(i, CAMERA_WAYPOINTS.length - 1)]);
 
         scene.add(mesh);
         photoMeshes.push(mesh);
@@ -191,43 +173,39 @@ function createPhotoPlaceholders() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// PROGRESSIVE TEXTURE LOADING/UNLOADING
+// PROGRESSIVE TEXTURE LOADING (Only 2 ahead/behind)
 // ═══════════════════════════════════════════════════════════════════════════
 
-async function updateTextureLoading() {
-    const current = Math.floor(currentWaypoint);
+async function updateTextures() {
+    const current = Math.floor(currentPhotoIndex);
 
     for (let i = 0; i < PHOTOS.length; i++) {
         const distance = Math.abs(current - i);
         const mesh = photoMeshes[i];
 
-        // Load texture if within range and not loaded
-        if (distance <= CONFIG.TEXTURE_LOAD_DISTANCE && !textureLoadStatus[i]) {
-            textureLoadStatus[i] = true;  // Mark as loading
-
+        // Load if within range
+        if (distance <= CONFIG.TEXTURE_LOAD_RANGE && !textureLoadStatus[i]) {
+            textureLoadStatus[i] = true;
             try {
-                const texture = await loadOptimizedTexture(PHOTOS[i].src);
-
-                // Update mesh with loaded texture
+                const texture = await loadTexture(PHOTOS[i].src);
                 mesh.material.map = texture;
                 mesh.material.color.setHex(0xffffff);
                 mesh.material.needsUpdate = true;
                 mesh.userData.loaded = true;
 
-                // Adjust geometry to match texture aspect ratio
+                // Adjust aspect ratio
                 if (texture.image) {
                     const aspect = texture.image.width / texture.image.height;
                     mesh.geometry.dispose();
-                    mesh.geometry = new THREE.PlaneGeometry(10 * aspect, 10);
+                    mesh.geometry = new THREE.PlaneGeometry(CONFIG.PHOTO_SCALE * aspect, CONFIG.PHOTO_SCALE);
                 }
             } catch (e) {
-                console.warn(`Failed to load: ${PHOTOS[i].src}`);
                 textureLoadStatus[i] = false;
             }
         }
 
-        // Unload texture if too far away (memory management)
-        if (distance > CONFIG.TEXTURE_UNLOAD_DISTANCE && mesh.userData.loaded) {
+        // Unload if too far (memory management)
+        if (distance > CONFIG.TEXTURE_LOAD_RANGE + 1 && mesh.userData.loaded) {
             if (mesh.material.map) {
                 mesh.material.map.dispose();
                 mesh.material.map = null;
@@ -241,41 +219,67 @@ async function updateTextureLoading() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// CAMERA PATH (CatmullRomCurve3)
+// PHOTO ZOOM & BLEND LOGIC
+// ═══════════════════════════════════════════════════════════════════════════
+
+function updatePhotoZoomBlend() {
+    photoMeshes.forEach((mesh, i) => {
+        const distance = camera.position.distanceTo(mesh.position);
+
+        // ZOOM: Scale increases as camera approaches
+        const zoomFactor = THREE.MathUtils.clamp(1.0 + (25 - distance) / 15, 0.8, 2.5);
+        mesh.scale.setScalar(mesh.userData.baseScale * zoomFactor);
+
+        // BLEND: Opacity based on distance
+        let opacity;
+        if (distance > 25) {
+            opacity = 0;  // Too far - invisible
+        } else if (distance > 18) {
+            opacity = (25 - distance) / 7;  // Fade in (approaching)
+        } else if (distance > 8) {
+            opacity = 1.0;  // Full screen
+        } else {
+            opacity = distance / 8;  // Fade out (passing through)
+        }
+
+        // Smooth opacity transition
+        mesh.material.opacity += (opacity - mesh.material.opacity) * 0.15;
+
+        // Billboard: Always face camera
+        mesh.lookAt(camera.position);
+    });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CAMERA PATH
 // ═══════════════════════════════════════════════════════════════════════════
 
 function createCameraPath() {
     cameraPath = new THREE.CatmullRomCurve3(CAMERA_WAYPOINTS, false, 'catmullrom', 0.5);
 }
 
-function getCameraPositionOnPath(t) {
-    return cameraPath.getPointAt(Math.min(Math.max(t, 0), 1));
-}
-
-function getCameraLookTarget(t) {
-    // Look slightly ahead on the path
-    const lookAheadT = Math.min(t + 0.05, 1);
-    return cameraPath.getPointAt(lookAheadT);
-}
-
 // ═══════════════════════════════════════════════════════════════════════════
-// SCROLL HANDLING (Throttled)
+// SCROLL HANDLING
 // ═══════════════════════════════════════════════════════════════════════════
-
-let lastScrollTime = 0;
 
 function handleScroll() {
-    const now = Date.now();
-    if (now - lastScrollTime < 16) return;  // Throttle to ~60fps
-    lastScrollTime = now;
-
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     targetScrollProgress = docHeight > 0 ? scrollTop / docHeight : 0;
 
+    // Hide start screen on first scroll
+    if (!hasScrolled && scrollTop > 50) {
+        hasScrolled = true;
+        if (startScreen) startScreen.classList.add('hidden');
+    }
+
+    // Lazy render trigger
     isScrolling = true;
+    needsRender = true;
     clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => { isScrolling = false; }, 150);
+    scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+    }, CONFIG.IDLE_TIMEOUT);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -283,30 +287,25 @@ function handleScroll() {
 // ═══════════════════════════════════════════════════════════════════════════
 
 function updateUI() {
-    const waypoint = Math.min(Math.floor(currentWaypoint), PHOTOS.length - 1);
+    const index = Math.min(Math.floor(currentPhotoIndex), PHOTOS.length - 1);
 
-    // Timeline dots
+    // Timeline
     document.querySelectorAll('.timeline-dot').forEach((dot, i) => {
-        dot.classList.toggle('active', i <= waypoint);
+        dot.classList.toggle('active', i <= index);
     });
 
     // Temperature
     const tempEl = document.getElementById('temp-value');
-    if (tempEl && PHOTOS[waypoint]) {
-        tempEl.textContent = PHOTOS[waypoint].temp;
-    }
+    if (tempEl && PHOTOS[index]) tempEl.textContent = PHOTOS[index].temp;
 
-    // Section activation
+    // Sections
     document.querySelectorAll('section').forEach((section, i) => {
-        const dist = Math.abs(currentWaypoint - i);
-        section.classList.toggle('active', dist < 0.6);
+        section.classList.toggle('active', Math.abs(currentPhotoIndex - i) < 0.6);
     });
 
     // End screen
     const endScreen = document.getElementById('end-screen');
-    if (endScreen) {
-        endScreen.classList.toggle('visible', scrollProgress > 0.95);
-    }
+    if (endScreen) endScreen.classList.toggle('visible', scrollProgress > 0.95);
 }
 
 function updateProgress(percent, phase) {
@@ -319,12 +318,12 @@ function updateProgress(percent, phase) {
 // ═══════════════════════════════════════════════════════════════════════════
 
 async function init() {
-    updateProgress(5, 'Initializing renderer...');
+    updateProgress(5, 'Initializing...');
 
     // Scene
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000000);
-    scene.fog = new THREE.FogExp2(0x000000, CONFIG.FOG_DENSITY);
+    scene.background = new THREE.Color(0x000005);
+    scene.fog = new THREE.FogExp2(0x000005, CONFIG.FOG_DENSITY);
 
     // Camera
     camera = new THREE.PerspectiveCamera(
@@ -334,39 +333,34 @@ async function init() {
         CONFIG.CAMERA_FAR
     );
 
-    // Renderer (optimized)
+    // Renderer (OPTIMIZED FOR HEAT)
     const canvas = document.getElementById('universe-canvas');
     renderer = new THREE.WebGLRenderer({
         canvas,
-        antialias: true,
-        powerPreference: 'high-performance'
+        antialias: false,              // DISABLED for performance
+        powerPreference: 'low-power',  // Prefer integrated GPU
+        alpha: false
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, CONFIG.PIXEL_RATIO_CAP));
+    renderer.setPixelRatio(CONFIG.PIXEL_RATIO);  // Capped at 1.0
     renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-    updateProgress(15, 'Creating star field...');
-
-    // Create starfield
+    updateProgress(15, 'Creating starfield...');
     createStarField();
 
-    updateProgress(30, 'Setting up camera path...');
-
-    // Camera path
+    updateProgress(25, 'Setting up camera path...');
     createCameraPath();
-    camera.position.copy(getCameraPositionOnPath(0));
+    camera.position.copy(cameraPath.getPointAt(0));
 
-    updateProgress(40, 'Creating photo placeholders...');
+    updateProgress(35, 'Creating photo frames...');
+    createPhotoMeshes();
 
-    // Photo placeholders
-    createPhotoPlaceholders();
-
-    updateProgress(50, 'Loading initial photos...');
+    updateProgress(45, 'Loading first photos...');
 
     // Preload first 3 textures
     for (let i = 0; i < 3; i++) {
         try {
-            const texture = await loadOptimizedTexture(PHOTOS[i].src);
+            const texture = await loadTexture(PHOTOS[i].src);
             const mesh = photoMeshes[i];
             mesh.material.map = texture;
             mesh.material.color.setHex(0xffffff);
@@ -377,25 +371,22 @@ async function init() {
             if (texture.image) {
                 const aspect = texture.image.width / texture.image.height;
                 mesh.geometry.dispose();
-                mesh.geometry = new THREE.PlaneGeometry(10 * aspect, 10);
+                mesh.geometry = new THREE.PlaneGeometry(CONFIG.PHOTO_SCALE * aspect, CONFIG.PHOTO_SCALE);
             }
-
-            updateProgress(50 + (i + 1) * 15, `Loaded ${PHOTOS[i].title}...`);
+            updateProgress(45 + (i + 1) * 15, `Loaded ${PHOTOS[i].title}...`);
         } catch (e) {
-            console.warn(`Failed to preload: ${PHOTOS[i].src}`);
+            console.warn(`Failed: ${PHOTOS[i].src}`);
         }
     }
 
-    updateProgress(95, 'Final setup...');
+    updateProgress(95, 'Ready');
 
-    // Setup scroll handling
+    // Event listeners
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', onResize);
 
-    // Setup timeline
     setupTimeline();
 
-    // Setup restart button
     const restartBtn = document.getElementById('restart-btn');
     if (restartBtn) {
         restartBtn.addEventListener('click', () => {
@@ -403,16 +394,16 @@ async function init() {
         });
     }
 
-    // Hide loading screen and start animation
-    updateProgress(100, 'Ready');
+    // Hide loading, start animation
     setTimeout(() => {
         if (loadingScreen) loadingScreen.classList.add('hidden');
-        animate();
+        needsRender = true;
+        animate(0);
     }, 300);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// TIMELINE SETUP
+// TIMELINE
 // ═══════════════════════════════════════════════════════════════════════════
 
 function setupTimeline() {
@@ -420,80 +411,71 @@ function setupTimeline() {
     if (!timeline) return;
 
     timeline.innerHTML = '';
-
     for (let i = 0; i < PHOTOS.length; i++) {
         const dot = document.createElement('div');
         dot.className = 'timeline-dot';
         dot.title = PHOTOS[i].title;
-
         dot.addEventListener('click', () => {
             const targetScroll = (i / (PHOTOS.length - 1)) *
                 (document.documentElement.scrollHeight - window.innerHeight);
             window.scrollTo({ top: targetScroll, behavior: 'smooth' });
         });
-
         timeline.appendChild(dot);
     }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// RESIZE HANDLER
+// RESIZE
 // ═══════════════════════════════════════════════════════════════════════════
 
 function onResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    needsRender = true;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// ANIMATION LOOP (60 FPS Optimized)
+// ANIMATION LOOP (FPS CAPPED + LAZY RENDERING)
 // ═══════════════════════════════════════════════════════════════════════════
 
-let frameCount = 0;
-let lastFPSTime = Date.now();
-
-function animate() {
+function animate(currentTime) {
     requestAnimationFrame(animate);
 
-    // FPS monitoring (development only - remove in production)
-    frameCount++;
-    const now = Date.now();
-    if (now - lastFPSTime >= 1000) {
-        // console.log(`FPS: ${frameCount}`);
-        frameCount = 0;
-        lastFPSTime = now;
-    }
+    // FPS cap - skip frame if too soon
+    if (currentTime - lastFrameTime < frameInterval) return;
+    lastFrameTime = currentTime;
 
-    // Smooth scroll interpolation (lerp)
+    // LAZY RENDER: Only render when scrolling or needs update
+    if (!isScrolling && !needsRender) return;
+
+    // Smooth scroll interpolation
     scrollProgress += (targetScrollProgress - scrollProgress) * CONFIG.LERP_SPEED;
-    currentWaypoint = scrollProgress * (PHOTOS.length - 1);
+    currentPhotoIndex = scrollProgress * (PHOTOS.length - 1);
 
-    // Camera movement along path
-    const targetPos = getCameraPositionOnPath(scrollProgress);
+    // Camera movement
+    const targetPos = cameraPath.getPointAt(Math.min(Math.max(scrollProgress, 0), 1));
     camera.position.lerp(targetPos, CONFIG.LERP_SPEED);
 
-    // Camera look direction
-    const lookTarget = getCameraLookTarget(scrollProgress);
+    // Look ahead on path
+    const lookT = Math.min(scrollProgress + 0.05, 1);
+    const lookTarget = cameraPath.getPointAt(lookT);
     camera.lookAt(lookTarget);
 
-    // Update photo opacities based on distance
-    photoMeshes.forEach((mesh, i) => {
-        const dist = Math.abs(currentWaypoint - i);
-        const targetOpacity = dist < 2 ? Math.max(0, 1 - dist * 0.5) : 0;
-        mesh.material.opacity += (targetOpacity - mesh.material.opacity) * 0.1;
-    });
+    // Update photo zoom & blend
+    updatePhotoZoomBlend();
 
-    // Progressive texture loading (only when scrolling)
-    if (isScrolling) {
-        updateTextureLoading();
-    }
+    // Load/unload textures
+    if (isScrolling) updateTextures();
 
-    // Update UI
+    // UI
     updateUI();
 
     // Render
     renderer.render(scene, camera);
+
+    // After first render, only render on scroll
+    if (!isScrolling) needsRender = false;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

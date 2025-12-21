@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Universe Story | From Big Bang to Heat Death</title>
-    <meta name="description" content="A photorealistic journey through cosmic history using NASA/Hubble images">
+    <title>The Universe | A Journey Through Time</title>
+    <meta name="description" content="A photorealistic journey through 13.8 billion years of cosmic history">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap"
@@ -18,80 +18,90 @@
     <div id="loading-screen">
         <div class="loader-content">
             <h1 class="loader-title">UNIVERSE</h1>
-            <p class="loader-subtitle">A Journey Through Time</p>
+            <p class="loader-subtitle">Loading Journey</p>
             <div class="progress-container">
                 <div id="progress-bar"></div>
             </div>
-            <p id="loading-phase">Loading images...</p>
+            <p id="loading-phase">Initializing...</p>
+        </div>
+    </div>
+
+    <!-- START SCREEN (Static until scroll) -->
+    <div id="start-screen" class="active">
+        <h1 class="start-title">THE UNIVERSE</h1>
+        <p class="start-subtitle">A Journey Through 13.8 Billion Years</p>
+        <div class="scroll-hint">
+            <p>SCROLL TO BEGIN</p>
+            <div class="scroll-arrow">↓</div>
         </div>
     </div>
 
     <!-- THREE.js Canvas -->
     <canvas id="universe-canvas"></canvas>
 
-    <!-- Scroll Container - 11 sections for 11 photos -->
+    <!-- Scroll Container -->
     <div id="scroll-container">
         <section data-scene="0">
             <div class="section-content">
                 <span class="epoch-marker">T = 0</span>
                 <h2>The Big Bang</h2>
-                <p>13.8 billion years ago, all of spacetime exploded from an infinitely dense singularity.</p>
+                <p>13.8 billion years ago, spacetime exploded from infinite density.</p>
             </div>
         </section>
 
         <section data-scene="1">
             <div class="section-content">
-                <span class="epoch-marker">T = 10⁻³² seconds</span>
+                <span class="epoch-marker">10⁻³² seconds</span>
                 <h2>Cosmic Inflation</h2>
-                <p>The universe expands faster than light, stretching quantum fluctuations across the cosmos.</p>
+                <p>The universe expands faster than light.</p>
             </div>
         </section>
 
         <section data-scene="2">
             <div class="section-content">
-                <span class="epoch-marker">T = 380,000 years</span>
+                <span class="epoch-marker">380,000 years</span>
                 <h2>First Light</h2>
-                <p>Atoms form. The universe becomes transparent. Light escapes for the first time.</p>
+                <p>Atoms form. Light escapes for the first time.</p>
             </div>
         </section>
 
         <section data-scene="3">
             <div class="section-content">
-                <span class="epoch-marker">T = 200 million years</span>
+                <span class="epoch-marker">200 million years</span>
                 <h2>The Dark Ages</h2>
-                <p>Before the first stars, only darkness. Gravity slowly pulls matter together.</p>
+                <p>Before stars, only darkness and gravity.</p>
             </div>
         </section>
 
         <section data-scene="4">
             <div class="section-content">
-                <span class="epoch-marker">T = 400 million years</span>
+                <span class="epoch-marker">400 million years</span>
                 <h2>First Stars</h2>
-                <p>Massive blue giants ignite, ending the cosmic dark ages with brilliant light.</p>
+                <p>Blue giants ignite, ending the dark ages.</p>
             </div>
         </section>
 
         <section data-scene="5">
             <div class="section-content">
-                <span class="epoch-marker">T = 1 billion years</span>
+                <span class="epoch-marker">1 billion years</span>
                 <h2>Galaxies Form</h2>
-                <p>Billions of stars orbit supermassive black holes, forming spiral galaxies.</p>
+                <p>Stars orbit black holes, forming spirals.</p>
             </div>
         </section>
 
         <section data-scene="6">
             <div class="section-content">
-                <span class="epoch-marker">T = 5 billion years</span>
+                <span class="epoch-marker">5 billion years</span>
                 <h2>Stellar Alchemy</h2>
-                <p>Stars forge carbon, oxygen, iron. Supernovae scatter elements across space.</p>
+                <p>Stars forge elements. Supernovae scatter them.</p>
             </div>
         </section>
 
         <section data-scene="7">
             <div class="section-content">
-                <span class="epoch-marker">T = 9.2 billion years</span>
+                <span class="epoch-marker">9.2 billion years</span>
                 <h2>Our Solar System</h2>
-                <p>From a spinning disk of gas and dust, our Sun and planets take shape.</p>
+                <p>Our Sun and planets take shape.</p>
             </div>
         </section>
 
@@ -99,7 +109,7 @@
             <div class="section-content">
                 <span class="epoch-marker">4.6 billion years ago</span>
                 <h2>Planets Form</h2>
-                <p>Saturn and other worlds emerge from the protoplanetary disk.</p>
+                <p>Saturn emerges from the disk.</p>
             </div>
         </section>
 
@@ -107,15 +117,15 @@
             <div class="section-content">
                 <span class="epoch-marker">Present Day</span>
                 <h2>Cosmic Nurseries</h2>
-                <p>Pillars of Creation - where new stars are born from cosmic dust.</p>
+                <p>Where new stars are born.</p>
             </div>
         </section>
 
         <section data-scene="10">
             <div class="section-content final">
                 <span class="epoch-marker">10¹⁰⁰ years</span>
-                <h2>The Far Future</h2>
-                <p>Black holes evaporate. The universe fades to silence. Heat Death.</p>
+                <h2>Heat Death</h2>
+                <p>The universe fades to silence.</p>
             </div>
         </section>
     </div>
@@ -136,7 +146,7 @@
         <span id="temp-unit">K</span>
     </div>
 
-    <!-- Import Map for ES Modules -->
+    <!-- Import Map -->
     <script type="importmap">
     {
         "imports": {
@@ -146,7 +156,6 @@
     }
     </script>
 
-    <!-- Main Script -->
     <script type="module" src="js/main.js"></script>
 </body>
 
