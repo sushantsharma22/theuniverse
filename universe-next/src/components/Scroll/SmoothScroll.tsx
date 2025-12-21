@@ -1,21 +1,28 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// SMOOTH SCROLL - Creates scrollable sections for the journey
+// SMOOTH SCROLL - Native scroll with velocity tracking
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { useEffect, useRef } from 'react';
-import { useLenis } from '@/hooks/useLenis';
 import { useScrollStore } from '@/store/scrollStore';
-import { PHOTOS } from '@/lib/constants';
 
 export default function SmoothScroll() {
-    useLenis();
     const setProgress = useScrollStore(state => state.setProgress);
     const setIsScrolling = useScrollStore(state => state.setIsScrolling);
+    const updateSmoothVelocity = useScrollStore(state => state.updateSmoothVelocity);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
+        // Update smooth velocity via requestAnimationFrame
+        let frameId: number;
+        const updateVelocity = () => {
+            updateSmoothVelocity();
+            frameId = requestAnimationFrame(updateVelocity);
+        };
+        frameId = requestAnimationFrame(updateVelocity);
+
+        // Native scroll handler
         const handleScroll = () => {
             const scrollTop = window.scrollY;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -36,32 +43,21 @@ export default function SmoothScroll() {
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
-
-        // Initial call to set progress on load
         handleScroll();
 
-        // ✅ CRITICAL: Cleanup on unmount
         return () => {
             window.removeEventListener('scroll', handleScroll);
+            cancelAnimationFrame(frameId);
             if (timeoutRef.current) {
                 clearTimeout(timeoutRef.current);
             }
         };
-    }, [setProgress, setIsScrolling]);
+    }, [setProgress, setIsScrolling, updateSmoothVelocity]);
 
-    // ✅ FIX: Use RELATIVE positioning to create actual scroll height
-    // Each section is 100vh, creating 11 * 100vh = 1100vh of scrollable content
     return (
-        <div className="relative w-full" style={{ pointerEvents: 'auto' }}>
-            {PHOTOS.map((photo, i) => (
-                <section
-                    key={i}
-                    className="h-screen w-full"
-                    data-scene={i}
-                >
-                    {/* Invisible section - Canvas renders the visuals */}
-                </section>
-            ))}
+        <div className="relative w-full z-10">
+            {/* Long scrollable area - 12 full screen heights for the journey */}
+            <div className="h-[1200vh] w-full" />
         </div>
     );
 }
