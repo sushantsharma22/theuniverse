@@ -28,11 +28,13 @@
 
     <!-- START SCREEN (Static until scroll) -->
     <div id="start-screen" class="active">
-        <h1 class="start-title">THE UNIVERSE</h1>
-        <p class="start-subtitle">A Journey Through 13.8 Billion Years</p>
-        <div class="scroll-hint">
-            <p>SCROLL TO BEGIN</p>
-            <div class="scroll-arrow">↓</div>
+        <div style="pointer-events: none;">
+            <h1 class="start-title">THE UNIVERSE</h1>
+            <p class="start-subtitle">A Journey Through 13.8 Billion Years</p>
+            <div class="scroll-hint">
+                <p>SCROLL TO BEGIN</p>
+                <div class="scroll-arrow">↓</div>
+            </div>
         </div>
     </div>
 
@@ -40,8 +42,8 @@
     <canvas id="universe-canvas"></canvas>
 
     <!-- Scroll Container -->
-    <div id="scroll-container">
-        <section data-scene="0">
+    <div id="scroll-container" style="pointer-events: auto !important;">
+        <section data-scene="0" style="height: 100vh;">
             <div class="section-content">
                 <span class="epoch-marker">T = 0</span>
                 <h2>The Big Bang</h2>
@@ -49,7 +51,7 @@
             </div>
         </section>
 
-        <section data-scene="1">
+        <section data-scene="1" style="height: 100vh;">
             <div class="section-content">
                 <span class="epoch-marker">10⁻³² seconds</span>
                 <h2>Cosmic Inflation</h2>
@@ -57,7 +59,7 @@
             </div>
         </section>
 
-        <section data-scene="2">
+        <section data-scene="2" style="height: 100vh;">
             <div class="section-content">
                 <span class="epoch-marker">380,000 years</span>
                 <h2>First Light</h2>
@@ -65,7 +67,7 @@
             </div>
         </section>
 
-        <section data-scene="3">
+        <section data-scene="3" style="height: 100vh;">
             <div class="section-content">
                 <span class="epoch-marker">200 million years</span>
                 <h2>The Dark Ages</h2>
@@ -73,7 +75,7 @@
             </div>
         </section>
 
-        <section data-scene="4">
+        <section data-scene="4" style="height: 100vh;">
             <div class="section-content">
                 <span class="epoch-marker">400 million years</span>
                 <h2>First Stars</h2>
@@ -81,7 +83,7 @@
             </div>
         </section>
 
-        <section data-scene="5">
+        <section data-scene="5" style="height: 100vh;">
             <div class="section-content">
                 <span class="epoch-marker">1 billion years</span>
                 <h2>Galaxies Form</h2>
@@ -89,7 +91,7 @@
             </div>
         </section>
 
-        <section data-scene="6">
+        <section data-scene="6" style="height: 100vh;">
             <div class="section-content">
                 <span class="epoch-marker">5 billion years</span>
                 <h2>Stellar Alchemy</h2>
@@ -97,7 +99,7 @@
             </div>
         </section>
 
-        <section data-scene="7">
+        <section data-scene="7" style="height: 100vh;">
             <div class="section-content">
                 <span class="epoch-marker">9.2 billion years</span>
                 <h2>Our Solar System</h2>
@@ -105,7 +107,7 @@
             </div>
         </section>
 
-        <section data-scene="8">
+        <section data-scene="8" style="height: 100vh;">
             <div class="section-content">
                 <span class="epoch-marker">4.6 billion years ago</span>
                 <h2>Planets Form</h2>
@@ -113,7 +115,7 @@
             </div>
         </section>
 
-        <section data-scene="9">
+        <section data-scene="9" style="height: 100vh;">
             <div class="section-content">
                 <span class="epoch-marker">Present Day</span>
                 <h2>Cosmic Nurseries</h2>
@@ -121,7 +123,7 @@
             </div>
         </section>
 
-        <section data-scene="10">
+        <section data-scene="10" style="height: 100vh;">
             <div class="section-content final">
                 <span class="epoch-marker">10¹⁰⁰ years</span>
                 <h2>Heat Death</h2>
@@ -134,7 +136,7 @@
     <div id="end-screen">
         <p class="end-text">The End</p>
         <p class="end-subtext">...or a new beginning?</p>
-        <button id="restart-btn">Experience Again</button>
+        <button id="restart-btn" style="pointer-events: auto;">Experience Again</button>
     </div>
 
     <!-- Timeline -->

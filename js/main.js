@@ -235,6 +235,7 @@ let hasScrolled = false;
 let needsRender = true;
 
 const frameInterval = 1000 / CONFIG.TARGET_FPS;
+let animationFrameId = null;
 
 // DOM
 const loadingScreen = document.getElementById('loading-screen');
@@ -501,6 +502,13 @@ function handleScroll() {
 
     isScrolling = true;
     needsRender = true;
+
+    // ✅ Restart animation if stopped
+    if (!animationFrameId) {
+        console.log('🚀 GPU ACTIVE');
+        animationFrameId = requestAnimationFrame(animate);
+    }
+
     clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(() => {
         isScrolling = false;
@@ -655,14 +663,23 @@ async function init() {
 // ═══════════════════════════════════════════════════════════════════════════
 
 function animate(currentTime) {
-    requestAnimationFrame(animate);
+    // ✅ NEW (stops when idle):
+    animationFrameId = null;
 
     // FPS cap
-    if (currentTime - lastFrameTime < frameInterval) return;
+    if (currentTime - lastFrameTime < frameInterval) {
+        if (isScrolling || needsRender) {
+            animationFrameId = requestAnimationFrame(animate);
+        }
+        return;
+    }
     lastFrameTime = currentTime;
 
-    // Lazy render
-    if (!isScrolling && !needsRender) return;
+    // Only render when needed
+    if (!isScrolling && !needsRender) {
+        // GPU IDLE
+        return;
+    }
 
     // Smooth scroll
     scrollProgress += (targetScrollProgress - scrollProgress) * CONFIG.LERP_SPEED;
@@ -687,6 +704,11 @@ function animate(currentTime) {
     renderer.render(scene, camera);
 
     if (!isScrolling) needsRender = false;
+
+    // ✅ Only schedule next frame if still scrolling
+    if (isScrolling || needsRender) {
+        animationFrameId = requestAnimationFrame(animate);
+    }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
