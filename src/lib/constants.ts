@@ -257,10 +257,11 @@ export const WAYPOINTS: Vector3[] = [
 
     // UPWARD TURN (User Request: "going upwards camera")
     new Vector3(0, 40, -550),       // Start rising
-    new Vector3(0, 70, -675),       // Peak height mid-way
-    new Vector3(0, 40, -800),       // Coming down
+    new Vector3(0, 60, -675),       // Peak height (Smoother arc)
+    new Vector3(0, 20, -800),       // Descent
 
-    // STRAIGHT to Carbon Nebula
+    // STRAIGHT to Carbon Nebula - EXTENDED RUNWAY
+    new Vector3(0, 0, -850),        // *** TOUCHDOWN TO ZERO EARLY ***
     new Vector3(0, 0, -900),        // Buffer BEFORE (-950)
     new Vector3(0, 0, -950),        // CARBON NEBULA - pass through center
     new Vector3(0, 0, -1000),       // Buffer AFTER (Force Z-axis tangent)
