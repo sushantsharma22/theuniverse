@@ -71,30 +71,30 @@ export const LANDMARKS: LandmarkData[] = [
     }
 ];
 
-// Camera path waypoints - SHARP DIVE CHOREOGRAPHY
+// Camera path waypoints - REFINED STRAIGHTS
 export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, 100),         // START
-    new Vector3(-25, 5, 50),        // Sharp Left Weave
-    new Vector3(25, -5, -20),       // Sharp Right Weave
-    new Vector3(-5, 5, -80),        // Center Adjust
+    new Vector3(-10, 2, 50),        // Gentle Left
+    new Vector3(10, -2, 0),         // Gentle Right
+    new Vector3(0, 0, -50),         // CENTER STRAIGHT
 
-    // SHARP RIGHT TO PILLARS
-    new Vector3(60, -2, -150),      // Extreme Right Drift
-    new Vector3(30, 0, -200),       // Banking In
-    new Vector3(0, 0, -250),        // PILLARS CENTER
+    // APPROACHING PILLARS (Sharp turn -> Straighten)
+    new Vector3(35, -2, -120),      // Sharp Right Turn (Reduced from 60)
+    new Vector3(15, 0, -180),       // Aligning...
+    new Vector3(0, 0, -220),        // STRAIGHT ON (Before Pillars)
+    new Vector3(0, 0, -250),        // PILLARS FOCUS (Center)
 
-    // FLY THROUGH & SHARP LEFT
-    new Vector3(0, 0, -300),        // Fly Through
-    new Vector3(-60, 5, -380),      // Extreme Left (Deep Space Void)
-    new Vector3(-30, -5, -450),     // Banking In
+    // THROUGH PILLARS & TRANSIT (Sharp Left -> Straighten)
+    new Vector3(0, 0, -300),        // Fly Through Straight
+    new Vector3(-35, 5, -380),      // Sharp Left Turn (Reduced from 60)
+    new Vector3(-10, 0, -450),      // Aligning...
 
     // STRAIGHT APPROACH TO EYE
-    new Vector3(0, 0, -500),        // Dead Center Reveal
+    new Vector3(0, 0, -500),        // STRAIGHT ON (Long approach)
     new Vector3(0, 0, -550),        // EYE FOCUS
 
-    // STRAIGHT -> SHARP DIVE
-    new Vector3(0, 0, -620),        // Fly Through Eye (Straight)
-    new Vector3(0, -20, -680),      // Start Dive
-    new Vector3(0, -80, -750),      // STEEP DIVE DOWN
+    // STRAIGHT -> SMOOTH DIVE
+    new Vector3(0, 0, -650),        // Fly Through Eye (Straight Long)
+    new Vector3(0, -30, -750),      // Start Dive Smoothly
     new Vector3(0, -100, -850)      // BUTTERFLY FOCUS (Bottom)
 ];
