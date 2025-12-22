@@ -1,7 +1,7 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// CAMERA RIG - Cinematic Weaving Flight with Focus Control
+// CAMERA RIG - Move through stars with scroll (left, right, center)
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { useRef } from 'react';
@@ -9,56 +9,46 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { CatmullRomCurve3, Vector3 } from 'three';
 import * as THREE from 'three';
 import { useScrollStore } from '@/store/scrollStore';
-import { WAYPOINTS } from '@/lib/constants';
+
+// Camera path - weaving through stars
+const CAMERA_PATH = [
+    new Vector3(0, 0, 100),       // Start
+    new Vector3(-15, 8, 60),      // Curve left
+    new Vector3(0, -5, 30),       // Center down
+    new Vector3(20, 10, 0),       // Curve right up
+    new Vector3(-10, -8, -30),    // Left down
+    new Vector3(15, 5, -60),      // Right up
+    new Vector3(-20, 0, -90),     // Far left
+    new Vector3(0, 10, -120),     // Center up
+    new Vector3(25, -5, -150),    // Far right
+    new Vector3(-15, 8, -180),    // Left up
+    new Vector3(10, -10, -210),   // Right down
+    new Vector3(0, 0, -250),      // End center
+];
 
 export default function CameraRig() {
     const { camera } = useThree();
     const progress = useScrollStore(state => state.progress);
 
-    // Create smooth cinematic path from shared constants
-    // This allows the camera to "search" (move Left/Right/Up/Down) while flying
-    const curve = useRef(new CatmullRomCurve3(WAYPOINTS, false, 'catmullrom', 0.5));
+    // Create smooth camera path
+    const curve = useRef(new CatmullRomCurve3(CAMERA_PATH, false, 'catmullrom', 0.5));
 
     // Smooth position tracking
-    const currentPos = useRef(new THREE.Vector3(0, 0, 0));
-    const lookAtPos = useRef(new THREE.Vector3(0, 0, -5000));
+    const currentPos = useRef(new THREE.Vector3(0, 0, 100));
 
     useFrame(() => {
-        // Get target position on curve based on scroll
+        // Get target position on curve
         const t = Math.min(Math.max(progress, 0), 1);
-
-        // 1. POSITION: Follow the weaving path
-        // We need to map progress (0-1) to the curve range loosely
-        // Since curve is defined by WAYPOINTS which end at -600 or so, 
-        // but our journey goes to -5000, we need to scale the Z movement.
-
-        // Actually, WAYPOINTS in constants are:
-        // (0,0,0) -> ... -> (0,0,-600)
-        // If we want a long journey to -5000, we should PROBABLY scale the Z of the curve 
-        // OR rely on the fact the curve is just a guide.
-
-        // Let's use the curve for X/Y deviation, but override Z for the long journey.
-        const curvePoint = curve.current.getPointAt(t);
-
-        // Custom Journey Mapping:
-        // Z: 0 -> -2000 (New physical distance)
-        const targetZ = 0 - (progress * 2000);
-
-        // X/Y: Subtle sway
-        const targetX = curvePoint.x * 1.5;
-        const targetY = curvePoint.y * 1.5;
-
-        const targetPos = new Vector3(targetX, targetY, targetZ);
+        const targetPos = curve.current.getPointAt(t);
 
         // Smooth interpolation
-        currentPos.current.lerp(targetPos, 0.05);
+        currentPos.current.lerp(targetPos, 0.04);
         camera.position.copy(currentPos.current);
 
-        // 2. ROTATION (LookAt):
-        // Look at the Pillars at z=-1000 until we pass them, then forward
-        // Actually, just looking forward works best for parallax
-        lookAtPos.current.set(0, 0, targetZ - 1000);
-        camera.lookAt(lookAtPos.current);
+        // Look ahead on the path
+        const lookT = Math.min(t + 0.05, 1);
+        const lookTarget = curve.current.getPointAt(lookT);
+        camera.lookAt(lookTarget);
     });
 
     return null;

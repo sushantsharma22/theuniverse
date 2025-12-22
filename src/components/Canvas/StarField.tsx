@@ -27,8 +27,8 @@ export default function StarField() {
 
             const x = radius * Math.cos(theta);
             const y = radius * Math.sin(theta);
-            // Z spans the journey (compressed for density)
-            const z = 100 - Math.random() * 2000;
+            // Z spans the entire journey
+            const z = 150 - Math.random() * 500;
 
             const scale = 0.2 + Math.random() * 0.8;
             matrix.makeScale(scale, scale, scale);

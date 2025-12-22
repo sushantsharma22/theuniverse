@@ -7,7 +7,6 @@
 import { Canvas } from '@react-three/fiber';
 import * as THREE from 'three';
 import StarField from './StarField';
-import PillarsOfCreation from './PillarsOfCreation';
 import CameraRig from './CameraRig';
 import { CONFIG } from '@/lib/constants';
 
@@ -41,7 +40,6 @@ export default function Scene() {
             }}
         >
             <StarField />
-            <PillarsOfCreation />
             <CameraRig />
         </Canvas>
     );

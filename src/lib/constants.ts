@@ -5,7 +5,7 @@ import { Vector3 } from 'three';
 // ═══════════════════════════════════════════════════════════════════════════
 
 export const CONFIG = {
-    STAR_COUNT: 100000,
+    STAR_COUNT: 50000,
     PIXEL_RATIO: 1.5,
     TARGET_FPS: 60,
     LERP_SPEED: 0.035,
@@ -14,16 +14,21 @@ export const CONFIG = {
     // Camera
     BASE_FOV: 60,
     NEAR: 0.1,
-    FAR: 2500,
+    FAR: 1000,
 };
 
-// Camera path waypoints - Weaving through space to the Pillars
+// Camera path waypoints - smooth curve through space
 export const WAYPOINTS: Vector3[] = [
-    new Vector3(0, 0, 0),          // START
-    new Vector3(-30, 20, -80),     // High Left - exciting start
-    new Vector3(40, -15, -160),    // Low Right - swoop down
-    new Vector3(-20, 10, -250),    // Mid Left - approach
-    new Vector3(0, 30, -350),      // TARGET: INSIDE PILLARS (Matches Pillars Position)
-    new Vector3(30, -30, -450),    // Dive out to Right
-    new Vector3(0, 0, -600),       // Center - Deep Space
+    new Vector3(0, 0, 100),        // START
+    new Vector3(-8, 5, 70),
+    new Vector3(6, -4, 40),
+    new Vector3(-5, 6, 10),
+    new Vector3(7, -5, -20),
+    new Vector3(-6, 4, -50),
+    new Vector3(5, -6, -80),
+    new Vector3(-4, 5, -110),
+    new Vector3(6, -4, -140),
+    new Vector3(-5, 6, -170),
+    new Vector3(4, -5, -200),
+    new Vector3(0, 0, -240)        // END
 ];
