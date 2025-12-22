@@ -54,12 +54,9 @@ export default function InfoPanel() {
                         </div>
                     </div>
 
-                    {/* Narrative Text - Justified and scientific */}
-                    <div className="space-y-6">
-                        <p className="text-base md:text-lg leading-relaxed text-gray-300 font-light text-justify max-w-xl border-l border-white/5 pl-0">
-                            {activeLandmark.description}
-                        </p>
-                    </div>
+
+                    {/* Narrative Text - REMOVED as per user request */}
+
 
                     {/* Scanner Aesthetic */}
                     <div className="absolute top-0 right-0 h-4 w-4 border-t border-r border-blue-500/50" />
