@@ -246,83 +246,84 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -100),
     new Vector3(0, 0, -350),        // BIG BANG (centered)
 
-    // Turn in void, then CENTER before Carbon Nebula
-    new Vector3(40, -30, -500),     // Turn RIGHT + DOWN
-    new Vector3(80, -50, -650),     // Peak
-    new Vector3(30, -20, -780),     // Coming back
-    new Vector3(0, 0, -880),        // CENTERED before image
-    new Vector3(0, 0, -950),        // CARBON NEBULA (pass through center)
-    new Vector3(0, 0, -1020),       // CENTERED after image
+    // TURN happens EARLY, camera centers BEFORE visibility range (600 units before landmark)
+    // Carbon Nebula at z=-950: visible at z=-350, so be centered by z=-350
+    new Vector3(30, -20, -180),     // Turn RIGHT + DOWN
+    new Vector3(50, -35, -250),     // Peak of turn
+    new Vector3(20, -15, -320),     // Coming back to center
+    new Vector3(0, 0, -350),        // CENTERED - landmark starts appearing here
+    new Vector3(0, 0, -650),        // CENTERED through visibility range
+    new Vector3(0, 0, -950),        // CARBON NEBULA - pass through center
 
-    // Turn in void, then CENTER before Starbirth
-    new Vector3(-50, 40, -1150),    // Turn LEFT + UP
-    new Vector3(-100, 70, -1280),   // Peak
-    new Vector3(-40, 30, -1420),    // Coming back
-    new Vector3(0, 0, -1480),       // CENTERED before image
-    new Vector3(0, 0, -1550),       // STARBIRTH (pass through center)
-    new Vector3(0, 0, -1620),       // CENTERED after image
+    // Starbirth at z=-1550: visible at z=-950, so be centered by z=-950
+    new Vector3(-30, 25, -980),     // Turn LEFT + UP
+    new Vector3(-55, 45, -1050),    // Peak
+    new Vector3(-25, 20, -1150),    // Coming back
+    new Vector3(0, 0, -1200),       // CENTERED - landmark starts appearing
+    new Vector3(0, 0, -1400),       // CENTERED through visibility range
+    new Vector3(0, 0, -1550),       // STARBIRTH - pass through center
 
-    // Turn in void, then CENTER before Pillars
-    new Vector3(0, -40, -1750),     // Dive DOWN
-    new Vector3(0, -80, -1880),     // Peak
-    new Vector3(0, -30, -2020),     // Coming back
-    new Vector3(0, 0, -2080),       // CENTERED before image
-    new Vector3(0, 0, -2150),       // PILLARS (pass through center)
-    new Vector3(0, 0, -2220),       // CENTERED after image
+    // Pillars at z=-2150: visible at z=-1550, so be centered by z=-1550
+    new Vector3(0, -30, -1580),     // Dive DOWN
+    new Vector3(0, -50, -1680),     // Peak
+    new Vector3(0, -20, -1780),     // Coming back
+    new Vector3(0, 0, -1850),       // CENTERED - landmark starts appearing
+    new Vector3(0, 0, -2000),       // CENTERED through visibility range
+    new Vector3(0, 0, -2150),       // PILLARS - pass through center
 
-    // Turn in void, then CENTER before Saturn
-    new Vector3(50, 40, -2380),     // Turn RIGHT + UP
-    new Vector3(90, 70, -2520),     // Peak
-    new Vector3(40, 30, -2640),     // Coming back
-    new Vector3(0, 0, -2700),       // CENTERED before image
-    new Vector3(0, 0, -2750),       // SATURN (pass through center)
-    new Vector3(0, 0, -2820),       // CENTERED after image
+    // Saturn at z=-2750: visible at z=-2250, so be centered by z=-2250
+    new Vector3(35, 30, -2180),     // Turn RIGHT + UP
+    new Vector3(55, 50, -2280),     // Peak
+    new Vector3(25, 20, -2380),     // Coming back
+    new Vector3(0, 0, -2450),       // CENTERED - landmark starts appearing
+    new Vector3(0, 0, -2600),       // CENTERED through visibility range
+    new Vector3(0, 0, -2750),       // SATURN - pass through center
 
-    // Turn in void, then CENTER before Earth
-    new Vector3(-40, -30, -2950),   // Turn LEFT + DOWN
-    new Vector3(-80, -60, -3100),   // Peak
-    new Vector3(-30, -20, -3230),   // Coming back
-    new Vector3(0, 0, -3290),       // CENTERED before image
-    new Vector3(0, 0, -3350),       // EARTH (pass through center)
-    new Vector3(0, 0, -3420),       // CENTERED after image
+    // Earth at z=-3350: visible at z=-2850, so be centered by z=-2850
+    new Vector3(-30, -25, -2780),   // Turn LEFT + DOWN
+    new Vector3(-50, -40, -2880),   // Peak
+    new Vector3(-20, -15, -2980),   // Coming back
+    new Vector3(0, 0, -3050),       // CENTERED - landmark starts appearing
+    new Vector3(0, 0, -3200),       // CENTERED through visibility range
+    new Vector3(0, 0, -3350),       // EARTH - pass through center
 
-    // Turn in void, then CENTER before Eye of God
-    new Vector3(40, 40, -3580),     // Turn RIGHT + UP
-    new Vector3(70, 70, -3720),     // Peak
-    new Vector3(30, 30, -3850),     // Coming back
-    new Vector3(0, 0, -3900),       // CENTERED before image
-    new Vector3(0, 0, -3950),       // EYE OF GOD (pass through center)
-    new Vector3(0, 0, -4020),       // CENTERED after image
+    // Eye of God at z=-3950: visible at z=-3350, so be centered by z=-3350
+    new Vector3(30, 30, -3380),     // Turn RIGHT + UP
+    new Vector3(50, 50, -3480),     // Peak
+    new Vector3(20, 20, -3580),     // Coming back
+    new Vector3(0, 0, -3650),       // CENTERED - landmark starts appearing
+    new Vector3(0, 0, -3800),       // CENTERED through visibility range
+    new Vector3(0, 0, -3950),       // EYE OF GOD - pass through center
 
-    // Turn in void, then CENTER before Butterfly
-    new Vector3(-40, -30, -4180),   // Turn LEFT + DOWN
-    new Vector3(-70, -65, -4320),   // Peak
-    new Vector3(-30, -25, -4440),   // Coming back
-    new Vector3(0, 0, -4500),       // CENTERED before image
-    new Vector3(0, 0, -4550),       // BUTTERFLY (pass through center)
-    new Vector3(0, 0, -4620),       // CENTERED after image
+    // Butterfly at z=-4550: visible at z=-3950, so be centered by z=-3950
+    new Vector3(-30, -25, -3980),   // Turn LEFT + DOWN
+    new Vector3(-50, -45, -4080),   // Peak
+    new Vector3(-20, -18, -4180),   // Coming back
+    new Vector3(0, 0, -4250),       // CENTERED - landmark starts appearing
+    new Vector3(0, 0, -4400),       // CENTERED through visibility range
+    new Vector3(0, 0, -4550),       // BUTTERFLY - pass through center
 
-    // Turn in void, then CENTER before Sombrero
-    new Vector3(50, 50, -4780),     // Turn RIGHT + UP
-    new Vector3(90, 75, -4920),     // Peak
-    new Vector3(40, 35, -5050),     // Coming back
-    new Vector3(0, 0, -5100),       // CENTERED before image
-    new Vector3(0, 0, -5150),       // SOMBRERO (pass through center)
-    new Vector3(0, 0, -5220),       // CENTERED after image
+    // Sombrero at z=-5150: visible at z=-4550, so be centered by z=-4550
+    new Vector3(35, 35, -4580),     // Turn RIGHT + UP
+    new Vector3(55, 50, -4680),     // Peak
+    new Vector3(20, 20, -4780),     // Coming back
+    new Vector3(0, 0, -4850),       // CENTERED - landmark starts appearing
+    new Vector3(0, 0, -5000),       // CENTERED through visibility range
+    new Vector3(0, 0, -5150),       // SOMBRERO - pass through center
 
-    // ONE TURN between Sombrero and Black Hole, then CENTER
-    new Vector3(40, 30, -5350),     // Turn
-    new Vector3(65, 55, -5480),     // Peak
-    new Vector3(30, 25, -5620),     // Coming back
-    new Vector3(0, 0, -5700),       // CENTERED before image
-    new Vector3(0, 0, -5750),       // BLACK HOLE (pass through center)
+    // Black Hole at z=-5750: visible at z=-5150, so be centered by z=-5150
+    new Vector3(30, 25, -5180),     // Turn between Sombrero and Black Hole
+    new Vector3(50, 45, -5280),     // Peak
+    new Vector3(20, 15, -5380),     // Coming back
+    new Vector3(0, 0, -5450),       // CENTERED - black hole starts appearing
+    new Vector3(0, 0, -5600),       // CENTERED through visibility
+    new Vector3(0, 0, -5750),       // BLACK HOLE - pass through center
 
-    // VOID: Straight
+    // STRAIGHT from here - Quasar, Wormhole, End
     new Vector3(0, 0, -5950),
     new Vector3(0, 0, -6150),
     new Vector3(0, 0, -6350),       // QUASAR (centered)
 
-    // VOID: Straight to wormhole
     new Vector3(0, 0, -6550),
     new Vector3(0, 0, -6750),
     new Vector3(0, 0, -6950),       // WORMHOLE (centered)
