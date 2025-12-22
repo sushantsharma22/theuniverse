@@ -7,9 +7,9 @@
 import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import * as THREE from 'three';
-import StarField from './StarField';
-import CameraRig from './CameraRig';
-import Landmark from './Landmark';
+import StarField from '@/components/Canvas/StarField';
+import CameraRig from '@/components/Canvas/CameraRig';
+import Landmark from '@/components/Canvas/Landmark';
 import { CONFIG, LANDMARKS } from '@/lib/constants';
 
 export default function Scene() {
