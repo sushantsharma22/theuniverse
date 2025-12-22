@@ -41,7 +41,7 @@ export default function CameraRig() {
         setCameraZ(currentPos.current.z);
 
         // Look ahead on the path - smooth the look target too
-        const lookT = Math.min(t + 0.002, 1);
+        const lookT = Math.min(t + 0.03, 1);
         const targetLookAt = curve.current.getPointAt(lookT);
         currentLookAt.current.lerp(targetLookAt, 0.02);
         camera.lookAt(currentLookAt.current);
