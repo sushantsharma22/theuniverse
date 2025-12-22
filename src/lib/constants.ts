@@ -17,15 +17,19 @@ export const CONFIG = {
     FAR: 1000,
 };
 
+
+
 export interface LandmarkData {
     id: string;
     position: Vector3;
     texture: string;
     scale: number;
     title: string;
-    description: string;
-    year: string;
-    distanceTrigger: number; // Distance at which UI appears
+    description: string; // Scientific/Adult description
+    type: string;        // e.g. "Emission Nebula"
+    distance: string;    // e.g. "6,500 ly"
+    constellation: string; // e.g. "Serpens"
+    distanceTrigger: number;
 }
 
 export const LANDMARKS: LandmarkData[] = [
@@ -35,8 +39,10 @@ export const LANDMARKS: LandmarkData[] = [
         texture: '/textures/pillars_of_creation.png',
         scale: 150, // Base scale
         title: 'Pillars of Creation',
-        description: 'Vast towers of interstellar gas and dust in the Eagle Nebula. These iconic structures are incubators for new stars, located approximately 6,500 light-years from Earth.',
-        year: 'Discovery: 1995',
+        type: 'Emission Nebula',
+        distance: '6,500 light-years',
+        constellation: 'Serpens',
+        description: 'The Pillars of Creation are vast trunks of interstellar gas and dust in the Eagle Nebula (Messier 16). They are active stellar nurseries where new stars are being born, simultaneously eroded by the intense ultraviolet light from nearby massive stars. The leftmost pillar is about four light-years in length.',
         distanceTrigger: 80
     }
 ];

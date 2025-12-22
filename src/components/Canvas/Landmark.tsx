@@ -31,15 +31,10 @@ export default function Landmark({ data }: LandmarkProps) {
         },
         vertexShader: `
             varying vec2 vUv;
-            uniform float uTime;
 
             void main() {
                 vUv = uv;
-                vec3 pos = position;
-                // Warping the plane slightly like a nebula
-                float warp = sin(pos.x * 1.5 + uTime * 0.3) * sin(pos.y * 1.5 + uTime * 0.2);
-                pos.z += warp * 5.0; 
-                gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
             }
         `,
         fragmentShader: `

@@ -1,7 +1,7 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// INFO PANEL - Glassmorphed story display for discoveries
+// INFO PANEL - Scientific Data Display
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { motion, AnimatePresence } from 'framer-motion';
@@ -18,7 +18,7 @@ export default function InfoPanel() {
         <AnimatePresence mode="wait">
             <motion.div
                 key={activeLandmark.id}
-                className="fixed right-8 top-1/2 -translate-y-1/2 w-80 md:w-96 z-50 pointer-events-none"
+                className="fixed right-8 lg:right-16 top-1/2 -translate-y-1/2 w-[400px] lg:w-[450px] z-50 pointer-events-none"
                 style={{ opacity: landmarkOpacity }}
                 initial={{ x: 50, opacity: 0 }}
                 animate={{ x: 0, opacity: landmarkOpacity }}
@@ -26,30 +26,40 @@ export default function InfoPanel() {
                 transition={{ duration: 0.8, ease: "easeOut" }}
             >
                 {/* Glass Container */}
-                <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 p-6 backdrop-blur-xl shadow-2xl">
-                    {/* Decorative colored glow based on "space" theme */}
-                    <div className="absolute -top-10 -right-10 h-32 w-32 rounded-full bg-blue-500/20 blur-3xl" />
-                    <div className="absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-purple-500/20 blur-3xl" />
+                <div className="relative overflow-hidden rounded-sm border-l-2 border-blue-400/50 bg-black/60 p-8 backdrop-blur-xl shadow-2xl">
 
-                    {/* Content */}
-                    <div className="relative z-10 flex flex-col gap-3 text-left">
-                        {/* Year/Era Tag */}
-                        <div className="inline-flex self-start rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-medium tracking-widest text-blue-200 backdrop-blur-md">
-                            {activeLandmark.year}
+                    {/* Header: Type and Title */}
+                    <div className="mb-6">
+                        <div className="text-xs font-mono tracking-[0.2em] text-blue-300 uppercase opacity-80 mb-2">
+                            {activeLandmark.type} • {activeLandmark.constellation}
                         </div>
-
-                        {/* Title */}
-                        <h2 className="text-3xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-white/70">
+                        <h2 className="text-4xl font-light tracking-wide text-white">
                             {activeLandmark.title}
                         </h2>
+                    </div>
 
-                        {/* Divider */}
-                        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent my-1" />
+                    {/* Scientific Data Grid */}
+                    <div className="grid grid-cols-2 gap-4 mb-6 border-y border-white/10 py-4">
+                        <div>
+                            <div className="text-[10px] uppercase tracking-widest text-gray-400 mb-1">Distance</div>
+                            <div className="text-sm font-mono text-blue-100">{activeLandmark.distance}</div>
+                        </div>
+                        <div>
+                            <div className="text-[10px] uppercase tracking-widest text-gray-400 mb-1">System</div>
+                            <div className="text-sm font-mono text-blue-100">{activeLandmark.constellation} Sector</div>
+                        </div>
+                    </div>
 
-                        {/* Description */}
-                        <p className="text-sm leading-relaxed text-gray-300 font-light">
-                            {activeLandmark.description}
-                        </p>
+                    {/* Detailed Description */}
+                    <p className="text-sm leading-7 text-gray-300 font-light text-justify">
+                        {activeLandmark.description}
+                    </p>
+
+                    {/* Decorative Elements */}
+                    <div className="absolute top-0 right-0 p-4 opacity-30">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" className="text-blue-400">
+                            <path d="M0 0 H20 V20" />
+                        </svg>
                     </div>
                 </div>
             </motion.div>
