@@ -31,6 +31,7 @@ export interface LandmarkData {
     constellation: string; // e.g. "Serpens"
     distanceTrigger: number;
     scaleX?: number;      // Optional multiplier for non-square textures
+    visibilityRange?: number; // Distance at which landmark starts fading in (Default: 400)
 }
 
 export const LANDMARKS: LandmarkData[] = [
@@ -81,7 +82,8 @@ export const LANDMARKS: LandmarkData[] = [
         distance: '55 million light-years',
         constellation: 'Virgo',
         description: 'This is the first direct image of a black hole, located in Messier 87. It captures the shadow of the supermassive black hole and its accretion disk of superheated gas. The black hole has a mass 6.5 billion times that of our Sun.',
-        distanceTrigger: 100
+        distanceTrigger: 100,
+        visibilityRange: 1000 // Visible from FAR away (ensures no black screen)
     },
     {
         id: 'galaxy',
@@ -94,7 +96,8 @@ export const LANDMARKS: LandmarkData[] = [
         distance: '29 million light-years',
         constellation: 'Virgo',
         description: 'The Sombrero Galaxy (M104) is a spiral galaxy in the constellation Virgo. It has a bright nucleus, an unusually large central bulge, and a prominent dust lane in its inclined disk, giving it the appearance of a sombrero.',
-        distanceTrigger: 100
+        distanceTrigger: 100,
+        visibilityRange: 900 // Visible from FAR away
     }
 ];
 

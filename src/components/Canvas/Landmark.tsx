@@ -93,15 +93,19 @@ export default function Landmark({ data }: LandmarkProps) {
         let targetX = originalPos.x;
         let uiOpacity = 0;
 
-        if (dist > 400) {
+        const visibleDist = data.visibilityRange || 400; // Use custom range or default
+        const focusDist = 100; // Distance where object becomes "Fully Focused"
+
+        if (dist > visibleDist) {
             // Far away but starting to appear
             targetOpacity = 0;
             setLandmark(null, 0);
         }
-        else if (dist > 100) {
+        else if (dist > focusDist) {
             // APPROACH PHASE - Long visibility
-            // Visible from 400 down to 100
-            const approachProgress = 1.0 - ((dist - 100) / 300);
+            // Visible from 'visibleDist' down to 'focusDist'
+            const range = visibleDist - focusDist;
+            const approachProgress = 1.0 - ((dist - focusDist) / range);
 
             // Gradual growth
             targetScale = data.scale + (approachProgress * data.scale * 1.0);
