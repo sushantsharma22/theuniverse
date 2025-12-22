@@ -246,12 +246,15 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -100),
     new Vector3(0, 0, -350),        // BIG BANG (centered)
 
+
     // BIG BANG - straight approach
     new Vector3(0, 0, -350),        // BIG BANG - pass through center
+    new Vector3(0, 0, -450),        // Buffer straight
 
     // STRAIGHT to Carbon Nebula, THEN turn
     new Vector3(0, 0, -650),        // Approaching
     new Vector3(0, 0, -950),        // CARBON NEBULA - pass through center
+    new Vector3(0, 0, -1000),       // Buffer straight (Force Z-axis tangent)
     new Vector3(25, -20, -1050),    // Turn AFTER passing nebula
     new Vector3(45, -35, -1150),    // Peak of turn
     new Vector3(25, -20, -1250),    // Coming back
@@ -259,6 +262,7 @@ export const WAYPOINTS: Vector3[] = [
     // STRAIGHT to Starbirth, THEN turn
     new Vector3(0, 0, -1400),       // Approaching straight
     new Vector3(0, 0, -1550),       // STARBIRTH - pass through center
+    new Vector3(0, 0, -1600),       // Buffer straight (Force Z-axis tangent)
     new Vector3(-25, 25, -1650),    // Turn AFTER passing
     new Vector3(-45, 40, -1750),    // Peak
     new Vector3(-25, 20, -1850),    // Coming back
@@ -266,6 +270,7 @@ export const WAYPOINTS: Vector3[] = [
     // STRAIGHT to Pillars, THEN turn
     new Vector3(0, 0, -2000),       // Approaching straight
     new Vector3(0, 0, -2150),       // PILLARS - pass through center
+    new Vector3(0, 0, -2200),       // Buffer straight (Force Z-axis tangent)
     new Vector3(0, -25, -2250),     // Dive AFTER passing
     new Vector3(0, -40, -2350),     // Peak
     new Vector3(0, -20, -2450),     // Coming back
@@ -273,6 +278,7 @@ export const WAYPOINTS: Vector3[] = [
     // STRAIGHT to Saturn, THEN turn
     new Vector3(0, 0, -2600),       // Approaching straight
     new Vector3(0, 0, -2750),       // SATURN - pass through center
+    new Vector3(0, 0, -2800),       // Buffer straight (Force Z-axis tangent)
     new Vector3(30, 25, -2850),     // Turn AFTER passing
     new Vector3(50, 40, -2950),     // Peak
     new Vector3(25, 20, -3050),     // Coming back
@@ -280,6 +286,7 @@ export const WAYPOINTS: Vector3[] = [
     // STRAIGHT to Earth, THEN turn
     new Vector3(0, 0, -3200),       // Approaching straight
     new Vector3(0, 0, -3350),       // EARTH - pass through center
+    new Vector3(0, 0, -3400),       // Buffer straight (Force Z-axis tangent)
     new Vector3(-25, -20, -3450),   // Turn AFTER passing
     new Vector3(-40, -35, -3550),   // Peak
     new Vector3(-20, -15, -3650),   // Coming back
@@ -287,6 +294,7 @@ export const WAYPOINTS: Vector3[] = [
     // STRAIGHT to Eye of God, THEN turn
     new Vector3(0, 0, -3800),       // Approaching straight
     new Vector3(0, 0, -3950),       // EYE OF GOD - pass through center
+    new Vector3(0, 0, -4000),       // Buffer straight (Force Z-axis tangent)
     new Vector3(25, 25, -4050),     // Turn AFTER passing
     new Vector3(40, 40, -4150),     // Peak
     new Vector3(20, 20, -4250),     // Coming back
@@ -294,6 +302,7 @@ export const WAYPOINTS: Vector3[] = [
     // STRAIGHT to Butterfly, THEN turn
     new Vector3(0, 0, -4400),       // Approaching straight
     new Vector3(0, 0, -4550),       // BUTTERFLY - pass through center
+    new Vector3(0, 0, -4600),       // Buffer straight (Force Z-axis tangent)
     new Vector3(-25, -20, -4650),   // Turn AFTER passing
     new Vector3(-40, -35, -4750),   // Peak
     new Vector3(-20, -18, -4850),   // Coming back
@@ -301,13 +310,15 @@ export const WAYPOINTS: Vector3[] = [
     // STRAIGHT to Sombrero, THEN turn
     new Vector3(0, 0, -5000),       // Approaching straight
     new Vector3(0, 0, -5150),       // SOMBRERO - pass through center
-    new Vector3(25, 20, -5250),     // Turn AFTER passing (user requested turn here)
+    new Vector3(0, 0, -5200),       // Buffer straight (Force Z-axis tangent)
+    new Vector3(25, 20, -5250),     // Turn AFTER passing
     new Vector3(40, 35, -5350),     // Peak
     new Vector3(20, 15, -5450),     // Coming back
 
     // STRAIGHT to Black Hole
     new Vector3(0, 0, -5600),       // Approaching straight
     new Vector3(0, 0, -5750),       // BLACK HOLE - pass through center
+    new Vector3(0, 0, -5800),       // Buffer straight
 
     // STRAIGHT from here - Quasar, Wormhole, End
     new Vector3(0, 0, -5950),
