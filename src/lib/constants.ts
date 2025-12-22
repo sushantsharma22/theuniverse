@@ -272,10 +272,10 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -350),        // BIG BANG - pass through center
     new Vector3(0, 0, -450),        // Buffer straight (100u)
 
-    // UPWARD TURN (User Request: "going upwards camera")
-    new Vector3(0, 40, -550),       // Start rising
-    new Vector3(0, 60, -675),       // Peak height (Smoother arc)
-    new Vector3(0, 20, -800),       // Descent
+    // FLATTENED: Upward Turn removed
+    new Vector3(0, 0, -550),
+    new Vector3(0, 0, -675),
+    new Vector3(0, 0, -800),
 
     // STRAIGHT to Carbon Nebula - EXTENDED RUNWAY
     new Vector3(0, 0, -850),        // *** TOUCHDOWN TO ZERO EARLY ***
@@ -286,10 +286,10 @@ export const WAYPOINTS: Vector3[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     // NEW SEGMENT: To "Ashes of the First Stars" (-1550)
     // ═══════════════════════════════════════════════════════════════════════════
-    // Turn
-    new Vector3(25, -20, -1100),    // Turn AFTER passing Carbon Nebula
-    new Vector3(45, -35, -1150),    // Peak
-    new Vector3(25, -20, -1250),    // Coming back
+    // FLATTENED: Turn removed
+    new Vector3(0, 0, -1100),
+    new Vector3(0, 0, -1150),
+    new Vector3(0, 0, -1250),
 
     // STRAIGHT to Ashes of First Stars
     new Vector3(0, 0, -1400),       // Approaching straight
@@ -301,10 +301,10 @@ export const WAYPOINTS: Vector3[] = [
     // SHIFTED SEGMENTS: All Z-coordinates below are shifted by -600 units
     // ═══════════════════════════════════════════════════════════════════════════
 
-    // Turn
-    new Vector3(-25, 25, -1700),    // Turn AFTER passing
-    new Vector3(-45, 40, -1750),    // Peak
-    new Vector3(-25, 20, -1850),    // Coming back
+    // FLATTENED: Turn removed
+    new Vector3(0, 0, -1700),
+    new Vector3(0, 0, -1750),
+    new Vector3(0, 0, -1850),
 
     // STRAIGHT to Starbirth (was -1550, now -2150)
     new Vector3(0, 0, -2000),       // Approaching straight
@@ -312,10 +312,10 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -2150),       // STARBIRTH - pass through center
     new Vector3(0, 0, -2200),       // Buffer AFTER
 
-    // Turn
-    new Vector3(0, -25, -2300),     // Turn
-    new Vector3(0, -40, -2350),     // Peak
-    new Vector3(0, -20, -2450),     // Coming back
+    // FLATTENED: Turn removed
+    new Vector3(0, 0, -2300),
+    new Vector3(0, 0, -2350),
+    new Vector3(0, 0, -2450),
 
     // STRAIGHT to Pillars (was -2150, now -2750)
     new Vector3(0, 0, -2600),       // Approaching straight
@@ -323,10 +323,10 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -2750),       // PILLARS - pass through center
     new Vector3(0, 0, -2800),       // Buffer AFTER
 
-    // Turn
-    new Vector3(30, 25, -2900),     // Turn
-    new Vector3(50, 40, -2950),     // Peak
-    new Vector3(25, 20, -3050),     // Coming back
+    // FLATTENED: Turn removed
+    new Vector3(0, 0, -2900),
+    new Vector3(0, 0, -2950),
+    new Vector3(0, 0, -3050),
 
     // STRAIGHT to Saturn (was -2750, now -3350)
     new Vector3(0, 0, -3200),       // Approaching straight
@@ -334,10 +334,10 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -3350),       // SATURN - pass through center
     new Vector3(0, 0, -3400),       // Buffer AFTER
 
-    // Turn
-    new Vector3(-25, -20, -3500),   // Turn
-    new Vector3(-40, -35, -3550),   // Peak
-    new Vector3(-20, -15, -3650),   // Coming back
+    // FLATTENED: Turn removed
+    new Vector3(0, 0, -3500),
+    new Vector3(0, 0, -3550),
+    new Vector3(0, 0, -3650),
 
     // STRAIGHT to Earth (was -3350, now -3950)
     new Vector3(0, 0, -3800),       // Approaching straight
@@ -345,10 +345,10 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -3950),       // EARTH - pass through center
     new Vector3(0, 0, -4000),       // Buffer AFTER
 
-    // Turn
-    new Vector3(25, 25, -4100),     // Turn
-    new Vector3(40, 40, -4150),     // Peak
-    new Vector3(20, 20, -4250),     // Coming back
+    // FLATTENED: Turn removed
+    new Vector3(0, 0, -4100),
+    new Vector3(0, 0, -4150),
+    new Vector3(0, 0, -4250),
 
     // STRAIGHT to Eye of God (was -3950, now -4550)
     new Vector3(0, 0, -4400),       // Approaching straight
@@ -356,10 +356,10 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -4550),       // EYE OF GOD - pass through center
     new Vector3(0, 0, -4600),       // Buffer AFTER
 
-    // Turn
-    new Vector3(0, -25, -4700),     // Turn
-    new Vector3(0, -40, -4750),     // Peak
-    new Vector3(0, -20, -4850),     // Coming back
+    // FLATTENED: Turn removed
+    new Vector3(0, 0, -4700),
+    new Vector3(0, 0, -4750),
+    new Vector3(0, 0, -4850),
 
     // STRAIGHT to Butterfly (was -4550, now -5150)
     new Vector3(0, 0, -5000),       // Approaching straight
@@ -377,10 +377,10 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -5750),       // SOMBRERO - pass through center
     new Vector3(0, 0, -5800),       // Buffer AFTER
 
-    // Turn between Sombrero and Black Hole
-    new Vector3(25, 20, -5900),     // Turn
-    new Vector3(40, 35, -5950),     // Peak
-    new Vector3(20, 15, -6050),     // Coming back
+    // FLATTENED: Turn between Sombrero and Black Hole
+    new Vector3(0, 0, -5900),
+    new Vector3(0, 0, -5950),
+    new Vector3(0, 0, -6050),
 
     // STRAIGHT to Black Hole (was -5750, now -6350)
     new Vector3(0, 0, -6200),       // Approaching
