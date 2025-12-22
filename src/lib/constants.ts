@@ -56,7 +56,7 @@ export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'carbon_nebula',
-        position: new Vector3(60, -30, -950),  // Appears from RIGHT+DOWN
+        position: new Vector3(120, -80, -950),  // Emerges from SHARP RIGHT + DOWN
         texture: '/textures/carbnebula.jpg',
         scale: 250,
         title: 'Carbon Nebula',
@@ -72,7 +72,7 @@ export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'starbirth',
-        position: new Vector3(-60, 40, -1550), // Appears from LEFT+UP
+        position: new Vector3(-120, 100, -1550), // Emerges from SHARP LEFT + UP
         texture: '/textures/starbirth.jpg',
         scale: 280,
         title: 'Seagull Nebula',
@@ -88,7 +88,7 @@ export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'pillars',
-        position: new Vector3(0, -80, -2150),
+        position: new Vector3(0, -150, -2150),  // Emerges from DEEP DIVE DOWN
         texture: '/textures/pillars_of_creation.jpg',
         scale: 300,
         title: 'Pillars of Creation',
@@ -104,7 +104,7 @@ export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'saturn',
-        position: new Vector3(50, -60, -2750), // Appears from RIGHT (after dive)
+        position: new Vector3(100, 80, -2750), // Emerges from SHARP RIGHT + UP
         texture: '/textures/saturn.jpg',
         scale: 180,
         title: 'Saturn',
@@ -120,7 +120,7 @@ export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'earth',
-        position: new Vector3(-50, 20, -3350), // Appears from LEFT+UP
+        position: new Vector3(-100, -80, -3350), // Emerges from SHARP LEFT + DOWN
         texture: '/textures/earth.jpg',
         scale: 150,
         title: 'Earth',
@@ -136,7 +136,7 @@ export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'eye_of_god',
-        position: new Vector3(40, 30, -3950),  // Appears from RIGHT+UP
+        position: new Vector3(80, 100, -3950),  // Emerges from SHARP RIGHT + UP
         texture: '/textures/eye_of_god.png',
         scale: 350,
         title: 'Eye of God',
@@ -152,7 +152,7 @@ export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'butterfly',
-        position: new Vector3(0, -60, -4550),
+        position: new Vector3(-80, -120, -4550), // Emerges from SHARP LEFT + DOWN
         texture: '/textures/Butterfly_nebula.jpg',
         scale: 380,
         title: 'Butterfly Nebula',
@@ -168,7 +168,7 @@ export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'sombrero',
-        position: new Vector3(40, -40, -5150), // Appears from RIGHT (after rise)
+        position: new Vector3(100, 80, -5150), // Emerges from SHARP RIGHT + UP
         texture: '/textures/The Sombrero Galaxy.jpg',
         scale: 500,
         scaleX: 1.8,
@@ -237,87 +237,72 @@ export const LANDMARKS: LandmarkData[] = [
 export const UNIVERSE_END_POSITION = -7200;
 
 // ═══════════════════════════════════════════════════════════════════════════
-// CAMERA WAYPOINTS - 12-Stage Epic Journey with DIRECTIONAL Choreography
-// Camera travels TOWARDS where landmarks appear, then centers on them
+// CAMERA WAYPOINTS - 12-Stage SHARP TURN Choreography
+// Each landmark EMERGES from the direction of the sharp turn
 // ═══════════════════════════════════════════════════════════════════════════
 export const WAYPOINTS: Vector3[] = [
-    // 1. START - Gentle drift into the cosmos
+    // 1. START - Centered drift
     new Vector3(0, 0, 100),
-    new Vector3(0, 0, -50),
-    new Vector3(0, 0, -200),
-    new Vector3(0, 0, -350),        // BIG BANG REVEAL (centered)
+    new Vector3(0, 0, -100),
+    new Vector3(0, 0, -350),        // BIG BANG (centered)
 
-    // 2. TO CARBON NEBULA - Travel RIGHT + DOWN (landmark at x:60, y:-30)
-    new Vector3(20, -10, -500),
-    new Vector3(50, -25, -650),     // DIVING RIGHT + DOWN
-    new Vector3(60, -30, -800),     // Near landmark position
-    new Vector3(60, -30, -950),     // CARBON NEBULA REVEAL
+    // 2. SHARP RIGHT + DOWN → Carbon Nebula emerges from x:120, y:-80
+    new Vector3(30, -20, -500),
+    new Vector3(80, -50, -700),     // Banking RIGHT + DIVING
+    new Vector3(120, -80, -950),    // CARBON NEBULA REVEAL
 
-    // 3. TO STARBIRTH - Travel LEFT + UP (landmark at x:-60, y:40)
-    new Vector3(30, 0, -1050),
-    new Vector3(-20, 20, -1200),    // BANKING LEFT + RISING
-    new Vector3(-50, 35, -1350),    // Climbing higher
-    new Vector3(-60, 40, -1450),    // Near landmark
-    new Vector3(-60, 40, -1550),    // STARBIRTH REVEAL
+    // 3. SHARP LEFT + UP → Starbirth emerges from x:-120, y:100
+    new Vector3(60, -20, -1100),
+    new Vector3(-40, 40, -1300),    // Banking LEFT + RISING
+    new Vector3(-120, 100, -1550),  // STARBIRTH REVEAL
 
-    // 4. TO PILLARS - Travel CENTER + DEEP DOWN (landmark at x:0, y:-80)
-    new Vector3(-30, 20, -1650),
-    new Vector3(0, -20, -1800),     // DIVING DOWN
-    new Vector3(0, -60, -1950),     // DEEPER
-    new Vector3(0, -80, -2080),     // Approaching depth
-    new Vector3(0, -80, -2150),     // PILLARS REVEAL (Deep)
+    // 4. DEEP DIVE DOWN → Pillars emerges from y:-150
+    new Vector3(-60, 40, -1700),
+    new Vector3(0, -50, -1900),     // DIVING
+    new Vector3(0, -150, -2150),    // PILLARS REVEAL (Deep)
 
-    // 5. TO SATURN - Travel RIGHT + UP slightly (landmark at x:50, y:-60)
-    new Vector3(15, -75, -2300),
-    new Vector3(35, -70, -2450),    // RISING + BANKING RIGHT
-    new Vector3(50, -65, -2600),    // Nearing
-    new Vector3(50, -60, -2750),    // SATURN REVEAL
+    // 5. SHARP RIGHT + UP → Saturn emerges from x:100, y:80
+    new Vector3(0, -100, -2350),
+    new Vector3(50, -20, -2550),    // RISING + RIGHT
+    new Vector3(100, 80, -2750),    // SATURN REVEAL
 
-    // 6. TO EARTH - Travel LEFT + UP (landmark at x:-50, y:20)
-    new Vector3(25, -40, -2850),
-    new Vector3(-10, -10, -3000),   // SHARP LEFT + RISING
-    new Vector3(-40, 10, -3150),    // Continuing climb
-    new Vector3(-50, 20, -3350),    // EARTH REVEAL
+    // 6. SHARP LEFT + DOWN → Earth emerges from x:-100, y:-80
+    new Vector3(50, 40, -2900),
+    new Vector3(-30, -20, -3100),   // LEFT + DIVING
+    new Vector3(-100, -80, -3350),  // EARTH REVEAL
 
-    // 7. TO EYE OF GOD - Travel RIGHT + UP (landmark at x:40, y:30)
-    new Vector3(-25, 20, -3500),
-    new Vector3(10, 25, -3650),     // BANKING RIGHT
-    new Vector3(30, 28, -3800),     // Rising right
-    new Vector3(40, 30, -3950),     // EYE OF GOD REVEAL
+    // 7. SHARP RIGHT + UP → Eye of God emerges from x:80, y:100
+    new Vector3(-50, -30, -3550),
+    new Vector3(20, 40, -3750),     // RIGHT + RISING
+    new Vector3(80, 100, -3950),    // EYE OF GOD REVEAL
 
-    // 8. TO BUTTERFLY - Travel LEFT + DOWN (landmark at x:0, y:-60)
-    new Vector3(20, 15, -4100),
-    new Vector3(-10, -10, -4250),   // LEFT + DIVING
-    new Vector3(-5, -40, -4400),    // Deeper dive
-    new Vector3(0, -55, -4480),     // Approaching
-    new Vector3(0, -60, -4550),     // BUTTERFLY REVEAL (Low)
+    // 8. SHARP LEFT + DOWN → Butterfly emerges from x:-80, y:-120
+    new Vector3(40, 50, -4150),
+    new Vector3(-30, -40, -4350),   // LEFT + DIVING
+    new Vector3(-80, -120, -4550),  // BUTTERFLY REVEAL
 
-    // 9. TO SOMBRERO GALAXY - Travel RIGHT + RISE (landmark at x:40, y:-40)
-    new Vector3(10, -55, -4650),
-    new Vector3(25, -50, -4800),    // RISING + RIGHT
-    new Vector3(35, -45, -4950),    // Continuing
-    new Vector3(40, -40, -5150),    // SOMBRERO REVEAL
+    // 9. SHARP RIGHT + UP → Sombrero emerges from x:100, y:80
+    new Vector3(-40, -60, -4750),
+    new Vector3(30, 20, -4950),     // RIGHT + RISING
+    new Vector3(100, 80, -5150),    // SOMBRERO REVEAL
 
-    // 10. TO BLACK HOLE - Travel CENTER (landmark at x:0, y:0)
-    new Vector3(25, -30, -5300),
-    new Vector3(10, -15, -5450),    // Centering
-    new Vector3(0, -5, -5600),      // Almost centered
+    // 10. CENTER → Black Hole (centered, ominous)
+    new Vector3(60, 50, -5350),
+    new Vector3(20, 20, -5550),     // Centering
     new Vector3(0, 0, -5750),       // BLACK HOLE REVEAL
 
-    // 11. TO QUASAR - Travel CENTER (landmark at x:0, y:0)
-    new Vector3(0, 0, -5900),
-    new Vector3(0, 0, -6050),       // Straight
-    new Vector3(0, 0, -6200),
+    // 11. CENTER → Quasar (straight approach)
+    new Vector3(0, 0, -5950),
+    new Vector3(0, 0, -6150),
     new Vector3(0, 0, -6350),       // QUASAR REVEAL
 
-    // 12. TO WORMHOLE - Travel CENTER (landmark at x:0, y:0)
-    new Vector3(0, 0, -6500),
-    new Vector3(0, 0, -6700),       // Final approach
-    new Vector3(0, 0, -6850),
+    // 12. CENTER → Wormhole (final approach)
+    new Vector3(0, 0, -6550),
+    new Vector3(0, 0, -6750),
     new Vector3(0, 0, -6950),       // WORMHOLE REVEAL
 
-    // 13. INTO THE VOID - The End
+    // 13. INTO THE VOID → The End (with flash)
     new Vector3(0, 0, -7050),
     new Vector3(0, 0, -7150),
-    new Vector3(0, 0, -7200)        // UNIVERSE END - Pitch Black
+    new Vector3(0, 0, -7200)        // UNIVERSE END
 ];
