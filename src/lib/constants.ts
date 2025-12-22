@@ -47,7 +47,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'eye_of_god',
-        position: new Vector3(0, 0, -750), // Much deeper for separation
+        position: new Vector3(0, 0, -850), // Pushed even deeper for longer straight approach
         texture: '/textures/eye_of_god.png',
         scale: 250,
         title: 'Eye of God',
@@ -59,24 +59,24 @@ export const LANDMARKS: LandmarkData[] = [
     }
 ];
 
-// Camera path waypoints - Choreographed Journey
+// Camera path waypoints - SHARP CHOREOGRAPHY
 export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, 100),         // START
-    new Vector3(-10, 5, 50),        // Left Weave
-    new Vector3(10, -5, 0),         // Right Weave
-    new Vector3(-5, 5, -50),        // Center/Left Adjustment
+    new Vector3(-20, 5, 50),        // Sharp Left Weave
+    new Vector3(20, -5, 0),         // Sharp Right Weave
+    new Vector3(-10, 5, -50),       // Center Adjustment
 
-    // APPROACHING PILLARS (Go Right)
-    new Vector3(15, -2, -150),      // Drifting Right
-    new Vector3(8, 0, -250),        // Aligning from Right
-    new Vector3(0, 0, -320),        // PILLARS FOCUS (Center)
+    // SHARP RIGHT TURN TO PILLARS
+    new Vector3(80, -2, -150),      // Extreme Right (Drift)
+    new Vector3(40, 0, -250),       // Banking In
+    new Vector3(0, 0, -320),        // PILLARS CENTER
 
-    // THROUGH PILLARS & TRANSIT (Go Left -> Straight)
+    // FLY THROUGH & SHARP LEFT
     new Vector3(0, 0, -380),        // Fly Through
-    new Vector3(-15, 5, -450),      // Drift Left (Deep Space)
-    new Vector3(-10, -5, -550),     // Holding Left/Down
+    new Vector3(-80, 5, -500),      // Extreme Left (Deep Space - "Nothingness")
+    new Vector3(-40, -5, -650),     // Banking In (Still nothing visible)
 
-    // APPROACHING EYE (Straighten Out)
-    new Vector3(0, 0, -650),        // Center/Straight
-    new Vector3(0, 0, -750)         // EYE FOCUS
+    // STRAIGHT APPROACH TO EYE
+    new Vector3(0, 0, -750),        // Dead Center (Eye fades in here)
+    new Vector3(0, 0, -850)         // EYE FOCUS
 ];

@@ -56,8 +56,8 @@ export default function SmoothScroll() {
 
     return (
         <div className="relative w-full z-10">
-            {/* Long scrollable area - Restored for majestic pacing */}
-            <div className="h-[3500vh] w-full" />
+            {/* Long scrollable area - Extended for deep choreo */}
+            <div className="h-[4000vh] w-full" />
         </div>
     );
 }

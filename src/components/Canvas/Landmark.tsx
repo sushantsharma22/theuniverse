@@ -92,15 +92,15 @@ export default function Landmark({ data }: LandmarkProps) {
         let targetX = originalPos.x;
         let uiOpacity = 0;
 
-        if (dist > 350) {
+        if (dist > 250) {
             targetOpacity = 0;
             setLandmark(null, 0); // Ensure UI is hidden
         }
         else if (dist > 150) {
             // APPROACH PHASE
             // Grow from base scale to 2x base scale
-            // Range: 150 to 350
-            const approachProgress = 1.0 - ((dist - 150) / 200);
+            // Range: 150 to 250
+            const approachProgress = 1.0 - ((dist - 150) / 100);
             targetScale = data.scale + (approachProgress * data.scale * 1.5);
             targetOpacity = 0.8 * approachProgress;
             targetX = originalPos.x;
