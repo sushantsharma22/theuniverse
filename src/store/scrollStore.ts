@@ -13,11 +13,13 @@ interface ScrollState {
     smoothVelocity: number;
     activeLandmark: LandmarkData | null; // Currently visible landmark story
     landmarkOpacity: number; // Opacity for the UI panel (0-1)
+    cameraZ: number; // Current camera Z position for ending detection
 
     setProgress: (progress: number) => void;
     setIsScrolling: (isScrolling: boolean) => void;
     setVelocity: (velocity: number) => void;
     setLandmark: (landmark: LandmarkData | null, opacity: number) => void;
+    setCameraZ: (z: number) => void;
     updateSmoothVelocity: () => void;
 }
 
@@ -31,6 +33,7 @@ export const useScrollStore = create<ScrollState>((set, get) => ({
     smoothVelocity: 0,
     activeLandmark: null,
     landmarkOpacity: 0,
+    cameraZ: 0,
 
     setProgress: (progress: number) => {
         const now = performance.now();
@@ -51,6 +54,7 @@ export const useScrollStore = create<ScrollState>((set, get) => ({
     setIsScrolling: (isScrolling: boolean) => set({ isScrolling }),
     setVelocity: (velocity: number) => set({ velocity }),
     setLandmark: (landmark, opacity) => set({ activeLandmark: landmark, landmarkOpacity: opacity }),
+    setCameraZ: (z: number) => set({ cameraZ: z }),
     updateSmoothVelocity: () => {
         const { velocity, smoothVelocity } = get();
         // Smooth velocity with exponential decay

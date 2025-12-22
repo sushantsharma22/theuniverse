@@ -18,6 +18,7 @@ const CAMERA_PATH = WAYPOINTS;
 export default function CameraRig() {
     const { camera } = useThree();
     const progress = useScrollStore(state => state.progress);
+    const setCameraZ = useScrollStore(state => state.setCameraZ);
 
     // Create smooth camera path
     const curve = useRef(new CatmullRomCurve3(CAMERA_PATH, false, 'catmullrom', 0.5));
@@ -33,6 +34,9 @@ export default function CameraRig() {
         // Smooth interpolation
         currentPos.current.lerp(targetPos, 0.04);
         camera.position.copy(currentPos.current);
+
+        // Track camera Z for ending detection
+        setCameraZ(currentPos.current.z);
 
         // Look ahead on the path
         const lookT = Math.min(t + 0.05, 1);

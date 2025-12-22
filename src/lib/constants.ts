@@ -198,15 +198,33 @@ export const LANDMARKS: LandmarkData[] = [
         visibilityRange: 700
     },
     // ═══════════════════════════════════════════════════════════════════════════
-    // STAGE 11: THE BEYOND
+    // STAGE 11: COSMIC LIGHTHOUSE
+    // ═══════════════════════════════════════════════════════════════════════════
+    {
+        id: 'quasar',
+        position: new Vector3(0, 0, -6350),
+        texture: '/textures/quasar.jpg',
+        scale: 420,
+        scaleX: 1.78,
+        title: 'Quasar',
+        type: 'Active Galactic Nucleus',
+        distance: '2.4 billion light-years',
+        constellation: 'Ursa Major',
+        description: 'Quasars are the brightest objects in the universe, powered by supermassive black holes consuming matter at incredible rates. They outshine entire galaxies, serving as cosmic lighthouses visible across billions of light-years.',
+        distanceTrigger: 100,
+        visibilityRange: 700
+    },
+    // ═══════════════════════════════════════════════════════════════════════════
+    // STAGE 12: THE BEYOND - FINAL STAGE
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'wormhole',
-        position: new Vector3(0, 0, -6350),
+        position: new Vector3(0, 0, -6950),
         texture: '/textures/wormhole.png',
-        scale: 450,
+        scale: 500,
+        scaleX: 1.78,
         title: 'Wormhole',
-        type: 'Theoretical Construct',
+        type: 'Einstein-Rosen Bridge',
         distance: 'Beyond Space-Time',
         constellation: 'Unknown',
         description: 'A wormhole, or Einstein-Rosen bridge, is a theoretical passage through space-time. It represents the ultimate frontier—a gateway to other universes, distant galaxies, or perhaps the next cycle of cosmic creation.',
@@ -215,8 +233,11 @@ export const LANDMARKS: LandmarkData[] = [
     }
 ];
 
+// Position where the universe ends and "The End" appears
+export const UNIVERSE_END_POSITION = -7200;
+
 // ═══════════════════════════════════════════════════════════════════════════
-// CAMERA WAYPOINTS - 11-Stage Epic Journey with Dynamic Choreography
+// CAMERA WAYPOINTS - 12-Stage Epic Journey with DYNAMIC GLIDING Choreography
 // ═══════════════════════════════════════════════════════════════════════════
 export const WAYPOINTS: Vector3[] = [
     // 1. START - Gentle drift into the cosmos
@@ -225,64 +246,85 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -200),
     new Vector3(0, 0, -350),        // BIG BANG REVEAL
 
-    // 2. TO CARBON NEBULA - Sharp RIGHT turn
-    new Vector3(0, 0, -500),
-    new Vector3(80, -10, -650),     // SHARP RIGHT
-    new Vector3(60, 0, -800),
+    // 2. TO CARBON NEBULA - Sharp RIGHT turn + slight dive
+    new Vector3(30, 0, -450),
+    new Vector3(80, -15, -600),     // SHARP RIGHT + DOWN
+    new Vector3(60, -5, -750),
+    new Vector3(20, 0, -850),
     new Vector3(0, 0, -950),        // CARBON NEBULA REVEAL
 
     // 3. TO STARBIRTH - Sharp LEFT turn + Rising
-    new Vector3(0, 0, -1100),
-    new Vector3(-80, 20, -1250),    // SHARP LEFT + UP
-    new Vector3(-40, 10, -1400),
+    new Vector3(-20, 5, -1050),
+    new Vector3(-80, 25, -1200),    // SHARP LEFT + UP
+    new Vector3(-60, 15, -1350),
+    new Vector3(-20, 5, -1450),
     new Vector3(0, 0, -1550),       // STARBIRTH REVEAL
 
-    // 4. TO PILLARS - Deep DIVE downward
-    new Vector3(0, 0, -1700),
-    new Vector3(0, -40, -1850),     // START DIVE
-    new Vector3(0, -80, -2000),     // DEEP DIVE
+    // 4. TO PILLARS - Deep DIVE + slight RIGHT
+    new Vector3(20, -10, -1650),
+    new Vector3(40, -40, -1800),    // RIGHT + DIVING
+    new Vector3(20, -70, -1950),
+    new Vector3(0, -80, -2050),
     new Vector3(0, -80, -2150),     // PILLARS REVEAL (Deep)
 
-    // 5. TO SATURN - Rise UP + slight RIGHT
-    new Vector3(0, -80, -2300),
-    new Vector3(40, -40, -2450),    // RISING + RIGHT
-    new Vector3(30, 0, -2600),
+    // 5. TO SATURN - Rise UP + sweeping RIGHT
+    new Vector3(20, -70, -2250),
+    new Vector3(60, -40, -2400),    // RISING + SHARP RIGHT
+    new Vector3(50, -10, -2550),
+    new Vector3(20, 0, -2650),
     new Vector3(0, 0, -2750),       // SATURN REVEAL
 
-    // 6. TO EARTH - Banking LEFT approach
-    new Vector3(0, 0, -2900),
-    new Vector3(-60, 10, -3050),    // BANK LEFT
-    new Vector3(-40, 0, -3200),
+    // 6. TO EARTH - Banking LEFT + slight dive
+    new Vector3(-20, -5, -2850),
+    new Vector3(-70, 10, -3000),    // SHARP LEFT BANK
+    new Vector3(-50, 5, -3150),
+    new Vector3(-20, 0, -3250),
     new Vector3(0, 0, -3350),       // EARTH REVEAL
 
-    // 7. TO EYE OF GOD - Straight centered approach
-    new Vector3(0, 0, -3500),
-    new Vector3(0, 0, -3650),
-    new Vector3(0, 0, -3800),
+    // 7. TO EYE OF GOD - Sharp RIGHT + rise
+    new Vector3(20, 10, -3450),
+    new Vector3(60, 20, -3600),     // RIGHT + RISING
+    new Vector3(40, 15, -3750),
+    new Vector3(15, 5, -3850),
     new Vector3(0, 0, -3950),       // EYE OF GOD REVEAL
 
-    // 8. TO BUTTERFLY - Gentle LEFT sway + slight dive
-    new Vector3(0, 0, -4100),
-    new Vector3(-40, -20, -4250),   // LEFT SWAY + DIVE
-    new Vector3(-20, -40, -4400),
+    // 8. TO BUTTERFLY - Sharp LEFT sway + deep dive
+    new Vector3(-25, -10, -4050),
+    new Vector3(-60, -30, -4200),   // LEFT SWAY + DIVE
+    new Vector3(-40, -50, -4350),
+    new Vector3(-15, -55, -4450),
     new Vector3(0, -60, -4550),     // BUTTERFLY REVEAL (Low)
 
-    // 9. TO SOMBRERO GALAXY - Rise UP to center
-    new Vector3(0, -60, -4700),
-    new Vector3(0, -30, -4850),     // RISING
-    new Vector3(0, 0, -5000),
+    // 9. TO SOMBRERO GALAXY - Sharp rise RIGHT
+    new Vector3(20, -50, -4650),
+    new Vector3(50, -25, -4800),    // RISING + RIGHT
+    new Vector3(30, -10, -4950),
+    new Vector3(10, 0, -5050),
     new Vector3(0, 0, -5150),       // SOMBRERO REVEAL
 
-    // 10. TO BLACK HOLE - Ominous straight approach
-    new Vector3(0, 0, -5300),
-    new Vector3(0, 0, -5450),
-    new Vector3(0, 0, -5600),
+    // 10. TO BLACK HOLE - Sharp LEFT bank approach
+    new Vector3(-25, 5, -5250),
+    new Vector3(-60, 10, -5400),    // LEFT BANK
+    new Vector3(-35, 5, -5550),
+    new Vector3(-10, 0, -5650),
     new Vector3(0, 0, -5750),       // BLACK HOLE REVEAL
 
-    // 11. TO WORMHOLE - Final centered dive into the unknown
-    new Vector3(0, 0, -5900),
-    new Vector3(0, 0, -6050),
-    new Vector3(0, 0, -6200),
-    new Vector3(0, 0, -6350)        // WORMHOLE REVEAL - Journey's End
-];
+    // 11. TO QUASAR - Sharp RIGHT dive
+    new Vector3(25, -10, -5850),
+    new Vector3(60, -20, -6000),    // RIGHT + DIVE
+    new Vector3(40, -10, -6150),
+    new Vector3(15, 0, -6250),
+    new Vector3(0, 0, -6350),       // QUASAR REVEAL
 
+    // 12. TO WORMHOLE - Final centered approach
+    new Vector3(-20, 5, -6450),
+    new Vector3(-40, 10, -6600),    // GENTLE LEFT
+    new Vector3(-20, 5, -6750),
+    new Vector3(0, 0, -6850),
+    new Vector3(0, 0, -6950),       // WORMHOLE REVEAL
+
+    // 13. INTO THE VOID - The End
+    new Vector3(0, 0, -7050),
+    new Vector3(0, 0, -7150),
+    new Vector3(0, 0, -7200)        // UNIVERSE END - Pitch Black
+];

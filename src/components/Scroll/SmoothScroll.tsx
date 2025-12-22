@@ -56,8 +56,8 @@ export default function SmoothScroll() {
 
     return (
         <div className="relative w-full z-10">
-            {/* Long scrollable area - 11 Stage Cosmic Evolution */}
-            <div className="h-[25000vh] w-full" />
+            {/* Long scrollable area - 12 Stage Cosmic Evolution + Ending */}
+            <div className="h-[28000vh] w-full" />
         </div>
     );
 }
