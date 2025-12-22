@@ -73,7 +73,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'galaxy',
-        position: new Vector3(0, 0, -1500), // COMPRESSED GAP (250u from Nebula)
+        position: new Vector3(0, 0, -1850), // 600u GAP FROM NEBULA
         texture: '/textures/The Sombrero Galaxy.jpg',
         scale: 500,
         scaleX: 1.8,
@@ -83,11 +83,11 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Virgo',
         description: 'The Sombrero Galaxy (M104) is a spiral galaxy in the constellation Virgo. It has a bright nucleus, an unusually large central bulge, and a prominent dust lane in its inclined disk, giving it the appearance of a sombrero.',
         distanceTrigger: 100,
-        visibilityRange: 300 // REDUCED: Fast reveal
+        visibilityRange: 600
     },
     {
         id: 'black_hole',
-        position: new Vector3(0, 0, -2100), // FINAL (600u gap)
+        position: new Vector3(0, 0, -2450), // 600u GAP FROM GALAXY
         texture: '/textures/blackhole_v2.jpg',
         scale: 400,
         scaleX: 1.78,
@@ -101,41 +101,42 @@ export const LANDMARKS: LandmarkData[] = [
     }
 ];
 
-// Camera path waypoints - 5 STAGE EPIC JOURNEY (FAST TRAVEL)
+// Camera path waypoints - SYMMETRICAL 600u GAPS
 export const WAYPOINTS: Vector3[] = [
     // 1. START
     new Vector3(0, 0, 100),
     new Vector3(0, 0, -50),
 
     // 2. TURN TO PILLARS
-    new Vector3(60, -2, -200),      // SHARP RIGHT TURN
+    new Vector3(60, -2, -200),
     new Vector3(40, 0, -250),
     new Vector3(0, 0, -300),
     new Vector3(0, 0, -350),        // PILLARS REVEAL
 
     // 3. TRANSIT TO EYE
-    new Vector3(0, 0, -450),        // Fly Through
-    new Vector3(-60, 5, -550),      // SHARP LEFT TURN
-    new Vector3(-40, -5, -600),     // Banking...
+    new Vector3(0, 0, -450),
+    new Vector3(-60, 5, -550),
+    new Vector3(-40, -5, -600),
 
     // 4. EYE REVEAL
-    new Vector3(0, 0, -700),        // Center Approach
-    new Vector3(0, 0, -750),        // Straight...
+    new Vector3(0, 0, -700),
+    new Vector3(0, 0, -750),
     new Vector3(0, 0, -800),        // FLY THROUGH THE EYE
 
     // 5. TO BUTTERFLY
-    new Vector3(0, 0, -900),        // Straight out
-    new Vector3(0, -20, -1000),     // Start Dive
-    new Vector3(0, -100, -1150),    // DEEP DIVE
+    new Vector3(0, 0, -900),
+    new Vector3(0, -20, -1000),
+    new Vector3(0, -100, -1150),
     new Vector3(0, -100, -1250),    // BUTTERFLY REVEAL
 
-    // 6. TO GALAXY (Quick Transition)
-    new Vector3(0, -100, -1350),    // Fly through Butterfly
-    new Vector3(0, -20, -1450),     // RISING BACK TO CENTER
-    new Vector3(0, 0, -1500),       // SOMBRERO GALAXY REVEAL
+    // 6. TO GALAXY (600u Gap)
+    new Vector3(0, -100, -1400),    // Deep Void
+    new Vector3(0, -50, -1550),     // Rising Upward
+    new Vector3(0, 0, -1700),       // Centered
+    new Vector3(0, 0, -1850),       // GALAXY REVEAL
 
-    // 7. TO BLACK HOLE (Final Gap)
-    new Vector3(0, 0, -1700),       // Fly Through Galaxy
-    new Vector3(0, 0, -1900),       // Void Scroll
-    new Vector3(0, 0, -2100)        // BLACK HOLE REVEAL
+    // 7. TO BLACK HOLE (600u Gap)
+    new Vector3(0, 0, -2000),       // Fly Through Galaxy
+    new Vector3(0, 0, -2200),       // Void
+    new Vector3(0, 0, -2450)        // BLACK HOLE REVEAL
 ];

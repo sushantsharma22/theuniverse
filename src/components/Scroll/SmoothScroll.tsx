@@ -56,8 +56,8 @@ export default function SmoothScroll() {
 
     return (
         <div className="relative w-full z-10">
-            {/* Long scrollable area - Extended for Deep Spacing */}
-            <div className="h-[12000vh] w-full" />
+            {/* Long scrollable area - Optimized for 600u Gaps */}
+            <div className="h-[10000vh] w-full" />
         </div>
     );
 }
