@@ -1,42 +1,41 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// UNIVERSE ENDING - Flash FIRST, then message (matches StartScreen style)
+// UNIVERSE ENDING - Flash + Message RIGHT after wormhole crossing
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useScrollStore } from '@/store/scrollStore';
-import { UNIVERSE_END_POSITION } from '@/lib/constants';
+
+// Wormhole is at -6950, trigger ending immediately after
+const WORMHOLE_Z = -6950;
 
 export default function UniverseEnding() {
     const { cameraZ } = useScrollStore();
 
-    // WORMHOLE is at -6950, UNIVERSE_END is at -7200
-    // Flash starts at -7000 and peaks at -7100
-    const flashStart = -7000;
-    const flashPeak = -7100;
-    const flashEnd = -7150;
-    const messageStart = -7150;
+    // Flash appears RIGHT after crossing wormhole
+    const flashStart = WORMHOLE_Z - 50;  // -7000
+    const flashPeak = WORMHOLE_Z - 100;  // -7050
 
-    // Calculate flash opacity - rises then falls
+    // Calculate flash opacity
     let flashOpacity = 0;
-    if (cameraZ < flashStart && cameraZ > flashEnd) {
+    if (cameraZ < flashStart && cameraZ > flashPeak - 50) {
         if (cameraZ > flashPeak) {
-            // Rising phase
+            // Rising
             flashOpacity = (flashStart - cameraZ) / (flashStart - flashPeak);
         } else {
-            // Falling phase
-            flashOpacity = (cameraZ - flashEnd) / (flashPeak - flashEnd);
+            // Falling
+            flashOpacity = Math.max(0, 1 - (flashPeak - cameraZ) / 50);
         }
     }
 
-    // Ending message appears AFTER flash fades
-    const showEnding = cameraZ < messageStart;
-    const endingOpacity = showEnding ? Math.min(1, (messageStart - cameraZ) / 100) : 0;
+    // Ending appears as flash fades
+    const showEnding = cameraZ < flashPeak;
+    const endingOpacity = showEnding ? Math.min(1, (flashPeak - cameraZ) / 80) : 0;
 
     return (
         <>
-            {/* BRIGHT FLASH - Peaks then fades */}
+            {/* BRIGHT FLASH */}
             {flashOpacity > 0.05 && (
                 <div
                     className="fixed inset-0 z-[100] pointer-events-none bg-white"
@@ -44,9 +43,9 @@ export default function UniverseEnding() {
                 />
             )}
 
-            {/* ENDING MESSAGE - Appears AFTER flash */}
+            {/* ENDING MESSAGE - Brighter, more visible */}
             <AnimatePresence>
-                {showEnding && endingOpacity > 0.1 && (
+                {showEnding && endingOpacity > 0.05 && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: endingOpacity }}
@@ -55,13 +54,13 @@ export default function UniverseEnding() {
                         className="fixed inset-0 z-[101] flex flex-col items-center justify-center bg-black"
                         style={{ pointerEvents: endingOpacity > 0.5 ? 'auto' : 'none' }}
                     >
-                        {/* Main message - same style as "THE UNIVERSE" */}
+                        {/* Main message - BRIGHTER text */}
                         <motion.p
                             initial={{ y: 30, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.3, duration: 0.8 }}
-                            className="text-xl md:text-2xl font-extralight tracking-[0.3em] text-white/80 mb-6 text-center italic"
-                            style={{ textShadow: '0 0 40px rgba(100, 150, 255, 0.2)' }}
+                            transition={{ delay: 0.2, duration: 0.8 }}
+                            className="text-2xl md:text-3xl font-extralight tracking-[0.25em] text-white mb-6 text-center italic px-4"
+                            style={{ textShadow: '0 0 40px rgba(150, 180, 255, 0.4)' }}
                         >
                             From the ashes of dying stars
                         </motion.p>
@@ -69,19 +68,19 @@ export default function UniverseEnding() {
                         <motion.p
                             initial={{ y: 30, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.5, duration: 0.8 }}
-                            className="text-xl md:text-2xl font-extralight tracking-[0.3em] text-white/70 mb-12 text-center italic"
-                            style={{ textShadow: '0 0 40px rgba(100, 150, 255, 0.2)' }}
+                            transition={{ delay: 0.4, duration: 0.8 }}
+                            className="text-2xl md:text-3xl font-extralight tracking-[0.25em] text-white/90 mb-16 text-center italic px-4"
+                            style={{ textShadow: '0 0 40px rgba(150, 180, 255, 0.4)' }}
                         >
                             new life awaits its moment
                         </motion.p>
 
-                        {/* Subtitle */}
+                        {/* Subtitle - Brighter */}
                         <motion.p
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.7, duration: 0.8 }}
-                            className="text-sm md:text-base tracking-[0.25em] text-white/50 mb-4 text-center"
+                            transition={{ delay: 0.6, duration: 0.8 }}
+                            className="text-base md:text-lg tracking-[0.2em] text-white/70 mb-4 text-center px-4"
                         >
                             New planets. New stars. New everything.
                         </motion.p>
@@ -89,20 +88,20 @@ export default function UniverseEnding() {
                         <motion.p
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.9, duration: 0.8 }}
-                            className="text-xs md:text-sm tracking-[0.35em] text-white/40 mb-20 uppercase text-center"
+                            transition={{ delay: 0.8, duration: 0.8 }}
+                            className="text-sm md:text-base tracking-[0.3em] text-white/60 mb-24 uppercase text-center px-4"
                         >
                             Waiting for the next big bang
                         </motion.p>
 
-                        {/* Final tagline */}
+                        {/* Final tagline - More visible */}
                         <motion.div
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 1.1, duration: 0.8 }}
-                            className="absolute bottom-16 flex flex-col items-center"
+                            transition={{ delay: 1.0, duration: 0.8 }}
+                            className="absolute bottom-12 md:bottom-16 flex flex-col items-center px-4"
                         >
-                            <p className="text-[10px] tracking-[0.3em] text-white/30 uppercase">
+                            <p className="text-xs tracking-[0.25em] text-white/50 uppercase text-center">
                                 This is the beginning of the end
                             </p>
                         </motion.div>
