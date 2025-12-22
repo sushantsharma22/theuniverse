@@ -14,6 +14,7 @@ interface ScrollState {
     activeLandmark: LandmarkData | null; // Currently visible landmark story
     landmarkOpacity: number; // Opacity for the UI panel (0-1)
     cameraZ: number; // Current camera Z position for ending detection
+    isAutoPlaying: boolean; // Auto-glide recording mode
 
     setProgress: (progress: number) => void;
     setIsScrolling: (isScrolling: boolean) => void;
@@ -21,6 +22,7 @@ interface ScrollState {
     setLandmark: (landmark: LandmarkData | null, opacity: number) => void;
     setCameraZ: (z: number) => void;
     updateSmoothVelocity: () => void;
+    setIsAutoPlaying: (playing: boolean) => void;
 }
 
 let lastProgress = 0;
@@ -34,6 +36,7 @@ export const useScrollStore = create<ScrollState>((set, get) => ({
     activeLandmark: null,
     landmarkOpacity: 0,
     cameraZ: 0,
+    isAutoPlaying: false,
 
     setProgress: (progress: number) => {
         const now = performance.now();
@@ -60,5 +63,6 @@ export const useScrollStore = create<ScrollState>((set, get) => ({
         // Smooth velocity with exponential decay
         const newSmoothVelocity = smoothVelocity + (velocity - smoothVelocity) * 0.1;
         set({ smoothVelocity: newSmoothVelocity < 0.001 ? 0 : newSmoothVelocity });
-    }
+    },
+    setIsAutoPlaying: (playing: boolean) => set({ isAutoPlaying: playing })
 }));

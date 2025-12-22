@@ -11,6 +11,7 @@ import StartScreen from '@/components/UI/StartScreen';
 import InfoPanel from '@/components/UI/InfoPanel';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 import UniverseEnding from '@/components/UI/UniverseEnding';
+import RecordingControls from '@/components/UI/RecordingControls';
 
 // Dynamic import Canvas
 const Scene = dynamic(() => import('@/components/Canvas/Scene'), {
@@ -30,6 +31,7 @@ export default function UniversePage() {
       <InfoPanel />
       <StartScreen />
       <UniverseEnding />
+      <RecordingControls />
     </>
   );
 }
