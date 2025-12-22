@@ -364,12 +364,9 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -5150),       // BUTTERFLY - pass through center
     new Vector3(0, 0, -5200),       // Buffer AFTER
 
-    // SHARP TURN: Left only
-    new Vector3(-80, 0, -5300),     // Turn LEFT
-    new Vector3(-120, 0, -5400),    // Peak
-    new Vector3(-60, 0, -5500),     // Coming back
-
-    // STRAIGHT to Sombrero
+    // STRAIGHT to Sombrero (no turn per user request)
+    new Vector3(0, 0, -5350),       // Void
+    new Vector3(0, 0, -5500),       // Void
     new Vector3(0, 0, -5650),       // Approaching
     new Vector3(0, 0, -5700),       // Buffer BEFORE
     new Vector3(0, 0, -5750),       // SOMBRERO - pass through center
@@ -386,13 +383,10 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -6350),       // BLACK HOLE - pass through center
     new Vector3(0, 0, -6400),       // Buffer AFTER
 
-    // SHARP TURN: Up-Left (final dramatic turn before Quasar)
-    new Vector3(-50, 40, -6500),    // Turn LEFT & UP
-    new Vector3(-80, 70, -6600),    // Peak
-    new Vector3(-40, 30, -6700),    // Coming back
-
-    // STRAIGHT to Quasar
-    new Vector3(0, 0, -6850),       // Approaching
+    // STRAIGHT to Quasar (no turn per user request)
+    new Vector3(0, 0, -6550),       // Void
+    new Vector3(0, 0, -6750),       // Void
+    new Vector3(0, 0, -6900),       // Buffer BEFORE
     new Vector3(0, 0, -6950),       // QUASAR - pass through center
     new Vector3(0, 0, -7050),       // Buffer AFTER
 
