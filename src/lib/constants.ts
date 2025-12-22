@@ -72,22 +72,8 @@ export const LANDMARKS: LandmarkData[] = [
         distanceTrigger: 80
     },
     {
-        id: 'black_hole',
-        position: new Vector3(0, 0, -1750), // RESET TO CENTER (y: 0) & ADJUSTED GAP
-        texture: '/textures/interstellar_blackhole.png',
-        scale: 400,
-        scaleX: 1.9,
-        title: 'Supermassive Black Hole',
-        type: 'Black Hole',
-        distance: '55 million light-years',
-        constellation: 'Virgo',
-        description: 'This is the first direct image of a black hole, located in Messier 87. It captures the shadow of the supermassive black hole and its accretion disk of superheated gas. The black hole has a mass 6.5 billion times that of our Sun.',
-        distanceTrigger: 100,
-        visibilityRange: 1000 // Visible from FAR away (ensures no black screen)
-    },
-    {
         id: 'galaxy',
-        position: new Vector3(0, 0, -2250), // CENTERED (y: 0)
+        position: new Vector3(0, 0, -1750), // NOW FIRST (after Nebula)
         texture: '/textures/The Sombrero Galaxy.jpg',
         scale: 500,
         scaleX: 1.8,
@@ -97,7 +83,21 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Virgo',
         description: 'The Sombrero Galaxy (M104) is a spiral galaxy in the constellation Virgo. It has a bright nucleus, an unusually large central bulge, and a prominent dust lane in its inclined disk, giving it the appearance of a sombrero.',
         distanceTrigger: 100,
-        visibilityRange: 900 // Visible from FAR away
+        visibilityRange: 900
+    },
+    {
+        id: 'black_hole',
+        position: new Vector3(0, 0, -2250), // NOW FINAL (Deepest visual)
+        texture: '/textures/blackhole_v2.jpg', // NEW V2 TEXTURE
+        scale: 400,
+        scaleX: 1.78, // 16:9 Aspect Ratio (1024x576)
+        title: 'Supermassive Black Hole',
+        type: 'Black Hole',
+        distance: '55 million light-years',
+        constellation: 'Virgo',
+        description: 'This is the first direct image of a black hole, located in Messier 87. It captures the shadow of the supermassive black hole and its accretion disk of superheated gas. The black hole has a mass 6.5 billion times that of our Sun.',
+        distanceTrigger: 100,
+        visibilityRange: 1000
     }
 ];
 
@@ -129,14 +129,13 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, -100, -1150),    // DEEP DIVE
     new Vector3(0, -100, -1250),    // BUTTERFLY REVEAL
 
-    // 6. TO BLACK HOLE (RESET TO Y=0 FOR SAFETY)
-    // Rise smoothly back to center 0,0 for perfect framing
+    // 6. TO GALAXY (Centered Rise)
     new Vector3(0, -100, -1350),    // Fly through Butterfly
     new Vector3(0, -20, -1450),     // RISING BACK TO CENTER...
     new Vector3(0, 0, -1550),       // CENTERED & LEVEL (y: 0)
-    new Vector3(0, 0, -1750),       // FACE THE BLACK HOLE (Straight Shot)
+    new Vector3(0, 0, -1750),       // SOMBRERO GALAXY REVEAL
 
-    // 7. TO GALAXY (FINAL LEG)
-    new Vector3(0, 0, -1950),       // Fly Through
-    new Vector3(0, 0, -2250)        // SOMBRERO GALAXY REVEAL
+    // 7. TO BLACK HOLE (Final Boss)
+    new Vector3(0, 0, -1950),       // Fly Through Galaxy
+    new Vector3(0, 0, -2250)        // BLACK HOLE REVEAL
 ];
