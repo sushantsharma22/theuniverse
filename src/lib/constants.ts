@@ -246,68 +246,103 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -100),
     new Vector3(0, 0, -350),        // BIG BANG (centered)
 
+
     // BIG BANG - straight approach
     new Vector3(0, 0, -350),        // BIG BANG - pass through center
+    new Vector3(0, 0, -450),        // Buffer straight (100u)
 
-    // STRAIGHT to Carbon Nebula, THEN turn
+    // STRAIGHT to Carbon Nebula
     new Vector3(0, 0, -650),        // Approaching
+    new Vector3(0, 0, -900),        // Buffer BEFORE (-950)
     new Vector3(0, 0, -950),        // CARBON NEBULA - pass through center
-    new Vector3(25, -20, -1050),    // Turn AFTER passing nebula
-    new Vector3(45, -35, -1150),    // Peak of turn
+    new Vector3(0, 0, -1000),       // Buffer AFTER (Force Z-axis tangent)
+
+    // Turn
+    new Vector3(25, -20, -1100),    // Turn AFTER passing
+    new Vector3(45, -35, -1150),    // Peak
     new Vector3(25, -20, -1250),    // Coming back
 
-    // STRAIGHT to Starbirth, THEN turn
+    // STRAIGHT to Starbirth
     new Vector3(0, 0, -1400),       // Approaching straight
+    new Vector3(0, 0, -1500),       // Buffer BEFORE
     new Vector3(0, 0, -1550),       // STARBIRTH - pass through center
-    new Vector3(-25, 25, -1650),    // Turn AFTER passing
+    new Vector3(0, 0, -1600),       // Buffer AFTER
+
+    // Turn
+    new Vector3(-25, 25, -1700),    // Turn AFTER passing
     new Vector3(-45, 40, -1750),    // Peak
     new Vector3(-25, 20, -1850),    // Coming back
 
-    // STRAIGHT to Pillars, THEN turn
+    // STRAIGHT to Pillars
     new Vector3(0, 0, -2000),       // Approaching straight
+    new Vector3(0, 0, -2100),       // Buffer BEFORE
     new Vector3(0, 0, -2150),       // PILLARS - pass through center
-    new Vector3(0, -25, -2250),     // Dive AFTER passing
+    new Vector3(0, 0, -2200),       // Buffer AFTER
+
+    // Turn
+    new Vector3(0, -25, -2300),     // Dive AFTER passing
     new Vector3(0, -40, -2350),     // Peak
     new Vector3(0, -20, -2450),     // Coming back
 
-    // STRAIGHT to Saturn, THEN turn
+    // STRAIGHT to Saturn
     new Vector3(0, 0, -2600),       // Approaching straight
+    new Vector3(0, 0, -2700),       // Buffer BEFORE
     new Vector3(0, 0, -2750),       // SATURN - pass through center
-    new Vector3(30, 25, -2850),     // Turn AFTER passing
+    new Vector3(0, 0, -2800),       // Buffer AFTER
+
+    // Turn
+    new Vector3(30, 25, -2900),     // Turn AFTER passing
     new Vector3(50, 40, -2950),     // Peak
     new Vector3(25, 20, -3050),     // Coming back
 
-    // STRAIGHT to Earth, THEN turn
+    // STRAIGHT to Earth
     new Vector3(0, 0, -3200),       // Approaching straight
+    new Vector3(0, 0, -3300),       // Buffer BEFORE
     new Vector3(0, 0, -3350),       // EARTH - pass through center
-    new Vector3(-25, -20, -3450),   // Turn AFTER passing
+    new Vector3(0, 0, -3400),       // Buffer AFTER
+
+    // Turn
+    new Vector3(-25, -20, -3500),   // Turn AFTER passing
     new Vector3(-40, -35, -3550),   // Peak
     new Vector3(-20, -15, -3650),   // Coming back
 
-    // STRAIGHT to Eye of God, THEN turn
+    // STRAIGHT to Eye of God
     new Vector3(0, 0, -3800),       // Approaching straight
+    new Vector3(0, 0, -3900),       // Buffer BEFORE
     new Vector3(0, 0, -3950),       // EYE OF GOD - pass through center
-    new Vector3(25, 25, -4050),     // Turn AFTER passing
+    new Vector3(0, 0, -4000),       // Buffer AFTER
+
+    // Turn
+    new Vector3(25, 25, -4100),     // Turn AFTER passing
     new Vector3(40, 40, -4150),     // Peak
     new Vector3(20, 20, -4250),     // Coming back
 
-    // STRAIGHT to Butterfly, THEN turn
+    // STRAIGHT to Butterfly
     new Vector3(0, 0, -4400),       // Approaching straight
+    new Vector3(0, 0, -4500),       // Buffer BEFORE
     new Vector3(0, 0, -4550),       // BUTTERFLY - pass through center
-    new Vector3(-25, -20, -4650),   // Turn AFTER passing
-    new Vector3(-40, -35, -4750),   // Peak
-    new Vector3(-20, -18, -4850),   // Coming back
+    new Vector3(0, 0, -4600),       // Buffer AFTER
 
-    // STRAIGHT to Sombrero, THEN turn
-    new Vector3(0, 0, -5000),       // Approaching straight
+    // FIXED: STRAIGHT LINE between Butterfly and Sombrero (User Request)
+    new Vector3(0, 0, -4700),       // VOID: Straight
+    new Vector3(0, 0, -4850),       // VOID: Straight
+    new Vector3(0, 0, -5000),       // VOID: Straight
+
+    // STRAIGHT to Sombrero
+    new Vector3(0, 0, -5100),       // Buffer BEFORE
     new Vector3(0, 0, -5150),       // SOMBRERO - pass through center
-    new Vector3(25, 20, -5250),     // Turn AFTER passing (user requested turn here)
+    new Vector3(0, 0, -5200),       // Buffer AFTER
+
+    // Turn between Sombrero and Black Hole (Requested)
+    new Vector3(25, 20, -5300),     // Turn AFTER passing
     new Vector3(40, 35, -5350),     // Peak
     new Vector3(20, 15, -5450),     // Coming back
 
     // STRAIGHT to Black Hole
-    new Vector3(0, 0, -5600),       // Approaching straight
+    new Vector3(0, 0, -5600),       // Approaching
+    new Vector3(0, 0, -5700),       // Buffer BEFORE
     new Vector3(0, 0, -5750),       // BLACK HOLE - pass through center
+    new Vector3(0, 0, -5800),       // Buffer AFTER
 
     // STRAIGHT from here - Quasar, Wormhole, End
     new Vector3(0, 0, -5950),
