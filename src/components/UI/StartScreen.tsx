@@ -41,7 +41,7 @@ export default function StartScreen() {
                         A Journey Through 13.8 Billion Years
                     </motion.p>
 
-                    {/* Scroll hint REMOVED */}\n
+                    {/* Scroll hint REMOVED */}
                 </motion.div>
             )}
         </AnimatePresence>

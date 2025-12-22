@@ -90,7 +90,7 @@ export default function UniverseEnding() {
                             <p className="text-sm md:text-base tracking-[0.15em] text-white/40">
                                 New planets. New stars. New everything.
                             </p>
-                        </motion.div>\n
+                        </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
