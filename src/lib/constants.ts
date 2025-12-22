@@ -35,8 +35,8 @@ export interface LandmarkData {
 export const LANDMARKS: LandmarkData[] = [
     {
         id: 'pillars',
-        position: new Vector3(0, 0, -250), // Moved closer from -320
-        texture: '/textures/pillars_of_creation.jpg', // New high-res texture
+        position: new Vector3(0, 0, -600), // Pushed WAY back for "3-4 scrolls nothing"
+        texture: '/textures/pillars_of_creation.jpg',
         scale: 150,
         title: 'Pillars of Creation',
         type: 'Emission Nebula',
@@ -47,7 +47,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'eye_of_god',
-        position: new Vector3(0, 0, -550),
+        position: new Vector3(0, 0, -1400), // Deep separation
         texture: '/textures/eye_of_god.png',
         scale: 250,
         title: 'Eye of God',
@@ -59,7 +59,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'butterfly',
-        position: new Vector3(0, -100, -850), // DEEP & DOWN (Dive target)
+        position: new Vector3(0, -100, -2200), // Abyss
         texture: '/textures/Butterfly_nebula.jpg',
         scale: 300,
         title: 'Butterfly Nebula',
@@ -71,30 +71,42 @@ export const LANDMARKS: LandmarkData[] = [
     }
 ];
 
-// Camera path waypoints - REFINED STRAIGHTS
+// Camera path waypoints - SCRIPTED CINEMA
 export const WAYPOINTS: Vector3[] = [
+    // 1. "START UNIVERSE FOR 3-4 SCROLLS NOTHING" 
+    // Just traveling through stars
     new Vector3(0, 0, 100),         // START
-    new Vector3(-10, 2, 50),        // Gentle Left
-    new Vector3(10, -2, 0),         // Gentle Right
-    new Vector3(0, 0, -50),         // CENTER STRAIGHT
+    new Vector3(0, 0, -100),        // Straight...
+    new Vector3(-20, 5, -300),      // Slight drift left...
 
-    // APPROACHING PILLARS (Sharp turn -> Straighten)
-    new Vector3(35, -2, -120),      // Sharp Right Turn (Reduced from 60)
-    new Vector3(15, 0, -180),       // Aligning...
-    new Vector3(0, 0, -220),        // STRAIGHT ON (Before Pillars)
-    new Vector3(0, 0, -250),        // PILLARS FOCUS (Center)
+    // 2. "5 SCROLL IS SHARP RIGHT"
+    new Vector3(60, -2, -450),      // SHARP RIGHT TURN
+    new Vector3(40, 0, -500),       // Banking...
 
-    // THROUGH PILLARS & TRANSIT (Sharp Left -> Straighten)
-    new Vector3(0, 0, -300),        // Fly Through Straight
-    new Vector3(-35, 5, -380),      // Sharp Left Turn (Reduced from 60)
-    new Vector3(-10, 0, -450),      // Aligning...
+    // 3. "6TH SCROLL WE SEE DISTANT CREATION IN MIDDLE"
+    // "GO STRAIGHT AND IT APPEAR"
+    new Vector3(0, 0, -550),        // CENTERED & STRAIGHT (Aligning for -600)
+    new Vector3(0, 0, -600),        // PILLARS FOCUS
 
-    // STRAIGHT APPROACH TO EYE
-    new Vector3(0, 0, -500),        // STRAIGHT ON (Long approach)
-    new Vector3(0, 0, -550),        // EYE FOCUS
+    // 4. "THROUGH WE GO 2 SCROLLS STRAIGHTS"
+    new Vector3(0, 0, -800),        // Flying straight through...
 
-    // STRAIGHT -> SMOOTH DIVE
-    new Vector3(0, 0, -650),        // Fly Through Eye (Straight Long)
-    new Vector3(0, -30, -750),      // Start Dive Smoothly
-    new Vector3(0, -100, -850)      // BUTTERFLY FOCUS (Bottom)
+    // 5. "THEN ON 3 SCROLL SHARP LEFT"
+    new Vector3(-60, 5, -950),      // SHARP LEFT TURN
+    new Vector3(-40, -5, -1100),    // Banking...
+
+    // 6. "THEN STRAIGHT 1 SCROLL... 2ND SCROLL WE SEE EYE IN MIDDLE"
+    new Vector3(0, 0, -1250),       // CENTERED & STRAIGHT (Aligning for -1400)
+    new Vector3(0, 0, -1400),       // EYE FOCUS
+
+    // 7. "THROUGH WE GO 2 SCROLLS STRAIGHT"
+    new Vector3(0, 0, -1600),       // Flying straight through...
+
+    // 8. "THEN 3 BOTTOM DIVE"
+    new Vector3(0, -20, -1700),     // Start Dive
+    new Vector3(0, -100, -1900),    // DEEP DIVE
+
+    // 9. "4 LITTLE STRAIGHT... 5 WE START SEEING NEBULA"
+    new Vector3(0, -100, -2050),    // Straight leveling at bottom...
+    new Vector3(0, -100, -2200)     // BUTTERFLY FOCUS
 ];
