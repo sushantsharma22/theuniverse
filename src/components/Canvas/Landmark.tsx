@@ -73,55 +73,71 @@ export default function Landmark({ data }: LandmarkProps) {
     useFrame((state) => {
         if (!meshRef.current) return;
 
-        // Animate
+        // Animate shader time
         (meshRef.current.material as THREE.ShaderMaterial).uniforms.uTime.value = state.clock.elapsedTime;
 
         // Distance logic
         const dist = camera.position.distanceTo(meshRef.current.position);
+        const originalPos = data.position;
 
-        // 1. DYNAMIC SCALE (Small -> Big)
-        // Similar logic to Cloud.tsx but generic
-        const proximityLimit = 250;
-        const proximityFactor = Math.max(0, proximityLimit - dist);
-        // Grow up to 2.5x base scale
-        const targetScale = data.scale + (proximityFactor * (data.scale / 100));
+        // CINEMATIC LOGIC STATE MACHINE
+        // 1. Far Away (> 400): Invisible/Small
+        // 2. Approach (150 - 400): Growing, Centered
+        // 3. Focus Zone (60 - 150): Slide Right, Text Left, Full Size
+        // 4. Fly Through (< 60): Re-center, Fade Out, Fly Through
 
-        currentScale.current += (targetScale - currentScale.current) * 0.04;
-        meshRef.current.scale.setScalar(currentScale.current);
-
-        // 2. FADE & UI LOGIC
+        let targetScale = data.scale;
         let targetOpacity = 0;
         let mistIntensity = 0;
+        let targetX = originalPos.x;
         let uiOpacity = 0;
 
         if (dist > 400) {
             targetOpacity = 0;
-        } else if (dist > 150) {
-            // Approach
-            targetOpacity = 0.8 * (1.0 - (dist - 150) / 250);
-        } else if (dist > 20) {
-            // Close - Trigger UI
-            targetOpacity = 0.9;
-            mistIntensity = (150 - dist) / 130;
+        }
+        else if (dist > 150) {
+            // APPROACH PHASE
+            // Grow from base scale to 2x base scale
+            const approachProgress = 1.0 - ((dist - 150) / 250);
+            targetScale = data.scale + (approachProgress * data.scale * 1.5);
+            targetOpacity = 0.8 * approachProgress;
+            targetX = originalPos.x;
+        }
+        else if (dist > 60) {
+            // FOCUS PHASE (Cinematic Moment)
+            // Slide to Right (+30 units) so text can be on Left
+            targetX = originalPos.x + 40;
+            targetScale = data.scale * 3.5; // Massive
+            targetOpacity = 1.0;
 
-            // UI Opacity (fades in when closer than distanceTrigger)
-            if (dist < data.distanceTrigger) {
-                uiOpacity = Math.min(1, (data.distanceTrigger - dist) / 20);
-                // Inform store we are active
-                setLandmark(data, uiOpacity);
-            } else {
-                setLandmark(null, 0);
-            }
-        } else {
-            // Inside
-            targetOpacity = dist / 20;
-            setLandmark(data, 0); // Hide UI when too close/inside
+            // UI Fades in
+            uiOpacity = 1.0;
+            setLandmark(data, uiOpacity);
+        }
+        else {
+            // EXIT / FLY THROUGH PHASE
+            targetX = originalPos.x; // Back to center to fly through
+            targetOpacity = dist / 60; // Fade out as we get very close
+            mistIntensity = (60 - dist) / 50; // Mist increases
+            setLandmark(null, 0); // Hide UI
         }
 
+        // Smooth Interpolation for Cinematic Feel
+        const lerpSpeed = 0.04;
+
+        // Position X (Using simple lerp for smooth slide)
+        meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, targetX, lerpSpeed);
+
+        // Scale
+        currentScale.current = THREE.MathUtils.lerp(currentScale.current, targetScale, lerpSpeed);
+        meshRef.current.scale.setScalar(currentScale.current);
+
+        // Opacity & Mist
         const mat = meshRef.current.material as THREE.ShaderMaterial;
         mat.uniforms.uOpacity.value = THREE.MathUtils.lerp(mat.uniforms.uOpacity.value, targetOpacity, 0.05);
         mat.uniforms.uMist.value = mistIntensity;
 
+        // Always face camera
         meshRef.current.lookAt(camera.position);
     });
 
