@@ -31,19 +31,10 @@ export default function Landmark({ data }: LandmarkProps) {
         },
         vertexShader: `
             varying vec2 vUv;
-            varying float vElevation;
-            uniform float uTime;
 
             void main() {
                 vUv = uv;
-                
-                // Slow, deep breathing movement
-                vec3 pos = position;
-                // Warping the plane slightly like a nebula (from Cloud.tsx)
-                float warp = sin(pos.x * 1.5 + uTime * 0.3) * sin(pos.y * 1.5 + uTime * 0.2);
-                pos.z += warp * 5.0; 
-                
-                gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
             }
         `,
         fragmentShader: `
@@ -59,14 +50,14 @@ export default function Landmark({ data }: LandmarkProps) {
                 // Glass/Cloud effect
                 vec3 finalColor = mix(texColor.rgb, uColor, 0.15);
                 
-                // Radial fade for soft edges
+                // Radial fade
                 float dist = distance(vUv, vec2(0.5));
                 float edgeFade = 1.0 - smoothstep(0.2, 0.5, dist);
                 
-                // Mist interaction - texture gets "softer" with more mist
+                // Mist interaction
                 float alpha = texColor.a * edgeFade;
                 
-                // Boost brightness for "internal glow"
+                // Internal glow
                 finalColor *= 1.3 + uMist * 0.5;
                 
                 // Final alpha fade
@@ -91,63 +82,61 @@ export default function Landmark({ data }: LandmarkProps) {
         const originalPos = data.position;
 
         // CINEMATIC LOGIC STATE MACHINE
+        // 1. Far Away (> 400): Invisible/Small
+        // 2. Approach (150 - 400): Growing, Centered
+        // 3. Focus Zone (60 - 150): Slide Right, Text Left, Full Size
+        // 4. Fly Through (< 60): Re-center, Fade Out, Fly Through
+
         let targetScale = data.scale;
         let targetOpacity = 0;
         let mistIntensity = 0;
         let targetX = originalPos.x;
         let uiOpacity = 0;
 
-        if (dist > 250) {
+        if (dist > 200) {
             targetOpacity = 0;
-            setLandmark(null, 0);
+            setLandmark(null, 0); // Ensure UI is hidden
         }
         else if (dist > 150) {
-            // APPROACH PHASE (Visible dimly)
-            // Range: 150 to 250
-            const approachProgress = 1.0 - ((dist - 150) / 100);
-            // Dynamic Scale: massive growth as we get closer (from Cloud.tsx)
+            // APPROACH PHASE
+            // Grow from base scale to 2x base scale
+            // Range: 150 to 200
+            const approachProgress = 1.0 - ((dist - 150) / 50);
             targetScale = data.scale + (approachProgress * data.scale * 1.5);
             targetOpacity = 0.8 * approachProgress;
             targetX = originalPos.x;
-            setLandmark(null, 0);
+            setLandmark(null, 0); // Ensure UI is hidden during approach
         }
-        else if (dist > 40) {
+        else if (dist > 60) {
             // FOCUS PHASE (Cinematic Moment)
-            // Adjusted distance logic to be smoother
-            const focusProgress = 1.0 - ((dist - 40) / 110);
-
-            // Standard Slide for Text
-            targetX = originalPos.x + 30;
-
-            // Continue growing massive
-            targetScale = data.scale * 3.0;
-
+            // Slide to Right (+30 units) so text can be on Left
+            targetX = originalPos.x + 40;
+            targetScale = data.scale * 3.5; // Massive
             targetOpacity = 1.0;
-            mistIntensity = focusProgress * 0.5; // Slight mist adding up
 
             // UI Fades in
             uiOpacity = 1.0;
             setLandmark(data, uiOpacity);
         }
         else {
-            // EXIT / FLY THROUGH PHASE (Inside the cloud)
-            targetX = originalPos.x; // Re-center to fly through
-
-            // Improved fade out logic from Cloud.tsx (dist / 20)
-            targetOpacity = dist / 40;
-
-            // Max Mist
-            mistIntensity = 1.0;
-            setLandmark(null, 0);
+            // EXIT / FLY THROUGH PHASE
+            targetX = originalPos.x; // Back to center to fly through
+            targetOpacity = dist / 60; // Fade out as we get very close
+            mistIntensity = (60 - dist) / 50; // Mist increases
+            setLandmark(null, 0); // Hide UI
         }
 
-        // Smooth Interpolation
+        // Smooth Interpolation for Cinematic Feel
         const lerpSpeed = 0.04;
+
+        // Position X (Using simple lerp for smooth slide)
         meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, targetX, lerpSpeed);
 
+        // Scale
         currentScale.current = THREE.MathUtils.lerp(currentScale.current, targetScale, lerpSpeed);
         meshRef.current.scale.setScalar(currentScale.current);
 
+        // Opacity & Mist
         const mat = meshRef.current.material as THREE.ShaderMaterial;
         mat.uniforms.uOpacity.value = THREE.MathUtils.lerp(mat.uniforms.uOpacity.value, targetOpacity, 0.05);
         mat.uniforms.uMist.value = mistIntensity;
