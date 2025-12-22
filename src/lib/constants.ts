@@ -59,7 +59,7 @@ export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'carbon_nebula',
-        position: new Vector3(0, 60, -950),   // Offset UP to match upward turn
+        position: new Vector3(0, 0, -950),
         texture: `${BASE_PATH}/textures/carbnebula.jpg`,
         scale: 250,
         title: 'Carbon Nebula',
@@ -75,7 +75,7 @@ export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'ashes_of_first_stars',
-        position: new Vector3(50, -40, -1550), // Offset RIGHT+DOWN to match turn
+        position: new Vector3(0, 0, -1550),
         texture: `${BASE_PATH}/textures/theashesofthefirststar.jpg`,
         scale: 280,
         title: 'Ashes of the First Stars',
@@ -91,7 +91,7 @@ export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'starbirth',
-        position: new Vector3(-50, 45, -2150), // Offset LEFT+UP to match turn
+        position: new Vector3(0, 0, -2150),
         texture: `${BASE_PATH}/textures/starbirth.jpg`,
         scale: 280,
         title: 'Seagull Nebula',
@@ -107,7 +107,7 @@ export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'pillars',
-        position: new Vector3(0, -50, -2750),  // Offset DOWN to match turn
+        position: new Vector3(0, 0, -2750),
         texture: `${BASE_PATH}/textures/pillars_of_creation.jpg`,
         scale: 300,
         title: 'Pillars of Creation',
@@ -123,7 +123,7 @@ export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'saturn',
-        position: new Vector3(55, 45, -3350),  // Offset RIGHT+UP to match turn
+        position: new Vector3(0, 0, -3350),
         texture: `${BASE_PATH}/textures/saturn.jpg`,
         scale: 180,
         title: 'Saturn',
@@ -139,7 +139,7 @@ export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'earth',
-        position: new Vector3(-45, -40, -3950), // Offset LEFT+DOWN to match turn
+        position: new Vector3(0, 0, -3950),
         texture: `${BASE_PATH}/textures/earth.jpg`,
         scale: 150,
         title: 'Earth',
@@ -155,7 +155,7 @@ export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'eye_of_god',
-        position: new Vector3(0, 50, -4550),   // Offset UP to match turn
+        position: new Vector3(0, 0, -4550),
         texture: `${BASE_PATH}/textures/eye_of_god.png`,
         scale: 350,
         title: 'Eye of God',
@@ -171,7 +171,7 @@ export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'butterfly',
-        position: new Vector3(60, 0, -5150),   // Offset RIGHT to match turn
+        position: new Vector3(0, 0, -5150),
         texture: `${BASE_PATH}/textures/Butterfly_nebula.jpg`,
         scale: 380,
         title: 'Butterfly Nebula',
@@ -204,7 +204,7 @@ export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'black_hole',
-        position: new Vector3(45, -40, -6350), // Offset RIGHT+DOWN to match turn
+        position: new Vector3(0, 0, -6350),
         texture: `${BASE_PATH}/textures/blackhole.jpg`,
         scale: 400,
         scaleX: 1.78,
@@ -277,11 +277,11 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 120, -675),      // Peak height (SHARPER arc)
     new Vector3(0, 40, -800),       // Descent
 
-    // Approach Carbon Nebula (offset at 0, 60)
-    new Vector3(0, 60, -850),       // Match landmark Y offset
-    new Vector3(0, 60, -900),       // Buffer BEFORE
-    new Vector3(0, 60, -950),       // CARBON NEBULA - pass through center
-    new Vector3(0, 60, -1000),      // Buffer AFTER
+    // Approach Carbon Nebula - return to center
+    new Vector3(0, 0, -850),        // Return to center
+    new Vector3(0, 0, -900),        // Buffer BEFORE
+    new Vector3(0, 0, -950),        // CARBON NEBULA - pass through center
+    new Vector3(0, 0, -1000),       // Buffer AFTER
 
     // ═══════════════════════════════════════════════════════════════════════════
     // SHARP TURN: Down-Right
@@ -290,11 +290,11 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(100, -80, -1150),   // Peak
     new Vector3(50, -40, -1250),    // Coming back
 
-    // Approach Ashes (offset at 50, -40)
-    new Vector3(50, -40, -1400),    // Match landmark offset
-    new Vector3(50, -40, -1500),    // Buffer BEFORE
-    new Vector3(50, -40, -1550),    // ASHES - pass through center
-    new Vector3(50, -40, -1600),    // Buffer AFTER
+    // Approach Ashes - return to center
+    new Vector3(0, 0, -1400),       // Return to center
+    new Vector3(0, 0, -1500),       // Buffer BEFORE
+    new Vector3(0, 0, -1550),       // ASHES - pass through center
+    new Vector3(0, 0, -1600),       // Buffer AFTER
 
     // ═══════════════════════════════════════════════════════════════════════════
     // SHARP TURN: Up-Left
@@ -303,66 +303,66 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(-100, 90, -1750),   // Peak
     new Vector3(-50, 50, -1850),    // Coming back
 
-    // Approach Starbirth (offset at -50, 45)
-    new Vector3(-50, 45, -2000),    // Match landmark offset
-    new Vector3(-50, 45, -2100),    // Buffer BEFORE
-    new Vector3(-50, 45, -2150),    // STARBIRTH - pass through center
-    new Vector3(-50, 45, -2200),    // Buffer AFTER
+    // Approach Starbirth - return to center
+    new Vector3(0, 0, -2000),       // Return to center
+    new Vector3(0, 0, -2100),       // Buffer BEFORE
+    new Vector3(0, 0, -2150),       // STARBIRTH - pass through center
+    new Vector3(0, 0, -2200),       // Buffer AFTER
 
     // SHARP TURN: Down only
     new Vector3(0, -70, -2300),     // Dive DOWN
     new Vector3(0, -100, -2350),    // Peak
     new Vector3(0, -50, -2450),     // Coming back
 
-    // Approach Pillars (offset at 0, -50)
-    new Vector3(0, -50, -2600),     // Match landmark offset
-    new Vector3(0, -50, -2700),     // Buffer BEFORE
-    new Vector3(0, -50, -2750),     // PILLARS - pass through center
-    new Vector3(0, -50, -2800),     // Buffer AFTER
+    // Approach Pillars - return to center
+    new Vector3(0, 0, -2600),       // Return to center
+    new Vector3(0, 0, -2700),       // Buffer BEFORE
+    new Vector3(0, 0, -2750),       // PILLARS - pass through center
+    new Vector3(0, 0, -2800),       // Buffer AFTER
 
     // SHARP TURN: Up-Right
     new Vector3(70, 60, -2900),     // Turn RIGHT & UP
     new Vector3(110, 90, -2950),    // Peak
     new Vector3(60, 50, -3050),     // Coming back
 
-    // Approach Saturn (offset at 55, 45)
-    new Vector3(55, 45, -3200),     // Match landmark offset
-    new Vector3(55, 45, -3300),     // Buffer BEFORE
-    new Vector3(55, 45, -3350),     // SATURN - pass through center
-    new Vector3(55, 45, -3400),     // Buffer AFTER
+    // Approach Saturn - return to center
+    new Vector3(0, 0, -3200),       // Return to center
+    new Vector3(0, 0, -3300),       // Buffer BEFORE
+    new Vector3(0, 0, -3350),       // SATURN - pass through center
+    new Vector3(0, 0, -3400),       // Buffer AFTER
 
     // SHARP TURN: Down-Left
     new Vector3(-60, -50, -3500),   // Turn LEFT & DOWN
     new Vector3(-90, -80, -3550),   // Peak
     new Vector3(-50, -40, -3650),   // Coming back
 
-    // Approach Earth (offset at -45, -40)
-    new Vector3(-45, -40, -3800),   // Match landmark offset
-    new Vector3(-45, -40, -3900),   // Buffer BEFORE
-    new Vector3(-45, -40, -3950),   // EARTH - pass through center
-    new Vector3(-45, -40, -4000),   // Buffer AFTER
+    // Approach Earth - return to center
+    new Vector3(0, 0, -3800),       // Return to center
+    new Vector3(0, 0, -3900),       // Buffer BEFORE
+    new Vector3(0, 0, -3950),       // EARTH - pass through center
+    new Vector3(0, 0, -4000),       // Buffer AFTER
 
     // SHARP TURN: Up only
     new Vector3(0, 70, -4100),      // Rise UP
     new Vector3(0, 100, -4150),     // Peak
     new Vector3(0, 50, -4250),      // Coming back
 
-    // Approach Eye of God (offset at 0, 50)
-    new Vector3(0, 50, -4400),      // Match landmark offset
-    new Vector3(0, 50, -4500),      // Buffer BEFORE
-    new Vector3(0, 50, -4550),      // EYE OF GOD - pass through center
-    new Vector3(0, 50, -4600),      // Buffer AFTER
+    // Approach Eye of God - return to center
+    new Vector3(0, 0, -4400),       // Return to center
+    new Vector3(0, 0, -4500),       // Buffer BEFORE
+    new Vector3(0, 0, -4550),       // EYE OF GOD - pass through center
+    new Vector3(0, 0, -4600),       // Buffer AFTER
 
     // SHARP TURN: Right only
     new Vector3(80, 0, -4700),      // Turn RIGHT
     new Vector3(120, 0, -4750),     // Peak
     new Vector3(60, 0, -4850),      // Coming back
 
-    // Approach Butterfly (offset at 60, 0)
-    new Vector3(60, 0, -5000),      // Match landmark offset
-    new Vector3(60, 0, -5100),      // Buffer BEFORE
-    new Vector3(60, 0, -5150),      // BUTTERFLY - pass through center
-    new Vector3(60, 0, -5200),      // Buffer AFTER
+    // Approach Butterfly - return to center
+    new Vector3(0, 0, -5000),       // Return to center
+    new Vector3(0, 0, -5100),       // Buffer BEFORE
+    new Vector3(0, 0, -5150),       // BUTTERFLY - pass through center
+    new Vector3(0, 0, -5200),       // Buffer AFTER
 
     // STRAIGHT to Sombrero (no turn per user request)
     new Vector3(0, 0, -5350),       // Void
@@ -377,11 +377,11 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(90, -80, -5950),    // Peak
     new Vector3(50, -40, -6050),    // Coming back
 
-    // Approach Black Hole (offset at 45, -40)
-    new Vector3(45, -40, -6200),    // Match landmark offset
-    new Vector3(45, -40, -6300),    // Buffer BEFORE
-    new Vector3(45, -40, -6350),    // BLACK HOLE - pass through center
-    new Vector3(45, -40, -6400),    // Buffer AFTER
+    // Approach Black Hole - return to center
+    new Vector3(0, 0, -6200),       // Return to center
+    new Vector3(0, 0, -6300),       // Buffer BEFORE
+    new Vector3(0, 0, -6350),       // BLACK HOLE - pass through center
+    new Vector3(0, 0, -6400),       // Buffer AFTER
 
     // STRAIGHT to Quasar (no turn per user request)
     new Vector3(0, 0, -6550),       // Void
