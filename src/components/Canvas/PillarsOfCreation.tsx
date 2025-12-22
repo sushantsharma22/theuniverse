@@ -162,7 +162,7 @@ export default function PillarsOfCreation() {
             {/* Layer 2.5: Duplicate Main for Intensity (Glassy core) */}
             <mesh position={[0, 0, 5]}>
                 <planeGeometry args={[145, 195]} />
-                <meshBasicMaterial {...matProps} opacity={0} color="#aaaaff" blending={THREE.ScreenBlending} />
+                <meshBasicMaterial {...matProps} opacity={0} color="#aaaaff" blending={THREE.AdditiveBlending} />
             </mesh>
 
 
