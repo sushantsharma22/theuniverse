@@ -244,71 +244,71 @@ export const WAYPOINTS: Vector3[] = [
     // 1. START - Centered
     new Vector3(0, 0, 100),
     new Vector3(0, 0, -100),
-    new Vector3(0, 0, -350),        // BIG BANG (straight through center)
+    new Vector3(0, 0, -350),        // BIG BANG (centered)
 
-    // STRAIGHT to Carbon Nebula (through center)
-    new Vector3(0, 0, -500),
-    new Vector3(0, 0, -700),
-    new Vector3(0, 0, -850),
-    new Vector3(0, 0, -950),        // CARBON NEBULA (straight through center)
+    // VOID: Sharp RIGHT + DOWN turn
+    new Vector3(40, -30, -500),     // Start turning RIGHT + DOWN
+    new Vector3(100, -60, -650),    // Peak of turn
+    new Vector3(60, -40, -800),     // Coming back to center
+    new Vector3(0, 0, -950),        // CARBON NEBULA (centered)
 
-    // STRAIGHT to Starbirth (through center)
-    new Vector3(0, 0, -1100),
-    new Vector3(0, 0, -1300),
-    new Vector3(0, 0, -1450),
-    new Vector3(0, 0, -1550),       // STARBIRTH (straight through center)
+    // VOID: Sharp LEFT + UP turn
+    new Vector3(-50, 40, -1100),    // Start turning LEFT + UP
+    new Vector3(-120, 80, -1250),   // Peak of turn
+    new Vector3(-60, 50, -1400),    // Coming back to center
+    new Vector3(0, 0, -1550),       // STARBIRTH (centered)
 
-    // STRAIGHT to Pillars (through center)
-    new Vector3(0, 0, -1700),
-    new Vector3(0, 0, -1900),
-    new Vector3(0, 0, -2050),
-    new Vector3(0, 0, -2150),       // PILLARS (straight through center)
+    // VOID: DEEP DIVE DOWN
+    new Vector3(0, -30, -1700),     // Start diving
+    new Vector3(0, -100, -1850),    // Peak of dive
+    new Vector3(0, -60, -2000),     // Coming back up
+    new Vector3(0, 0, -2150),       // PILLARS (centered)
 
-    // STRAIGHT to Saturn (through center)
-    new Vector3(0, 0, -2350),
-    new Vector3(0, 0, -2500),
-    new Vector3(0, 0, -2650),
-    new Vector3(0, 0, -2750),       // SATURN (straight through center)
+    // VOID: Sharp RIGHT + UP turn
+    new Vector3(50, 40, -2350),     // Start turning RIGHT + UP
+    new Vector3(100, 80, -2500),    // Peak of turn
+    new Vector3(60, 50, -2650),     // Coming back to center
+    new Vector3(0, 0, -2750),       // SATURN (centered)
 
-    // STRAIGHT to Earth (through center)
-    new Vector3(0, 0, -2900),
-    new Vector3(0, 0, -3100),
-    new Vector3(0, 0, -3250),
-    new Vector3(0, 0, -3350),       // EARTH (straight through center)
+    // VOID: Sharp LEFT + DOWN turn
+    new Vector3(-40, -30, -2900),   // Start turning LEFT + DOWN
+    new Vector3(-100, -60, -3100),  // Peak of turn
+    new Vector3(-50, -30, -3250),   // Coming back to center
+    new Vector3(0, 0, -3350),       // EARTH (centered)
 
-    // STRAIGHT to Eye of God (through center)
-    new Vector3(0, 0, -3550),
-    new Vector3(0, 0, -3750),
-    new Vector3(0, 0, -3880),
-    new Vector3(0, 0, -3950),       // EYE OF GOD (straight through center)
+    // VOID: Sharp RIGHT + UP turn
+    new Vector3(40, 40, -3550),     // Start turning RIGHT + UP
+    new Vector3(80, 80, -3750),     // Peak of turn
+    new Vector3(40, 40, -3880),     // Coming back to center
+    new Vector3(0, 0, -3950),       // EYE OF GOD (centered)
 
-    // STRAIGHT to Butterfly (through center)
-    new Vector3(0, 0, -4150),
-    new Vector3(0, 0, -4350),
-    new Vector3(0, 0, -4480),
-    new Vector3(0, 0, -4550),       // BUTTERFLY (straight through center)
+    // VOID: Sharp LEFT + DOWN turn
+    new Vector3(-40, -30, -4150),   // Start turning LEFT + DOWN
+    new Vector3(-80, -80, -4350),   // Peak of turn
+    new Vector3(-40, -40, -4480),   // Coming back to center
+    new Vector3(0, 0, -4550),       // BUTTERFLY (centered)
 
-    // STRAIGHT to Sombrero (through center)
-    new Vector3(0, 0, -4750),
-    new Vector3(0, 0, -4900),
-    new Vector3(0, 0, -5050),
-    new Vector3(0, 0, -5150),       // SOMBRERO GALAXY (straight through center)
+    // VOID: Sharp RIGHT + UP turn
+    new Vector3(50, 50, -4750),     // Start turning RIGHT + UP
+    new Vector3(100, 80, -4950),    // Peak of turn
+    new Vector3(50, 40, -5080),     // Coming back to center
+    new Vector3(0, 0, -5150),       // SOMBRERO (centered)
 
-    // ONE TURN between Sombrero and Black Hole
-    new Vector3(15, 12, -5300),     // Start turning
-    new Vector3(25, 20, -5450),     // Peak of turn
-    new Vector3(15, 12, -5600),     // Coming back
-    new Vector3(0, 0, -5750),       // BLACK HOLE (straight through center)
+    // VOID: ONE TURN between Sombrero and Black Hole
+    new Vector3(40, 30, -5300),     // Start turning
+    new Vector3(70, 60, -5450),     // Peak of turn
+    new Vector3(40, 30, -5600),     // Coming back to center
+    new Vector3(0, 0, -5750),       // BLACK HOLE (centered)
 
-    // STRAIGHT to Quasar (through center)
+    // VOID: Straight
     new Vector3(0, 0, -5950),
     new Vector3(0, 0, -6150),
-    new Vector3(0, 0, -6350),       // QUASAR (straight through center)
+    new Vector3(0, 0, -6350),       // QUASAR (centered)
 
-    // STRAIGHT to Wormhole (through center)
+    // VOID: Straight to wormhole
     new Vector3(0, 0, -6550),
     new Vector3(0, 0, -6750),
-    new Vector3(0, 0, -6950),       // WORMHOLE (straight through center)
+    new Vector3(0, 0, -6950),       // WORMHOLE (centered)
 
     // INTO THE VOID - Flash + End
     new Vector3(0, 0, -7050),
