@@ -65,92 +65,53 @@ export default function PillarsOfCreation() {
     useFrame((state) => {
         if (!groupRef.current) return;
 
-        // 1. BILLBOARD LOGIC (Always face camera)
+        // 1. BILLBOARD LOGIC
         groupRef.current.lookAt(camera.position);
 
-        // 2. SCROLL LOGIC
-        // Ranges:
-        // 0.00 - 0.15: Far away / Invisible
-        // 0.15 - 0.40: Zoom In (Approach)
-        // 0.40 - 0.50: At Pillars (Stable)
-        // 0.50 - 0.65: Zoom Out (Leaving)
-        // 0.00 - 0.05: Far away / Invisible
-        // 0.05 - 0.45: Zoom In (Approach)
-        // 0.45 - 0.55: At Pillars (Stable)
-        // 0.55 - 0.70: Zoom Out (Leaving)
-        // 0.70 - 1.00: Invisible
+        // 2. PHYSICAL PLACEMENT (No more weird scaling/zoom tricks)
+        // Fixed position in space
+        const fixedZ = -1000;
+        groupRef.current.position.set(0, 0, fixedZ);
 
-        let targetZ = -5000;
-        let targetScale = 0.1;
-        let baseOpacity = 0;
+        // Fixed Scale (Massive)
+        groupRef.current.scale.set(4, 4, 4);
 
-        if (progress < 0.05) {
-            // Invisible state
-            targetZ = -5000;
-            targetScale = 0.1;
-            baseOpacity = 0;
+        // 3. FOG FADE LOGIC (Simple distance check)
+        // Reveal when getting closer
+        const dist = camera.position.distanceTo(groupRef.current.position);
 
-        } else if (progress >= 0.05 && progress < 0.45) {
-            // APPROACHING (Zoom In) - Extended range (40% of scroll)
-            const p = (progress - 0.05) / 0.40; // 0 -> 1
-            // Softer Sine easing for very gradual fade-in
-            const easeP = Math.sin((p * Math.PI) / 2);
-
-            targetZ = -5000 + (easeP * 4800);       // -5000 -> -200
-            targetScale = 0.1 + (easeP * 2.9);      // 0.1 -> 3.0
-            baseOpacity = easeP * 1.0;              // Full opacity
-
-        } else if (progress >= 0.45 && progress < 0.55) {
-            // AT PILLARS (Stable)
-            targetZ = -200;
-            targetScale = 3.0;
-            baseOpacity = 1.0;
-
-        } else if (progress >= 0.50 && progress < 0.65) {
-            // LEAVING (Zoom Out/Away)
-            const p = (progress - 0.50) / 0.15; // 0 -> 1
-            const easeP = p * p; // Accelerate out
-
-            targetZ = -200 - (easeP * 4800);        // -200 -> -5000
-            targetScale = 3.0 - (easeP * 2.9);      // 3.0 -> 0.1
-            baseOpacity = 1.0 * (1 - easeP);
-
+        let opacity = 0;
+        if (dist > 1500) {
+            opacity = 0; // Hidden in deep space
+        } else if (dist > 500) {
+            // Fade in range (1500 -> 500)
+            opacity = 1 - ((dist - 500) / 1000);
+            // Non-linear for better feel
+            opacity = opacity * opacity;
         } else {
-            // Done
-            targetZ = -5000;
-            targetScale = 0.1;
-            baseOpacity = 0;
+            opacity = 1; // Fully visible
         }
 
-        // Apply Position & Scale to Group
-        groupRef.current.position.set(0, 0, targetZ);
-        groupRef.current.scale.set(targetScale, targetScale, targetScale);
+        // Fade out if we fly PAST it (optional)
+        if (camera.position.z < fixedZ) {
+            const distPast = Math.abs(camera.position.z - fixedZ);
+            opacity = Math.max(0, 1 - (distPast / 500));
+        }
 
-        // Volumetric Layer Animation (Subtle breathing/rotation)
+        // Apply to layers
+        let baseOpacity = opacity;
+
+        // Volumetric Layer Animation
         const time = state.clock.getElapsedTime();
-
         if (wispRef.current) {
-            wispRef.current.rotation.z = Math.sin(time * 0.1) * 0.05; // Gentle sway
-            wispRef.current.scale.setScalar(1.0 + Math.sin(time * 0.2) * 0.02); // Breathing
+            wispRef.current.rotation.z = Math.sin(time * 0.1) * 0.05;
         }
 
-        // Update Opacities & Colors for "Glassmorphism" feel
-        // Layer 1: Glow (Deep Red/Orange)
-        if (glowRef.current) {
-            (glowRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity * 0.4; // More glow
-        }
-        // Layer 2: Main (Crisp)
-        if (mainRef.current) {
-            (mainRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity * 0.9;
-        }
-        // Layer 3: Wisps (Blue/Ethereal)
-        if (wispRef.current) {
-            (wispRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity * 0.6;
-        }
-        // Layer 4: Stars (Sparkle)
-        if (starsRef.current) {
-            (starsRef.current.material as THREE.PointsMaterial).opacity = baseOpacity * 0.8; // Subtle stars
-        }
+        // Update Material Opacities
+        if (glowRef.current) (glowRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity * 0.5;
+        if (mainRef.current) (mainRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity;
+        if (wispRef.current) (wispRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity * 0.6;
+        if (starsRef.current) (starsRef.current.material as THREE.PointsMaterial).opacity = baseOpacity;
     });
 
     const matProps = {

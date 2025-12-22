@@ -5,7 +5,7 @@ import { Vector3 } from 'three';
 // ═══════════════════════════════════════════════════════════════════════════
 
 export const CONFIG = {
-    STAR_COUNT: 200000,
+    STAR_COUNT: 100000,
     PIXEL_RATIO: 1.5,
     TARGET_FPS: 60,
     LERP_SPEED: 0.035,
@@ -14,7 +14,7 @@ export const CONFIG = {
     // Camera
     BASE_FOV: 60,
     NEAR: 0.1,
-    FAR: 8000,
+    FAR: 2500,
 };
 
 // Camera path waypoints - Weaving through space to the Pillars

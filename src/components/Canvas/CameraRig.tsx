@@ -41,32 +41,23 @@ export default function CameraRig() {
         const curvePoint = curve.current.getPointAt(t);
 
         // Custom Journey Mapping:
-        // Z: 0 -> -5000 (Linear flight depth)
-        const targetZ = 0 - (progress * 5000);
+        // Z: 0 -> -2000 (New physical distance)
+        const targetZ = 0 - (progress * 2000);
 
-        // X/Y: Use the curve's X/Y for the "finding" feel, scaled up for drama
-        // The curve points are roughly within +/- 40 units.
-        const targetX = curvePoint.x * 2.0; // Amplify sway
-        const targetY = curvePoint.y * 2.0; // Amplify sway
+        // X/Y: Subtle sway
+        const targetX = curvePoint.x * 1.5;
+        const targetY = curvePoint.y * 1.5;
 
         const targetPos = new Vector3(targetX, targetY, targetZ);
 
-        // Smooth interpolation for heavy ship feel
+        // Smooth interpolation
         currentPos.current.lerp(targetPos, 0.05);
         camera.position.copy(currentPos.current);
 
         // 2. ROTATION (LookAt):
-        // CRITICAL: Always look towards the Pillars' location (0, 0, targetZ - lead)
-        // This keeps the Pillars visible/centered even while we sway left/right.
-        // It creates a Parallax effect.
-
-        // Look slightly ahead of current position
-        const lookLead = 1000;
-        // We look at (0, 0, forward) to keep Pillars centered in view
-        // If we looked at curve.getPointAt(t+delta), we would look away from pillars.
-        // User wants Pillars CENTERED.
-
-        lookAtPos.current.set(0, 0, targetZ - lookLead);
+        // Look at the Pillars at z=-1000 until we pass them, then forward
+        // Actually, just looking forward works best for parallax
+        lookAtPos.current.set(0, 0, targetZ - 1000);
         camera.lookAt(lookAtPos.current);
     });
 
