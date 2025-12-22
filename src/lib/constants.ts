@@ -35,7 +35,7 @@ export interface LandmarkData {
 export const LANDMARKS: LandmarkData[] = [
     {
         id: 'pillars',
-        position: new Vector3(0, 0, -350), // Shifted closer (was -600)
+        position: new Vector3(0, 0, -350), // Unchanged (Start pacing is good)
         texture: '/textures/pillars_of_creation.jpg',
         scale: 150,
         title: 'Pillars of Creation',
@@ -47,7 +47,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'eye_of_god',
-        position: new Vector3(0, 0, -1150), // Shifted closer (was -1400)
+        position: new Vector3(0, 0, -800), // Shifted closer (was -1150)
         texture: '/textures/eye_of_god.png',
         scale: 250,
         title: 'Eye of God',
@@ -59,7 +59,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'butterfly',
-        position: new Vector3(0, -100, -1950), // Shifted closer (was -2200)
+        position: new Vector3(0, -100, -1250), // Shifted closer (was -1950)
         texture: '/textures/Butterfly_nebula.jpg',
         scale: 300,
         title: 'Butterfly Nebula',
@@ -71,43 +71,41 @@ export const LANDMARKS: LandmarkData[] = [
     }
 ];
 
-// Camera path waypoints - SCRIPTED CINEMA (ADJUSTED START)
+// Camera path waypoints - SCRIPTED CINEMA (COMPRESSED GAPS)
 export const WAYPOINTS: Vector3[] = [
-    // 1. "START UNIVERSE... JUST 2 SCROLLS" 
-    // Reduced void duration significantly
-    new Vector3(0, 0, 100),         // START
-    new Vector3(0, 0, -50),         // Short straight...
+    // 1. START (Unchanged)
+    new Vector3(0, 0, 100),
+    new Vector3(0, 0, -50),
 
-    // 2. "DEEP DIVE EITHER LEFT OR RIGHT" (Turn happens much sooner)
-    // Target Turn at -200 (was -450)
+    // 2. TURN (Unchanged)
     new Vector3(60, -2, -200),      // SHARP RIGHT TURN
-    new Vector3(40, 0, -250),       // Banking...
+    new Vector3(40, 0, -250),
 
-    // 3. "NEXT IMAGE STARTS VISIBLE" (Pillars at -350)
-    new Vector3(0, 0, -300),        // CENTERED & STRAIGHT (Aligning for -350)
+    // 3. PILLARS REVEAL (Unchanged -350)
+    new Vector3(0, 0, -300),
     new Vector3(0, 0, -350),        // PILLARS FOCUS
 
-    // 4. "THROUGH WE GO 2 SCROLLS STRAIGHTS"
-    new Vector3(0, 0, -550),        // Flying straight through...
+    // 4. TRANSIT TO EYE (Accelerated)
+    new Vector3(0, 0, -450),        // Fly Through
 
-    // 5. "THEN ON 3 SCROLL SHARP LEFT"
-    new Vector3(-60, 5, -700),      // SHARP LEFT TURN
-    new Vector3(-40, -5, -850),     // Banking...
+    // 5. TURN TO EYE (Earlier)
+    // Eye is at -800. Reveal starts ~-650. Turn ~-600.
+    new Vector3(-60, 5, -550),      // SHARP LEFT TURN
+    new Vector3(-40, -5, -650),     // Banking...
 
-    // 6. "THEN STRAIGHT 1 SCROLL... 2ND SCROLL WE SEE EYE"
-    // Eye at -1150
-    new Vector3(0, 0, -1000),       // CENTERED & STRAIGHT
-    new Vector3(0, 0, -1150),       // EYE FOCUS
+    // 6. EYE REVEAL
+    new Vector3(0, 0, -750),        // CENTERED & STRAIGHT
+    new Vector3(0, 0, -800),        // EYE FOCUS
 
-    // 7. "THROUGH WE GO 2 SCROLLS STRAIGHT"
-    new Vector3(0, 0, -1350),       // Flying straight through...
+    // 7. TRANSIT TO NEBULA (Accelerated)
+    new Vector3(0, 0, -900),        // Fly Through
 
-    // 8. "THEN 3 BOTTOM DIVE"
-    new Vector3(0, -20, -1450),     // Start Dive
-    new Vector3(0, -100, -1650),    // DEEP DIVE
+    // 8. DIVE (Earlier)
+    // Butterfly at -1250. Dive start ~-1000.
+    new Vector3(0, -20, -1000),     // Start Dive
+    new Vector3(0, -100, -1150),    // DEEP DIVE
 
-    // 9. "5 WE START SEEING NEBULA"
-    // Butterfly at -1950
-    new Vector3(0, -100, -1800),    // Straight leveling at bottom...
-    new Vector3(0, -100, -1950)     // BUTTERFLY FOCUS
+    // 9. BUTTERFLY REVEAL
+    new Vector3(0, -100, -1200),    // Straight leveling...
+    new Vector3(0, -100, -1250)     // BUTTERFLY FOCUS
 ];
