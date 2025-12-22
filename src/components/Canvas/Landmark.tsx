@@ -92,7 +92,7 @@ export default function Landmark({ data }: LandmarkProps) {
         let targetX = originalPos.x;
         let uiOpacity = 0;
 
-        if (dist > 400) {
+        if (dist > 350) {
             targetOpacity = 0;
         }
         else if (dist > 150) {

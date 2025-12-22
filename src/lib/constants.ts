@@ -35,7 +35,7 @@ export interface LandmarkData {
 export const LANDMARKS: LandmarkData[] = [
     {
         id: 'pillars',
-        position: new Vector3(0, 0, -280),
+        position: new Vector3(0, 0, -320),
         texture: '/textures/pillars_of_creation.png',
         scale: 150, // Base scale
         title: 'Pillars of Creation',
@@ -43,7 +43,7 @@ export const LANDMARKS: LandmarkData[] = [
         distance: '6,500 light-years',
         constellation: 'Serpens',
         description: 'The Pillars of Creation are vast trunks of interstellar gas and dust in the Eagle Nebula (Messier 16). They are active stellar nurseries where new stars are being born, simultaneously eroded by the intense ultraviolet light from nearby massive stars. The leftmost pillar is about four light-years in length.',
-        distanceTrigger: 80
+        distanceTrigger: 70
     }
 ];
 
