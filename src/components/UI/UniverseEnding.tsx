@@ -1,7 +1,7 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// UNIVERSE ENDING - Flash after wormhole + Emotional message (matches StartScreen style)
+// UNIVERSE ENDING - Flash FIRST, then message (matches StartScreen style)
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { motion, AnimatePresence } from 'framer-motion';
@@ -11,37 +11,47 @@ import { UNIVERSE_END_POSITION } from '@/lib/constants';
 export default function UniverseEnding() {
     const { cameraZ } = useScrollStore();
 
-    // Flash appears immediately after wormhole
-    const showFlash = cameraZ < UNIVERSE_END_POSITION + 100 && cameraZ > UNIVERSE_END_POSITION - 50;
-    const flashOpacity = showFlash ? Math.max(0, 1 - Math.abs(cameraZ - (UNIVERSE_END_POSITION + 50)) / 100) : 0;
+    // WORMHOLE is at -6950, UNIVERSE_END is at -7200
+    // Flash starts at -7000 and peaks at -7100
+    const flashStart = -7000;
+    const flashPeak = -7100;
+    const flashEnd = -7150;
+    const messageStart = -7150;
 
-    // Ending message appears after flash
-    const showEnding = cameraZ < UNIVERSE_END_POSITION;
-    const endingOpacity = showEnding ? Math.min(1, (UNIVERSE_END_POSITION - cameraZ) / 100) : 0;
+    // Calculate flash opacity - rises then falls
+    let flashOpacity = 0;
+    if (cameraZ < flashStart && cameraZ > flashEnd) {
+        if (cameraZ > flashPeak) {
+            // Rising phase
+            flashOpacity = (flashStart - cameraZ) / (flashStart - flashPeak);
+        } else {
+            // Falling phase
+            flashOpacity = (cameraZ - flashEnd) / (flashPeak - flashEnd);
+        }
+    }
+
+    // Ending message appears AFTER flash fades
+    const showEnding = cameraZ < messageStart;
+    const endingOpacity = showEnding ? Math.min(1, (messageStart - cameraZ) / 100) : 0;
 
     return (
         <>
-            {/* BRIGHT FLASH - Right after wormhole */}
-            <AnimatePresence>
-                {showFlash && flashOpacity > 0.1 && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: flashOpacity }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="fixed inset-0 z-[100] pointer-events-none bg-white"
-                    />
-                )}
-            </AnimatePresence>
+            {/* BRIGHT FLASH - Peaks then fades */}
+            {flashOpacity > 0.05 && (
+                <div
+                    className="fixed inset-0 z-[100] pointer-events-none bg-white"
+                    style={{ opacity: flashOpacity }}
+                />
+            )}
 
-            {/* ENDING MESSAGE - Matches StartScreen style */}
+            {/* ENDING MESSAGE - Appears AFTER flash */}
             <AnimatePresence>
-                {showEnding && (
+                {showEnding && endingOpacity > 0.1 && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: endingOpacity }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 1.2, ease: 'easeInOut' }}
+                        transition={{ duration: 0.5 }}
                         className="fixed inset-0 z-[101] flex flex-col items-center justify-center bg-black"
                         style={{ pointerEvents: endingOpacity > 0.5 ? 'auto' : 'none' }}
                     >
@@ -66,7 +76,7 @@ export default function UniverseEnding() {
                             new life awaits its moment
                         </motion.p>
 
-                        {/* Subtitle - same style as "A Journey Through..." */}
+                        {/* Subtitle */}
                         <motion.p
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
@@ -85,7 +95,7 @@ export default function UniverseEnding() {
                             Waiting for the next big bang
                         </motion.p>
 
-                        {/* Final tagline - bottom of screen like scroll hint */}
+                        {/* Final tagline */}
                         <motion.div
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
