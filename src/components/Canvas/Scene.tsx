@@ -4,10 +4,12 @@
 // MAIN 3D SCENE - Just stars for now
 // ═══════════════════════════════════════════════════════════════════════════
 
+import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import * as THREE from 'three';
 import StarField from './StarField';
 import CameraRig from './CameraRig';
+import Cloud from './Cloud';
 import { CONFIG } from '@/lib/constants';
 
 export default function Scene() {
@@ -41,6 +43,9 @@ export default function Scene() {
         >
             <StarField />
             <CameraRig />
+            <Suspense fallback={null}>
+                <Cloud />
+            </Suspense>
         </Canvas>
     );
 }
