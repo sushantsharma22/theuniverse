@@ -33,73 +33,93 @@ export default function UniverseEnding() {
             }}
         >
             <div
-                className="text-center px-8 max-w-2xl"
+                className="text-center px-8 max-w-3xl"
                 style={{
                     opacity,
-                    transform: `translateY(${(1 - opacity) * 30}px)`,
-                    transition: 'transform 0.3s ease-out'
+                    transform: `translateY(${(1 - opacity) * 40}px)`,
+                    transition: 'transform 0.5s ease-out'
                 }}
             >
                 {/* THE END - Large and dramatic */}
                 <h1
-                    className="text-8xl md:text-[10rem] font-thin text-white mb-16"
+                    className="text-7xl md:text-9xl font-thin text-white mb-20"
                     style={{
                         fontFamily: 'Georgia, "Times New Roman", serif',
-                        textShadow: '0 0 80px rgba(255,255,255,0.15), 0 0 160px rgba(255,255,255,0.08)',
-                        letterSpacing: '0.25em',
+                        textShadow: '0 0 80px rgba(255,255,255,0.12)',
+                        letterSpacing: '0.3em',
                         fontWeight: 100
                     }}
                 >
                     The End
                 </h1>
 
-                {/* Subtle separator */}
+                {/* Philosophical message - sad yet hopeful */}
+                <div className="space-y-6 mb-20">
+                    <p
+                        className="text-xl md:text-2xl text-gray-300"
+                        style={{
+                            fontFamily: 'Georgia, serif',
+                            fontStyle: 'italic',
+                            lineHeight: 1.8,
+                            letterSpacing: '0.05em'
+                        }}
+                    >
+                        From the ashes of dying stars,
+                    </p>
+                    <p
+                        className="text-xl md:text-2xl text-gray-300"
+                        style={{
+                            fontFamily: 'Georgia, serif',
+                            fontStyle: 'italic',
+                            lineHeight: 1.8,
+                            letterSpacing: '0.05em'
+                        }}
+                    >
+                        new life awaits its moment.
+                    </p>
+                </div>
+
+                {/* Separator */}
                 <div
-                    className="w-40 h-[1px] mx-auto mb-14"
+                    className="w-32 h-[1px] mx-auto mb-16"
                     style={{
-                        background: 'linear-gradient(to right, transparent, rgba(150,150,150,0.5), transparent)'
+                        background: 'linear-gradient(to right, transparent, rgba(120,120,120,0.4), transparent)'
                     }}
                 />
 
-                {/* Waiting message */}
+                {/* The cycle continues */}
                 <p
-                    className="text-2xl md:text-3xl text-gray-300 mb-4"
+                    className="text-lg md:text-xl text-gray-400 mb-4"
                     style={{
                         fontFamily: 'Georgia, serif',
-                        fontStyle: 'italic',
-                        letterSpacing: '0.1em',
-                        fontWeight: 300
+                        letterSpacing: '0.1em'
                     }}
                 >
-                    Waiting for new big bang
+                    New planets. New stars. New everything.
                 </p>
                 <p
-                    className="text-xl md:text-2xl text-gray-400 mb-24"
+                    className="text-base md:text-lg text-gray-500 mb-20"
                     style={{
                         fontFamily: 'Georgia, serif',
-                        letterSpacing: '0.08em',
-                        fontWeight: 300
+                        letterSpacing: '0.08em'
                     }}
                 >
-                    and creation of another universe
+                    Waiting for the next big bang...
                 </p>
 
-                {/* Small separator */}
+                {/* Final line */}
                 <div
-                    className="w-20 h-[1px] mx-auto mb-10"
+                    className="w-16 h-[1px] mx-auto mb-10"
                     style={{
-                        background: 'rgba(100,100,100,0.4)'
+                        background: 'rgba(80,80,80,0.3)'
                     }}
                 />
-
-                {/* Beginning of the end */}
                 <p
-                    className="text-sm md:text-base text-gray-500"
+                    className="text-sm text-gray-600"
                     style={{
                         fontFamily: 'system-ui, sans-serif',
-                        letterSpacing: '0.4em',
-                        textTransform: 'uppercase',
-                        fontWeight: 400
+                        letterSpacing: '0.35em',
+                        textTransform: 'uppercase'
                     }}
                 >
                     This is the beginning of the end
