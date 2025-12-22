@@ -93,28 +93,20 @@ export default function Landmark({ data }: LandmarkProps) {
         let targetX = originalPos.x;
         let uiOpacity = 0;
 
-        if (dist > 600) {
+        if (dist > 400) {
             // Far away but starting to appear
             targetOpacity = 0;
             setLandmark(null, 0);
         }
         else if (dist > 100) {
             // APPROACH PHASE - Long visibility
-            // Visible from 600 down to 100
-            const approachRange = 500;
-            const approachProgress = 1.0 - ((dist - 100) / approachRange);
+            // Visible from 400 down to 100
+            const approachProgress = 1.0 - ((dist - 100) / 300);
 
-            // Dynamic Growth: Start SMALL (0.3x) and grow to Normal (1.0x)
-            currentScale.current = data.scale * (0.3 + (0.7 * approachProgress));
-
-            // High Contrast Fade In
-            targetOpacity = 1.0 * approachProgress;
-
+            // Gradual growth
+            targetScale = data.scale + (approachProgress * data.scale * 1.0);
+            targetOpacity = 0.6 * approachProgress; // Dim approach
             targetX = originalPos.x; // STRICTLY CENTERED
-            setLandmark(null, 0);
-
-            // Override lerp for scale to specific calculated value
-            targetScale = currentScale.current;
             setLandmark(null, 0);
         }
         else if (dist > 20) {

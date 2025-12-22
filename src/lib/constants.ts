@@ -72,7 +72,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'black_hole',
-        position: new Vector3(0, -100, -1950), // REVERTED: Deep Space Gap Restored
+        position: new Vector3(0, 0, -1750), // RESET TO CENTER (y: 0) & ADJUSTED GAP
         texture: '/textures/interstellar_blackhole.png',
         scale: 400,
         scaleX: 1.9,
@@ -85,7 +85,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'galaxy',
-        position: new Vector3(0, -100, -2450), // REVERTED: Final Frontier
+        position: new Vector3(0, 0, -2250), // CENTERED (y: 0)
         texture: '/textures/The Sombrero Galaxy.jpg',
         scale: 500,
         scaleX: 1.8,
@@ -98,9 +98,9 @@ export const LANDMARKS: LandmarkData[] = [
     }
 ];
 
-// Camera path waypoints - 5 STAGE EPIC JOURNEY (STABLE DEEP FLIGHT)
+// Camera path waypoints - 5 STAGE EPIC JOURNEY (PERFECTLY CENTERED FINALE)
 export const WAYPOINTS: Vector3[] = [
-    // 1. START
+    // 1. START 
     new Vector3(0, 0, 100),
     new Vector3(0, 0, -50),
 
@@ -126,14 +126,14 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, -100, -1150),    // DEEP DIVE
     new Vector3(0, -100, -1250),    // BUTTERFLY REVEAL
 
-    // 6. TO BLACK HOLE (RESTORED GAP)
-    // Stay deep y=-100.
+    // 6. TO BLACK HOLE (RESET TO Y=0 FOR SAFETY)
+    // Rise smoothly back to center 0,0 for perfect framing
     new Vector3(0, -100, -1350),    // Fly through Butterfly
-    new Vector3(0, -100, -1550),    // VOID TRAVEL (2 Scrolls)
-    new Vector3(0, -100, -1750),    // APPROACHING...
-    new Vector3(0, -100, -1950),    // BLACK HOLE REVEAL (Centered)
+    new Vector3(0, -20, -1450),     // RISING BACK TO CENTER...
+    new Vector3(0, 0, -1550),       // CENTERED & LEVEL (y: 0)
+    new Vector3(0, 0, -1750),       // FACE THE BLACK HOLE (Straight Shot)
 
-    // 7. TO GALAXY
-    new Vector3(0, -100, -2150),    // Fly Through
-    new Vector3(0, -100, -2450)     // SOMBRERO GALAXY REVEAL
+    // 7. TO GALAXY (FINAL LEG)
+    new Vector3(0, 0, -1950),       // Fly Through
+    new Vector3(0, 0, -2250)        // SOMBRERO GALAXY REVEAL
 ];
