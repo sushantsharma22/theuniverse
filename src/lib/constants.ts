@@ -30,6 +30,7 @@ export interface LandmarkData {
     distance: string;    // e.g. "6,500 ly"
     constellation: string; // e.g. "Serpens"
     distanceTrigger: number;
+    scaleX?: number;      // Optional multiplier for non-square textures
 }
 
 export const LANDMARKS: LandmarkData[] = [
@@ -72,8 +73,9 @@ export const LANDMARKS: LandmarkData[] = [
     {
         id: 'black_hole',
         position: new Vector3(0, 50, -1800),
-        texture: '/textures/firstblackhole.jpg',
-        scale: 1000, // MASSIVE (User requested "Huge")
+        texture: '/textures/interstellar_blackhole.png', // User's Interstellar Image
+        scale: 1000,
+        scaleX: 1.9, // Wide Aspect Ratio (1024x532)
         title: 'Supermassive Black Hole',
         type: 'Black Hole',
         distance: '55 million light-years',
@@ -86,6 +88,7 @@ export const LANDMARKS: LandmarkData[] = [
         position: new Vector3(0, 0, -2400),
         texture: '/textures/The Sombrero Galaxy.jpg',
         scale: 500,
+        scaleX: 1.8, // Assuming Galaxy is also wide
         title: 'Sombrero Galaxy',
         type: 'Spiral Galaxy',
         distance: '29 million light-years',
@@ -112,11 +115,10 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(-60, 5, -550),      // SHARP LEFT TURN
     new Vector3(-40, -5, -600),     // Banking...
 
-    // 4. "LOOK LEFT / SHEER SIZE" MOMENT (BEFORE THE EYE)
-    // Eye is at -800. We look at it from -700 to appreciate size.
-    new Vector3(0, 0, -700),        // Approach Center
-    new Vector3(-35, 0, -700),      // PAN LEFT (Look at it looming)
-    new Vector3(0, 0, -720),        // Center back
+    // 4. EYE REVEAL (SIMPLE STRAIGHT - Reverted "Look Left")
+    // Eye is at -800. Just go straight through.
+    new Vector3(0, 0, -700),        // Center Approach
+    new Vector3(0, 0, -750),        // Straight...
     new Vector3(0, 0, -800),        // FLY THROUGH THE EYE
 
     // 5. TO BUTTERFLY

@@ -141,7 +141,14 @@ export default function Landmark({ data }: LandmarkProps) {
 
         // Scale
         currentScale.current = THREE.MathUtils.lerp(currentScale.current, targetScale, lerpSpeed);
-        meshRef.current.scale.setScalar(currentScale.current);
+
+        // Apply Uniform Scale + optional Aspect Ratio stretch
+        const aspectMultiplier = data.scaleX || 1.0;
+        meshRef.current.scale.set(
+            currentScale.current * aspectMultiplier,
+            currentScale.current,
+            currentScale.current
+        );
 
         // Opacity & Mist
         const mat = meshRef.current.material as THREE.ShaderMaterial;
