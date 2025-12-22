@@ -53,43 +53,7 @@ export default function UniverseEnding() {
                         style={{ pointerEvents: endingOpacity > 0.5 ? 'auto' : 'none' }}
                     >
                         {/* Main title - Same position/style as "THE UNIVERSE" */}
-                        <motion.h1
-                            initial={{ y: 30, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.3, duration: 0.8 }}
-                            className="text-4xl md:text-6xl lg:text-7xl font-extralight tracking-[0.3em] text-white/95 mb-4 text-center px-4"
-                            style={{ textShadow: '0 0 60px rgba(100, 150, 255, 0.3)' }}
-                        >
-                            THE BEGINNING OF THE END
-                        </motion.h1>
-
-                        {/* Subtitle - Same style as "A Journey Through..." */}
-                        <motion.p
-                            initial={{ y: 20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.5, duration: 0.8 }}
-                            className="text-xs md:text-sm tracking-[0.35em] text-white/50 mb-16 uppercase"
-                        >
-                            A cycle that never ends
-                        </motion.p>
-
-                        {/* Additional message below */}
-                        <motion.div
-                            initial={{ y: 20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.7, duration: 0.8 }}
-                            className="text-center"
-                        >
-                            <p className="text-lg md:text-xl font-extralight tracking-[0.2em] text-white/70 mb-3 italic">
-                                From the ashes of dying stars
-                            </p>
-                            <p className="text-lg md:text-xl font-extralight tracking-[0.2em] text-white/60 mb-8 italic">
-                                new life awaits its moment
-                            </p>
-                            <p className="text-sm md:text-base tracking-[0.15em] text-white/40">
-                                New planets. New stars. New everything.
-                            </p>
-                        </motion.div>
+                        {/* Text Content REMOVED - Just visual ending */}\n
                     </motion.div>
                 )}
             </AnimatePresence>

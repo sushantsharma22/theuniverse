@@ -255,8 +255,12 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -350),        // BIG BANG - pass through center
     new Vector3(0, 0, -450),        // Buffer straight (100u)
 
+    // UPWARD TURN (User Request: "going upwards camera")
+    new Vector3(0, 40, -550),       // Start rising
+    new Vector3(0, 70, -675),       // Peak height mid-way
+    new Vector3(0, 40, -800),       // Coming down
+
     // STRAIGHT to Carbon Nebula
-    new Vector3(0, 0, -650),        // Approaching
     new Vector3(0, 0, -900),        // Buffer BEFORE (-950)
     new Vector3(0, 0, -950),        // CARBON NEBULA - pass through center
     new Vector3(0, 0, -1000),       // Buffer AFTER (Force Z-axis tangent)

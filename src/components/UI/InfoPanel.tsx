@@ -12,7 +12,8 @@ export default function InfoPanel() {
     const landmarkOpacity = useScrollStore(state => state.landmarkOpacity);
 
     // Don't render if opacity is too low or no landmark
-    if (!activeLandmark || landmarkOpacity < 0.05) return null;
+    // Also hide for 'wormhole' as per user request ("delete wormhole text")
+    if (!activeLandmark || landmarkOpacity < 0.05 || activeLandmark.id === 'wormhole') return null;
 
     return (
         <AnimatePresence mode="wait">
