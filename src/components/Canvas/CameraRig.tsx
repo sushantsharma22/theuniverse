@@ -1,58 +1,55 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// CAMERA RIG - Smooth cinematic movement through stars
+// CAMERA RIG - Straight movement through images with roll effect
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { CatmullRomCurve3 } from 'three';
 import * as THREE from 'three';
 import { useScrollStore } from '@/store/scrollStore';
+import { UNIVERSE_END_POSITION } from '@/lib/constants';
 
-import { WAYPOINTS } from '@/lib/constants';
-
-// Camera path - weaving through stars
-const CAMERA_PATH = WAYPOINTS;
+// Journey start and end positions
+const JOURNEY_START = 100;
+const JOURNEY_END = UNIVERSE_END_POSITION; // -7200
 
 export default function CameraRig() {
     const { camera } = useThree();
     const progress = useScrollStore(state => state.progress);
     const setCameraZ = useScrollStore(state => state.setCameraZ);
 
-    // Create smooth camera path with higher tension for smoother curves
-    const curve = useRef(new CatmullRomCurve3(CAMERA_PATH, false, 'catmullrom', 0.3));
-
     // Smooth position tracking
-    const currentPos = useRef(new THREE.Vector3(0, 0, 100));
-    const currentLookAt = useRef(new THREE.Vector3(0, 0, 0));
+    const currentZ = useRef(JOURNEY_START);
     const currentRoll = useRef(0);
 
     useFrame(() => {
-        // Get target position on curve
-        const t = Math.min(Math.max(progress, 0), 1);
-        const targetPos = curve.current.getPointAt(t);
+        // Calculate target Z position (simple linear interpolation from start to end)
+        const targetZ = JOURNEY_START + (JOURNEY_END - JOURNEY_START) * progress;
 
-        // MUCH smoother interpolation (lower = smoother but slower response)
-        currentPos.current.lerp(targetPos, 0.015);
-        camera.position.copy(currentPos.current);
+        // Smooth interpolation for Z position
+        currentZ.current = THREE.MathUtils.lerp(currentZ.current, targetZ, 0.015);
+
+        // Set camera position - ALWAYS at (0, 0, z) - perfectly straight
+        camera.position.set(0, 0, currentZ.current);
 
         // Track camera Z for ending detection
-        setCameraZ(currentPos.current.z);
+        setCameraZ(currentZ.current);
 
-        // Look ahead on the path - smooth the look target too
-        const lookT = Math.min(t + 0.03, 1);
-        const targetLookAt = curve.current.getPointAt(lookT);
-        currentLookAt.current.lerp(targetLookAt, 0.02);
-        camera.lookAt(currentLookAt.current);
+        // Look ahead - slightly ahead on Z axis
+        const lookAheadZ = currentZ.current - 200;
+        camera.lookAt(0, 0, lookAheadZ);
 
-        // CINEMATIC BANKING (Roll) - smoother
-        const tangent = curve.current.getTangentAt(t);
-        const bankingIntensity = -0.3; // Reduced for less aggressive banking
-        const targetRoll = tangent.x * bankingIntensity;
+        // CINEMATIC ROLL - subtle banking effect based on scroll velocity
+        // This gives the feeling of turning without actually moving sideways
+        const scrollVelocity = (targetZ - currentZ.current) / 10;
 
-        // Very smooth roll interpolation
-        currentRoll.current = THREE.MathUtils.lerp(currentRoll.current, targetRoll, 0.02);
+        // Create a wave pattern for roll based on position (gives feeling of gentle turns)
+        const rollWave = Math.sin(currentZ.current * 0.005) * 0.08;
+        const targetRoll = rollWave + scrollVelocity * 0.002;
+
+        // Smooth roll interpolation
+        currentRoll.current = THREE.MathUtils.lerp(currentRoll.current, targetRoll, 0.03);
         camera.rotation.z = currentRoll.current;
     });
 
