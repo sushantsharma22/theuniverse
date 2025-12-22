@@ -74,7 +74,7 @@ export const LANDMARKS: LandmarkData[] = [
         id: 'black_hole',
         position: new Vector3(0, -100, -1950), // STAY DEEP (y: -100) & DISTANT (Gap restored)
         texture: '/textures/interstellar_blackhole.png',
-        scale: 1000,
+        scale: 400, // NORMALIZED (User requested "Normal")
         scaleX: 1.9,
         title: 'Supermassive Black Hole',
         type: 'Black Hole',
