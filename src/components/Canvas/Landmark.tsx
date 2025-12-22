@@ -1,18 +1,25 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// CLOUD STRUCTURE - Pillars of Creation with massive scale and soft mist
+// LANDMARK - Generic component for cosmic discoveries (Nebulas, etc.)
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { useRef, useMemo } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
+import { useScrollStore } from '@/store/scrollStore';
+import { LandmarkData } from '@/lib/constants';
 
-export default function Cloud() {
+interface LandmarkProps {
+    data: LandmarkData;
+}
+
+export default function Landmark({ data }: LandmarkProps) {
     const meshRef = useRef<THREE.Mesh>(null);
-    const texture = useTexture('/textures/pillars_of_creation.png');
+    const texture = useTexture(data.texture);
     const { camera } = useThree();
+    const setLandmark = useScrollStore(state => state.setLandmark);
 
     const shaderArgs = useMemo(() => ({
         uniforms: {
@@ -20,22 +27,18 @@ export default function Cloud() {
             uTime: { value: 0 },
             uOpacity: { value: 0 },
             uColor: { value: new THREE.Color('#aaddff') },
-            uMist: { value: 0 } // New mist density control
+            uMist: { value: 0 }
         },
         vertexShader: `
             varying vec2 vUv;
-            varying float vElevation;
             uniform float uTime;
 
             void main() {
                 vUv = uv;
-                
-                // Slow, deep breathing movement
                 vec3 pos = position;
                 // Warping the plane slightly like a nebula
                 float warp = sin(pos.x * 1.5 + uTime * 0.3) * sin(pos.y * 1.5 + uTime * 0.2);
                 pos.z += warp * 5.0; 
-                
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
             }
         `,
@@ -52,17 +55,16 @@ export default function Cloud() {
                 // Glass/Cloud effect
                 vec3 finalColor = mix(texColor.rgb, uColor, 0.15);
                 
-                // Radial fade for soft edges
+                // Radial fade
                 float dist = distance(vUv, vec2(0.5));
                 float edgeFade = 1.0 - smoothstep(0.2, 0.5, dist);
                 
-                // Mist interaction - texture gets "softer" with more mist
+                // Mist interaction
                 float alpha = texColor.a * edgeFade;
                 
-                // Boost brightness for "internal glow"
+                // Internal glow
                 finalColor *= 1.3 + uMist * 0.5;
                 
-                // Final alpha fade
                 gl_FragColor = vec4(finalColor, alpha * uOpacity);
             }
         `,
@@ -71,62 +73,65 @@ export default function Cloud() {
         depthWrite: false,
     }), [texture]);
 
-    // Scale ref to smoothly animate size
-    const currentScale = useRef(150);
+    const currentScale = useRef(data.scale);
 
     useFrame((state) => {
         if (!meshRef.current) return;
 
-        // Animate time
+        // Animate
         (meshRef.current.material as THREE.ShaderMaterial).uniforms.uTime.value = state.clock.elapsedTime;
 
+        // Distance logic
         const dist = camera.position.distanceTo(meshRef.current.position);
 
-        // 1. DYNAMIC SCALE - "Small to Big"
-        // Base scale 150. As we get closer (dist < 200), it grows MASSIVELY
-        // Formula: closer = bigger. 
-        // At 200m away -> scale 150
-        // At 50m away -> scale 300
-        const proximityFactor = Math.max(0, 250 - dist);
-        const targetScale = 150 + (proximityFactor * 1.2);
+        // 1. DYNAMIC SCALE (Small -> Big)
+        // Similar logic to Cloud.tsx but generic
+        const proximityLimit = 250;
+        const proximityFactor = Math.max(0, proximityLimit - dist);
+        // Grow up to 2.5x base scale
+        const targetScale = data.scale + (proximityFactor * (data.scale / 100));
 
         currentScale.current += (targetScale - currentScale.current) * 0.04;
         meshRef.current.scale.setScalar(currentScale.current);
 
-        // 2. FADE MODE - "Mist"
-        // Logic: fully visible at distance, but as we fly INTO it (dist < 60), it fades out softly
+        // 2. FADE & UI LOGIC
         let targetOpacity = 0;
         let mistIntensity = 0;
+        let uiOpacity = 0;
 
-        if (dist > 300) {
-            targetOpacity = 0; // Too far
-        } else if (dist > 100) {
-            // Approach: Fade in gradually
-            // 300 -> 0 opacity
-            // 100 -> 0.8 opacity
-            targetOpacity = 0.8 * (1.0 - (dist - 100) / 200);
-            mistIntensity = 0;
+        if (dist > 400) {
+            targetOpacity = 0;
+        } else if (dist > 150) {
+            // Approach
+            targetOpacity = 0.8 * (1.0 - (dist - 150) / 250);
         } else if (dist > 20) {
-            // Close: Full glory
+            // Close - Trigger UI
             targetOpacity = 0.9;
-            // Mist increases as we get close
-            mistIntensity = (100 - dist) / 80;
+            mistIntensity = (150 - dist) / 130;
+
+            // UI Opacity (fades in when closer than distanceTrigger)
+            if (dist < data.distanceTrigger) {
+                uiOpacity = Math.min(1, (data.distanceTrigger - dist) / 20);
+                // Inform store we are active
+                setLandmark(data, uiOpacity);
+            } else {
+                setLandmark(null, 0);
+            }
         } else {
-            // Inside/Passing: Fade out
+            // Inside
             targetOpacity = dist / 20;
+            setLandmark(data, 0); // Hide UI when too close/inside
         }
 
-        // Smooth opacity transition
         const mat = meshRef.current.material as THREE.ShaderMaterial;
         mat.uniforms.uOpacity.value = THREE.MathUtils.lerp(mat.uniforms.uOpacity.value, targetOpacity, 0.05);
         mat.uniforms.uMist.value = mistIntensity;
 
-        // Always face camera
         meshRef.current.lookAt(camera.position);
     });
 
     return (
-        <mesh ref={meshRef} position={[0, 0, -260]}>
+        <mesh ref={meshRef} position={data.position}>
             <planeGeometry args={[1, 1, 64, 64]} />
             <primitive object={new THREE.ShaderMaterial(shaderArgs)} attach="material" />
         </mesh>

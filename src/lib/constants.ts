@@ -17,6 +17,30 @@ export const CONFIG = {
     FAR: 1000,
 };
 
+export interface LandmarkData {
+    id: string;
+    position: Vector3;
+    texture: string;
+    scale: number;
+    title: string;
+    description: string;
+    year: string;
+    distanceTrigger: number; // Distance at which UI appears
+}
+
+export const LANDMARKS: LandmarkData[] = [
+    {
+        id: 'pillars',
+        position: new Vector3(0, 0, -280),
+        texture: '/textures/pillars_of_creation.png',
+        scale: 150, // Base scale
+        title: 'Pillars of Creation',
+        description: 'Vast towers of interstellar gas and dust in the Eagle Nebula. These iconic structures are incubators for new stars, located approximately 6,500 light-years from Earth.',
+        year: 'Discovery: 1995',
+        distanceTrigger: 80
+    }
+];
+
 // Camera path waypoints - smooth curve through space
 export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, 100),        // START

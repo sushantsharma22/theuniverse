@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 import SmoothScroll from '@/components/Scroll/SmoothScroll';
 import StartScreen from '@/components/UI/StartScreen';
+import InfoPanel from '@/components/UI/InfoPanel';
 import LoadingScreen from '@/components/UI/LoadingScreen';
 
 // Dynamic import Canvas
@@ -25,6 +26,7 @@ export default function UniversePage() {
 
       <SmoothScroll />
 
+      <InfoPanel />
       <StartScreen />
     </>
   );

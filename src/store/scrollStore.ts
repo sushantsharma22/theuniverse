@@ -4,14 +4,20 @@
 
 import { create } from 'zustand';
 
+import { LandmarkData } from '@/lib/constants';
+
 interface ScrollState {
     progress: number;
     isScrolling: boolean;
-    velocity: number;           // Scroll velocity for motion effects
-    smoothVelocity: number;     // Smoothed velocity for gradual transitions
+    velocity: number;
+    smoothVelocity: number;
+    activeLandmark: LandmarkData | null; // Currently visible landmark story
+    landmarkOpacity: number; // Opacity for the UI panel (0-1)
+
     setProgress: (progress: number) => void;
     setIsScrolling: (isScrolling: boolean) => void;
     setVelocity: (velocity: number) => void;
+    setLandmark: (landmark: LandmarkData | null, opacity: number) => void;
     updateSmoothVelocity: () => void;
 }
 
@@ -23,6 +29,9 @@ export const useScrollStore = create<ScrollState>((set, get) => ({
     isScrolling: false,
     velocity: 0,
     smoothVelocity: 0,
+    activeLandmark: null,
+    landmarkOpacity: 0,
+
     setProgress: (progress: number) => {
         const now = performance.now();
         const deltaTime = Math.max(now - lastTime, 1);
@@ -41,6 +50,7 @@ export const useScrollStore = create<ScrollState>((set, get) => ({
     },
     setIsScrolling: (isScrolling: boolean) => set({ isScrolling }),
     setVelocity: (velocity: number) => set({ velocity }),
+    setLandmark: (landmark, opacity) => set({ activeLandmark: landmark, landmarkOpacity: opacity }),
     updateSmoothVelocity: () => {
         const { velocity, smoothVelocity } = get();
         // Smooth velocity with exponential decay

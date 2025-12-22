@@ -9,8 +9,8 @@ import { Canvas } from '@react-three/fiber';
 import * as THREE from 'three';
 import StarField from './StarField';
 import CameraRig from './CameraRig';
-import Cloud from './Cloud';
-import { CONFIG } from '@/lib/constants';
+import Landmark from './Landmark';
+import { CONFIG, LANDMARKS } from '@/lib/constants';
 
 export default function Scene() {
     return (
@@ -43,9 +43,12 @@ export default function Scene() {
         >
             <StarField />
             <CameraRig />
-            <Suspense fallback={null}>
-                <Cloud />
-            </Suspense>
+
+            {LANDMARKS.map((landmark) => (
+                <Suspense key={landmark.id} fallback={null}>
+                    <Landmark data={landmark} />
+                </Suspense>
+            ))}
         </Canvas>
     );
 }
