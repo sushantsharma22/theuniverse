@@ -35,7 +35,7 @@ export interface LandmarkData {
 }
 
 
-const BASE_PATH = '/theuniverse';
+const BASE_PATH = '';
 
 export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════

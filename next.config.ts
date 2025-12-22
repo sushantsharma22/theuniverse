@@ -3,8 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // GitHub Pages static export settings
   output: 'export',
-  basePath: '/theuniverse',
-  assetPrefix: '/theuniverse/',
+  // basePath and assetPrefix removed for custom domain (exploreuniverse.dev)
   images: {
     unoptimized: true, // GitHub Pages doesn't support Next.js image optimization
   },
