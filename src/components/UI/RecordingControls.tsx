@@ -46,13 +46,10 @@ export default function RecordingControls() {
     }, []);
 
     const buttons: { mode: RecordingMode; icon: string }[] = [
-        { mode: { duration: 45, direction: 'forward', enableRecording: true, label: 'Forward 45s' }, icon: '🎥' },
-        { mode: { duration: 45, direction: 'reverse', enableRecording: true, label: 'Reverse 45s' }, icon: '🔄' },
-        { mode: { duration: 30, direction: 'forward', enableRecording: true, label: 'Quick 30s' }, icon: '⚡' },
-        { mode: { duration: 60, direction: 'forward', enableRecording: true, label: 'Slow 60s' }, icon: '🌌' },
-        { mode: { duration: 30, direction: 'reverse', enableRecording: true, label: 'Quick Rev' }, icon: '⚡' },
-        { mode: { duration: 60, direction: 'reverse', enableRecording: true, label: 'Slow Rev' }, icon: '🌌' },
-        { mode: { duration: 120, direction: 'forward', enableRecording: false, label: 'Preview' }, icon: '👁️' },
+        { mode: { duration: 120, direction: 'forward', enableRecording: true, label: 'Record Forward' }, icon: '🎥' },
+        { mode: { duration: 120, direction: 'reverse', enableRecording: true, label: 'Record Reverse' }, icon: '🔄' },
+        { mode: { duration: 120, direction: 'forward', enableRecording: false, label: 'Preview Forward' }, icon: '👁️' },
+        { mode: { duration: 120, direction: 'reverse', enableRecording: false, label: 'Preview Reverse' }, icon: '👁️' },
     ];
 
     return (
