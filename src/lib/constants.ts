@@ -73,7 +73,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'galaxy',
-        position: new Vector3(0, 0, -1750), // NOW FIRST (after Nebula)
+        position: new Vector3(0, 0, -2000), // PUSHED BACK (750u gap from Nebula)
         texture: '/textures/The Sombrero Galaxy.jpg',
         scale: 500,
         scaleX: 1.8,
@@ -83,14 +83,14 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Virgo',
         description: 'The Sombrero Galaxy (M104) is a spiral galaxy in the constellation Virgo. It has a bright nucleus, an unusually large central bulge, and a prominent dust lane in its inclined disk, giving it the appearance of a sombrero.',
         distanceTrigger: 100,
-        visibilityRange: 900
+        visibilityRange: 600 // REDUCED: Only visible after clearing Nebula area
     },
     {
         id: 'black_hole',
-        position: new Vector3(0, 0, -2250), // NOW FINAL (Deepest visual)
-        texture: '/textures/blackhole_v2.jpg', // NEW V2 TEXTURE
+        position: new Vector3(0, 0, -2600), // FINAL BOSS (Deepest)
+        texture: '/textures/blackhole_v2.jpg',
         scale: 400,
-        scaleX: 1.78, // 16:9 Aspect Ratio (1024x576)
+        scaleX: 1.78,
         title: 'Supermassive Black Hole',
         type: 'Black Hole',
         distance: '55 million light-years',
@@ -101,7 +101,7 @@ export const LANDMARKS: LandmarkData[] = [
     }
 ];
 
-// Camera path waypoints - 5 STAGE EPIC JOURNEY (PERFECTLY CENTERED FINALE)
+// Camera path waypoints - 5 STAGE EPIC JOURNEY (DEEP SPACED FINALE)
 export const WAYPOINTS: Vector3[] = [
     // 1. START 
     new Vector3(0, 0, 100),
@@ -129,13 +129,13 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, -100, -1150),    // DEEP DIVE
     new Vector3(0, -100, -1250),    // BUTTERFLY REVEAL
 
-    // 6. TO GALAXY (Centered Rise)
-    new Vector3(0, -100, -1350),    // Fly through Butterfly
-    new Vector3(0, -20, -1450),     // RISING BACK TO CENTER...
-    new Vector3(0, 0, -1550),       // CENTERED & LEVEL (y: 0)
-    new Vector3(0, 0, -1750),       // SOMBRERO GALAXY REVEAL
+    // 6. TO GALAXY (Extended Transit)
+    new Vector3(0, -100, -1450),    // Fly through Butterfly
+    new Vector3(0, -20, -1550),     // RISING BACK TO CENTER...
+    new Vector3(0, 0, -1700),       // VOID TRAVEL (Longer)
+    new Vector3(0, 0, -2000),       // SOMBRERO GALAXY REVEAL
 
-    // 7. TO BLACK HOLE (Final Boss)
-    new Vector3(0, 0, -1950),       // Fly Through Galaxy
-    new Vector3(0, 0, -2250)        // BLACK HOLE REVEAL
+    // 7. TO BLACK HOLE (Final Deep Shot)
+    new Vector3(0, 0, -2300),       // Fly Through Galaxy
+    new Vector3(0, 0, -2600)        // BLACK HOLE REVEAL
 ];
