@@ -8,7 +8,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useScrollStore } from '@/store/scrollStore';
 
 // Wormhole is at -6950, trigger ending immediately after
-const WORMHOLE_Z = -6950;
+// Wormhole is at -7550, trigger ending immediately after
+const WORMHOLE_Z = -7550;
 
 export default function UniverseEnding() {
     const { cameraZ } = useScrollStore();
