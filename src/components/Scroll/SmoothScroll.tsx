@@ -56,8 +56,8 @@ export default function SmoothScroll() {
 
     return (
         <div className="relative w-full z-10">
-            {/* Long scrollable area - Compressed for Cinematic Pacing */}
-            <div className="h-[2200vh] w-full" />
+            {/* Long scrollable area - Extended for Butterfly Nebula */}
+            <div className="h-[3000vh] w-full" />
         </div>
     );
 }
