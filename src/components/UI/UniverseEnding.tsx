@@ -1,7 +1,7 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// UNIVERSE ENDING - Flash + Message RIGHT after wormhole crossing
+// UNIVERSE ENDING - Styled like StartScreen with main title centered
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { motion, AnimatePresence } from 'framer-motion';
@@ -21,10 +21,8 @@ export default function UniverseEnding() {
     let flashOpacity = 0;
     if (cameraZ < flashStart && cameraZ > flashPeak - 50) {
         if (cameraZ > flashPeak) {
-            // Rising
             flashOpacity = (flashStart - cameraZ) / (flashStart - flashPeak);
         } else {
-            // Falling
             flashOpacity = Math.max(0, 1 - (flashPeak - cameraZ) / 50);
         }
     }
@@ -43,7 +41,7 @@ export default function UniverseEnding() {
                 />
             )}
 
-            {/* ENDING MESSAGE - Brighter, more visible */}
+            {/* ENDING - Same layout as StartScreen */}
             <AnimatePresence>
                 {showEnding && endingOpacity > 0.05 && (
                     <motion.div
@@ -54,55 +52,42 @@ export default function UniverseEnding() {
                         className="fixed inset-0 z-[101] flex flex-col items-center justify-center bg-black"
                         style={{ pointerEvents: endingOpacity > 0.5 ? 'auto' : 'none' }}
                     >
-                        {/* Main message - BRIGHTER text */}
-                        <motion.p
+                        {/* Main title - Same position/style as "THE UNIVERSE" */}
+                        <motion.h1
                             initial={{ y: 30, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.2, duration: 0.8 }}
-                            className="text-2xl md:text-3xl font-extralight tracking-[0.25em] text-white mb-6 text-center italic px-4"
-                            style={{ textShadow: '0 0 40px rgba(150, 180, 255, 0.4)' }}
+                            transition={{ delay: 0.3, duration: 0.8 }}
+                            className="text-4xl md:text-6xl lg:text-7xl font-extralight tracking-[0.3em] text-white/95 mb-4 text-center px-4"
+                            style={{ textShadow: '0 0 60px rgba(100, 150, 255, 0.3)' }}
                         >
-                            From the ashes of dying stars
-                        </motion.p>
+                            THE BEGINNING OF THE END
+                        </motion.h1>
 
-                        <motion.p
-                            initial={{ y: 30, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.4, duration: 0.8 }}
-                            className="text-2xl md:text-3xl font-extralight tracking-[0.25em] text-white/90 mb-16 text-center italic px-4"
-                            style={{ textShadow: '0 0 40px rgba(150, 180, 255, 0.4)' }}
-                        >
-                            new life awaits its moment
-                        </motion.p>
-
-                        {/* Subtitle - Brighter */}
+                        {/* Subtitle - Same style as "A Journey Through..." */}
                         <motion.p
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.6, duration: 0.8 }}
-                            className="text-base md:text-lg tracking-[0.2em] text-white/70 mb-4 text-center px-4"
+                            transition={{ delay: 0.5, duration: 0.8 }}
+                            className="text-xs md:text-sm tracking-[0.35em] text-white/50 mb-16 uppercase"
                         >
-                            New planets. New stars. New everything.
+                            A cycle that never ends
                         </motion.p>
 
-                        <motion.p
-                            initial={{ y: 20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.8, duration: 0.8 }}
-                            className="text-sm md:text-base tracking-[0.3em] text-white/60 mb-24 uppercase text-center px-4"
-                        >
-                            Waiting for the next big bang
-                        </motion.p>
-
-                        {/* Final tagline - More visible */}
+                        {/* Additional message below */}
                         <motion.div
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 1.0, duration: 0.8 }}
-                            className="absolute bottom-12 md:bottom-16 flex flex-col items-center px-4"
+                            transition={{ delay: 0.7, duration: 0.8 }}
+                            className="text-center"
                         >
-                            <p className="text-xs tracking-[0.25em] text-white/50 uppercase text-center">
-                                This is the beginning of the end
+                            <p className="text-lg md:text-xl font-extralight tracking-[0.2em] text-white/70 mb-3 italic">
+                                From the ashes of dying stars
+                            </p>
+                            <p className="text-lg md:text-xl font-extralight tracking-[0.2em] text-white/60 mb-8 italic">
+                                new life awaits its moment
+                            </p>
+                            <p className="text-sm md:text-base tracking-[0.15em] text-white/40">
+                                New planets. New stars. New everything.
                             </p>
                         </motion.div>
                     </motion.div>

@@ -288,10 +288,10 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(-40, -40, -4480),   // Coming back to center
     new Vector3(0, 0, -4550),       // BUTTERFLY (centered)
 
-    // VOID: Sharp RIGHT + UP turn
-    new Vector3(50, 50, -4750),     // Start turning RIGHT + UP
-    new Vector3(100, 80, -4950),    // Peak of turn
-    new Vector3(50, 40, -5080),     // Coming back to center
+    // VOID: STRAIGHT to Sombrero (no more turns after Butterfly)
+    new Vector3(0, 0, -4750),
+    new Vector3(0, 0, -4900),
+    new Vector3(0, 0, -5050),
     new Vector3(0, 0, -5150),       // SOMBRERO (centered)
 
     // VOID: Straight ominous approach
