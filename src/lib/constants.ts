@@ -35,7 +35,7 @@ export interface LandmarkData {
 export const LANDMARKS: LandmarkData[] = [
     {
         id: 'pillars',
-        position: new Vector3(0, 0, -600), // Pushed WAY back for "3-4 scrolls nothing"
+        position: new Vector3(0, 0, -350), // Shifted closer (was -600)
         texture: '/textures/pillars_of_creation.jpg',
         scale: 150,
         title: 'Pillars of Creation',
@@ -47,7 +47,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'eye_of_god',
-        position: new Vector3(0, 0, -1400), // Deep separation
+        position: new Vector3(0, 0, -1150), // Shifted closer (was -1400)
         texture: '/textures/eye_of_god.png',
         scale: 250,
         title: 'Eye of God',
@@ -59,7 +59,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'butterfly',
-        position: new Vector3(0, -100, -2200), // Abyss
+        position: new Vector3(0, -100, -1950), // Shifted closer (was -2200)
         texture: '/textures/Butterfly_nebula.jpg',
         scale: 300,
         title: 'Butterfly Nebula',
@@ -71,42 +71,43 @@ export const LANDMARKS: LandmarkData[] = [
     }
 ];
 
-// Camera path waypoints - SCRIPTED CINEMA
+// Camera path waypoints - SCRIPTED CINEMA (ADJUSTED START)
 export const WAYPOINTS: Vector3[] = [
-    // 1. "START UNIVERSE FOR 3-4 SCROLLS NOTHING" 
-    // Just traveling through stars
+    // 1. "START UNIVERSE... JUST 2 SCROLLS" 
+    // Reduced void duration significantly
     new Vector3(0, 0, 100),         // START
-    new Vector3(0, 0, -100),        // Straight...
-    new Vector3(-20, 5, -300),      // Slight drift left...
+    new Vector3(0, 0, -50),         // Short straight...
 
-    // 2. "5 SCROLL IS SHARP RIGHT"
-    new Vector3(60, -2, -450),      // SHARP RIGHT TURN
-    new Vector3(40, 0, -500),       // Banking...
+    // 2. "DEEP DIVE EITHER LEFT OR RIGHT" (Turn happens much sooner)
+    // Target Turn at -200 (was -450)
+    new Vector3(60, -2, -200),      // SHARP RIGHT TURN
+    new Vector3(40, 0, -250),       // Banking...
 
-    // 3. "6TH SCROLL WE SEE DISTANT CREATION IN MIDDLE"
-    // "GO STRAIGHT AND IT APPEAR"
-    new Vector3(0, 0, -550),        // CENTERED & STRAIGHT (Aligning for -600)
-    new Vector3(0, 0, -600),        // PILLARS FOCUS
+    // 3. "NEXT IMAGE STARTS VISIBLE" (Pillars at -350)
+    new Vector3(0, 0, -300),        // CENTERED & STRAIGHT (Aligning for -350)
+    new Vector3(0, 0, -350),        // PILLARS FOCUS
 
     // 4. "THROUGH WE GO 2 SCROLLS STRAIGHTS"
-    new Vector3(0, 0, -800),        // Flying straight through...
+    new Vector3(0, 0, -550),        // Flying straight through...
 
     // 5. "THEN ON 3 SCROLL SHARP LEFT"
-    new Vector3(-60, 5, -950),      // SHARP LEFT TURN
-    new Vector3(-40, -5, -1100),    // Banking...
+    new Vector3(-60, 5, -700),      // SHARP LEFT TURN
+    new Vector3(-40, -5, -850),     // Banking...
 
-    // 6. "THEN STRAIGHT 1 SCROLL... 2ND SCROLL WE SEE EYE IN MIDDLE"
-    new Vector3(0, 0, -1250),       // CENTERED & STRAIGHT (Aligning for -1400)
-    new Vector3(0, 0, -1400),       // EYE FOCUS
+    // 6. "THEN STRAIGHT 1 SCROLL... 2ND SCROLL WE SEE EYE"
+    // Eye at -1150
+    new Vector3(0, 0, -1000),       // CENTERED & STRAIGHT
+    new Vector3(0, 0, -1150),       // EYE FOCUS
 
     // 7. "THROUGH WE GO 2 SCROLLS STRAIGHT"
-    new Vector3(0, 0, -1600),       // Flying straight through...
+    new Vector3(0, 0, -1350),       // Flying straight through...
 
     // 8. "THEN 3 BOTTOM DIVE"
-    new Vector3(0, -20, -1700),     // Start Dive
-    new Vector3(0, -100, -1900),    // DEEP DIVE
+    new Vector3(0, -20, -1450),     // Start Dive
+    new Vector3(0, -100, -1650),    // DEEP DIVE
 
-    // 9. "4 LITTLE STRAIGHT... 5 WE START SEEING NEBULA"
-    new Vector3(0, -100, -2050),    // Straight leveling at bottom...
-    new Vector3(0, -100, -2200)     // BUTTERFLY FOCUS
+    // 9. "5 WE START SEEING NEBULA"
+    // Butterfly at -1950
+    new Vector3(0, -100, -1800),    // Straight leveling at bottom...
+    new Vector3(0, -100, -1950)     // BUTTERFLY FOCUS
 ];
