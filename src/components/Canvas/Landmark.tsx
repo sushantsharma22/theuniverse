@@ -94,6 +94,7 @@ export default function Landmark({ data }: LandmarkProps) {
 
         if (dist > 350) {
             targetOpacity = 0;
+            setLandmark(null, 0); // Ensure UI is hidden
         }
         else if (dist > 150) {
             // APPROACH PHASE
@@ -102,6 +103,7 @@ export default function Landmark({ data }: LandmarkProps) {
             targetScale = data.scale + (approachProgress * data.scale * 1.5);
             targetOpacity = 0.8 * approachProgress;
             targetX = originalPos.x;
+            setLandmark(null, 0); // Ensure UI is hidden during approach
         }
         else if (dist > 60) {
             // FOCUS PHASE (Cinematic Moment)
