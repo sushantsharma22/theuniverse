@@ -36,7 +36,7 @@ export const LANDMARKS: LandmarkData[] = [
     {
         id: 'pillars',
         position: new Vector3(0, 0, -250), // Moved closer from -320
-        texture: '/textures/pillars_of_creation.png', // New high-res texture
+        texture: '/textures/pillars_of_creation.jpg', // New high-res texture
         scale: 150,
         title: 'Pillars of Creation',
         type: 'Emission Nebula',
