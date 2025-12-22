@@ -30,19 +30,32 @@ export default function PillarsOfCreation() {
     const wispRef = useRef<THREE.Mesh>(null);
     const starsRef = useRef<THREE.Points>(null);
 
-    // Generate nebula stars
+    // Generate nebula stars - Improved distribution to avoid "box" look
     const starGeo = useMemo(() => {
         const geometry = new THREE.BufferGeometry();
-        const positions = new Float32Array(500 * 3);
-        const sizes = new Float32Array(500); // Varying sizes for sparkles
+        const positions = new Float32Array(800 * 3); // More stars
+        const sizes = new Float32Array(800);
 
-        for (let i = 0; i < 500 * 3; i += 3) {
-            // Spread within the nebula volume (roughly 150x200x100)
-            positions[i] = (Math.random() - 0.5) * 160;   // X: -80 to 80
-            positions[i + 1] = (Math.random() - 0.5) * 220; // Y: -110 to 110
-            positions[i + 2] = (Math.random() - 0.5) * 60;  // Z: -30 to 30 (thickness)
+        for (let i = 0; i < 800 * 3; i += 3) {
+            // SPHERICAL/ELLIPSOID distribution instead of Box
+            // Create a cloud around the pillars
+            const r = Math.random();
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.random() * Math.PI;
 
-            sizes[i / 3] = Math.random() * 2.0;
+            // Varied radii for cloud effect
+            const radius = 60 + Math.random() * 120;
+
+            // X/Y stretch (Pillars are tall)
+            const x = radius * Math.sin(phi) * Math.cos(theta) * 0.8;
+            const y = radius * Math.sin(phi) * Math.sin(theta) * 1.5; // Taller
+            const z = (radius * Math.cos(phi) * 0.5); // Flatter z-depth
+
+            positions[i] = x;
+            positions[i + 1] = y;
+            positions[i + 2] = z;
+
+            sizes[i / 3] = Math.random() * 2.5;
         }
         geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
         geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
@@ -81,13 +94,13 @@ export default function PillarsOfCreation() {
 
             targetZ = -5000 + (easeP * 4800);       // -5000 -> -200
             targetScale = 0.1 + (easeP * 2.9);      // 0.1 -> 3.0
-            baseOpacity = easeP * 0.9;              // Increased opacity for vividness
+            baseOpacity = easeP * 1.0;              // Full opacity
 
         } else if (progress >= 0.40 && progress < 0.50) {
             // AT PILLARS (Stable)
             targetZ = -200;
             targetScale = 3.0;
-            baseOpacity = 0.9;
+            baseOpacity = 1.0;
 
         } else if (progress >= 0.50 && progress < 0.65) {
             // LEAVING (Zoom Out/Away)
@@ -96,7 +109,7 @@ export default function PillarsOfCreation() {
 
             targetZ = -200 - (easeP * 4800);        // -200 -> -5000
             targetScale = 3.0 - (easeP * 2.9);      // 3.0 -> 0.1
-            baseOpacity = 0.9 * (1 - easeP);
+            baseOpacity = 1.0 * (1 - easeP);
 
         } else {
             // Done
@@ -120,20 +133,19 @@ export default function PillarsOfCreation() {
         // Update Opacities & Colors for "Glassmorphism" feel
         // Layer 1: Glow (Deep Red/Orange)
         if (glowRef.current) {
-            (glowRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity * 0.3; // Increased
+            (glowRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity * 0.4; // More glow
         }
         // Layer 2: Main (Crisp)
         if (mainRef.current) {
-            (mainRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity * 0.8;
+            (mainRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity * 0.9;
         }
         // Layer 3: Wisps (Blue/Ethereal)
         if (wispRef.current) {
-            (wispRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity * 0.5;
+            (wispRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity * 0.6;
         }
         // Layer 4: Stars (Sparkle)
         if (starsRef.current) {
-            (starsRef.current.material as THREE.PointsMaterial).opacity = baseOpacity;
-            // Twinkle effect could go here if shader used, but basic points are fine
+            (starsRef.current.material as THREE.PointsMaterial).opacity = baseOpacity * 0.8; // Subtle stars
         }
     });
 
@@ -149,8 +161,8 @@ export default function PillarsOfCreation() {
         <group ref={groupRef}>
             {/* Layer 1: Volumetric Glow (Back) - Larger, softer */}
             <mesh ref={glowRef} position={[0, 0, -50]}>
-                <planeGeometry args={[200, 260]} />
-                <meshBasicMaterial {...matProps} opacity={0} color="#ff4422" />
+                <planeGeometry args={[220, 280]} />
+                <meshBasicMaterial {...matProps} opacity={0} color="#ff3311" />
             </mesh>
 
             {/* Layer 2: Main Structure (Center) - Sharp */}
@@ -168,8 +180,8 @@ export default function PillarsOfCreation() {
 
             {/* Layer 3: Ethereal Wisps (Front) - Blue/Cyan tint */}
             <mesh ref={wispRef} position={[0, 0, 40]}>
-                <planeGeometry args={[110, 130]} />
-                <meshBasicMaterial {...matProps} opacity={0} color="#88ccff" />
+                <planeGeometry args={[120, 140]} />
+                <meshBasicMaterial {...matProps} opacity={0} color="#77bbff" />
             </mesh>
 
             {/* Layer 4: Nebula Stars */}
