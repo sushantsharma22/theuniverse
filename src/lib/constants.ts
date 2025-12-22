@@ -248,7 +248,7 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Unknown',
         description: 'A wormhole, or Einstein-Rosen bridge, is a theoretical passage through space-time. It represents the ultimate frontier—a gateway to other universes, distant galaxies, or perhaps the next cycle of cosmic creation.',
         distanceTrigger: 100,
-        visibilityRange: 700
+        visibilityRange: 300
     }
 ];
 
