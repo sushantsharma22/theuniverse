@@ -72,7 +72,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'black_hole',
-        position: new Vector3(0, -100, -1650), // CLOSER (Gap = 400u)
+        position: new Vector3(0, -100, -1950), // REVERTED: Deep Space Gap Restored
         texture: '/textures/interstellar_blackhole.png',
         scale: 400,
         scaleX: 1.9,
@@ -85,7 +85,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'galaxy',
-        position: new Vector3(0, -100, -2000), // FINAL STOP
+        position: new Vector3(0, -100, -2450), // REVERTED: Final Frontier
         texture: '/textures/The Sombrero Galaxy.jpg',
         scale: 500,
         scaleX: 1.8,
@@ -98,9 +98,9 @@ export const LANDMARKS: LandmarkData[] = [
     }
 ];
 
-// Camera path waypoints - 5 STAGE EPIC JOURNEY (COMPACT FINISH)
+// Camera path waypoints - 5 STAGE EPIC JOURNEY (STABLE DEEP FLIGHT)
 export const WAYPOINTS: Vector3[] = [
-    // 1. START 
+    // 1. START
     new Vector3(0, 0, 100),
     new Vector3(0, 0, -50),
 
@@ -126,13 +126,14 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, -100, -1150),    // DEEP DIVE
     new Vector3(0, -100, -1250),    // BUTTERFLY REVEAL
 
-    // 6. TO BLACK HOLE (FASTER TRANSIT)
+    // 6. TO BLACK HOLE (RESTORED GAP)
     // Stay deep y=-100.
     new Vector3(0, -100, -1350),    // Fly through Butterfly
-    new Vector3(0, -100, -1500),    // Short Void (~3 scrolls)
-    new Vector3(0, -100, -1650),    // BLACK HOLE REVEAL
+    new Vector3(0, -100, -1550),    // VOID TRAVEL (2 Scrolls)
+    new Vector3(0, -100, -1750),    // APPROACHING...
+    new Vector3(0, -100, -1950),    // BLACK HOLE REVEAL (Centered)
 
     // 7. TO GALAXY
-    new Vector3(0, -100, -1800),    // Fly Through
-    new Vector3(0, -100, -2000)     // SOMBRERO GALAXY REVEAL
+    new Vector3(0, -100, -2150),    // Fly Through
+    new Vector3(0, -100, -2450)     // SOMBRERO GALAXY REVEAL
 ];
