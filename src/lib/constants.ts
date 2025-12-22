@@ -5,7 +5,7 @@ import { Vector3 } from 'three';
 // ═══════════════════════════════════════════════════════════════════════════
 
 export const CONFIG = {
-    STAR_COUNT: 125000,
+    STAR_COUNT: 200000,
     PIXEL_RATIO: 1.5,
     TARGET_FPS: 60,
     LERP_SPEED: 0.035,

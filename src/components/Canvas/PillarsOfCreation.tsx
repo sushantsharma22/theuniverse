@@ -74,29 +74,33 @@ export default function PillarsOfCreation() {
         // 0.15 - 0.40: Zoom In (Approach)
         // 0.40 - 0.50: At Pillars (Stable)
         // 0.50 - 0.65: Zoom Out (Leaving)
-        // 0.65 - 1.00: Invisible
+        // 0.00 - 0.05: Far away / Invisible
+        // 0.05 - 0.45: Zoom In (Approach)
+        // 0.45 - 0.55: At Pillars (Stable)
+        // 0.55 - 0.70: Zoom Out (Leaving)
+        // 0.70 - 1.00: Invisible
 
         let targetZ = -5000;
         let targetScale = 0.1;
         let baseOpacity = 0;
 
-        if (progress < 0.15) {
+        if (progress < 0.05) {
             // Invisible state
             targetZ = -5000;
             targetScale = 0.1;
             baseOpacity = 0;
 
-        } else if (progress >= 0.15 && progress < 0.40) {
-            // APPROACHING (Zoom In)
-            const p = (progress - 0.15) / 0.25; // 0 -> 1
-            // Smooth easing for cinematic feel
-            const easeP = p * p * (3 - 2 * p);
+        } else if (progress >= 0.05 && progress < 0.45) {
+            // APPROACHING (Zoom In) - Extended range (40% of scroll)
+            const p = (progress - 0.05) / 0.40; // 0 -> 1
+            // Softer Sine easing for very gradual fade-in
+            const easeP = Math.sin((p * Math.PI) / 2);
 
             targetZ = -5000 + (easeP * 4800);       // -5000 -> -200
             targetScale = 0.1 + (easeP * 2.9);      // 0.1 -> 3.0
             baseOpacity = easeP * 1.0;              // Full opacity
 
-        } else if (progress >= 0.40 && progress < 0.50) {
+        } else if (progress >= 0.45 && progress < 0.55) {
             // AT PILLARS (Stable)
             targetZ = -200;
             targetScale = 3.0;
