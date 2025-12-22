@@ -35,7 +35,7 @@ export interface LandmarkData {
 export const LANDMARKS: LandmarkData[] = [
     {
         id: 'pillars',
-        position: new Vector3(0, 0, -320),
+        position: new Vector3(0, 0, -250), // Moved closer from -320
         texture: '/textures/pillars_of_creation.png',
         scale: 150,
         title: 'Pillars of Creation',
@@ -47,7 +47,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'eye_of_god',
-        position: new Vector3(0, 0, -850), // Pushed even deeper for longer straight approach
+        position: new Vector3(0, 0, -550), // Moved closer from -850
         texture: '/textures/eye_of_god.png',
         scale: 250,
         title: 'Eye of God',
@@ -59,24 +59,24 @@ export const LANDMARKS: LandmarkData[] = [
     }
 ];
 
-// Camera path waypoints - SHARP CHOREOGRAPHY
+// Camera path waypoints - CINEMATIC & COMPRESSED
 export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, 100),         // START
-    new Vector3(-20, 5, 50),        // Sharp Left Weave
-    new Vector3(20, -5, 0),         // Sharp Right Weave
-    new Vector3(-10, 5, -50),       // Center Adjustment
+    new Vector3(-25, 5, 50),        // Sharp Left Weave (Banking Right)
+    new Vector3(25, -5, -20),       // Sharp Right Weave (Banking Left)
+    new Vector3(-5, 5, -80),        // Center Adjust
 
-    // SHARP RIGHT TURN TO PILLARS
-    new Vector3(80, -2, -150),      // Extreme Right (Drift)
-    new Vector3(40, 0, -250),       // Banking In
-    new Vector3(0, 0, -320),        // PILLARS CENTER
+    // SHARP RIGHT TO PILLARS
+    new Vector3(60, -2, -150),      // Extreme Right Drift
+    new Vector3(30, 0, -200),       // Banking In
+    new Vector3(0, 0, -250),        // PILLARS CENTER
 
     // FLY THROUGH & SHARP LEFT
-    new Vector3(0, 0, -380),        // Fly Through
-    new Vector3(-80, 5, -500),      // Extreme Left (Deep Space - "Nothingness")
-    new Vector3(-40, -5, -650),     // Banking In (Still nothing visible)
+    new Vector3(0, 0, -300),        // Fly Through
+    new Vector3(-60, 5, -380),      // Extreme Left (Deep Space Void)
+    new Vector3(-30, -5, -450),     // Banking In
 
     // STRAIGHT APPROACH TO EYE
-    new Vector3(0, 0, -750),        // Dead Center (Eye fades in here)
-    new Vector3(0, 0, -850)         // EYE FOCUS
+    new Vector3(0, 0, -500),        // Dead Center Reveal
+    new Vector3(0, 0, -550)         // EYE FOCUS
 ];

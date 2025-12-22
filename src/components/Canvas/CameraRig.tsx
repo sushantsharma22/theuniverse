@@ -38,6 +38,17 @@ export default function CameraRig() {
         const lookT = Math.min(t + 0.05, 1);
         const lookTarget = curve.current.getPointAt(lookT);
         camera.lookAt(lookTarget);
+
+        // CINEMATIC BANKING (Roll)
+        // Calculate tangent/horizontal movement to tilt camera
+        // If moving LEFT (negative x), bank RIGHT (positive z rotation)
+        // If moving RIGHT (positive x), bank LEFT (negative z rotation)
+        const tangent = curve.current.getTangentAt(t);
+        const bankingIntensity = -0.5; // Negative to invert standard bank for "plane" feel
+        const targetRoll = tangent.x * bankingIntensity;
+
+        // Smoothly interpolate roll
+        camera.rotation.z = THREE.MathUtils.lerp(camera.rotation.z, targetRoll, 0.05);
     });
 
     return null;
