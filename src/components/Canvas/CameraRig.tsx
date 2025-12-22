@@ -10,21 +10,10 @@ import { CatmullRomCurve3, Vector3 } from 'three';
 import * as THREE from 'three';
 import { useScrollStore } from '@/store/scrollStore';
 
+import { WAYPOINTS, CONFIG } from '@/lib/constants';
+
 // Camera path - weaving through stars
-const CAMERA_PATH = [
-    new Vector3(0, 0, 100),       // Start
-    new Vector3(-15, 8, 60),      // Curve left
-    new Vector3(0, -5, 30),       // Center down
-    new Vector3(20, 10, 0),       // Curve right up
-    new Vector3(-10, -8, -30),    // Left down
-    new Vector3(15, 5, -60),      // Right up
-    new Vector3(-20, 0, -90),     // Far left
-    new Vector3(0, 10, -120),     // Center up
-    new Vector3(25, -5, -150),    // Far right
-    new Vector3(-15, 8, -180),    // Left up
-    new Vector3(10, -10, -210),   // Right down
-    new Vector3(0, 0, -250),      // End center
-];
+const CAMERA_PATH = WAYPOINTS;
 
 export default function CameraRig() {
     const { camera } = useThree();
