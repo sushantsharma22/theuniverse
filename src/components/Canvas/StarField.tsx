@@ -27,8 +27,8 @@ export default function StarField() {
 
             const x = radius * Math.cos(theta);
             const y = radius * Math.sin(theta);
-            // Z spans the entire journey (Final Frontier)
-            const z = 200 - Math.random() * 3500;
+            // Z spans the entire journey (Compacted Final)
+            const z = 200 - Math.random() * 2500;
 
             const scale = 0.2 + Math.random() * 0.8;
             matrix.makeScale(scale, scale, scale);

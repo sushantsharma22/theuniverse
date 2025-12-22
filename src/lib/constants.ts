@@ -72,23 +72,23 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'black_hole',
-        position: new Vector3(0, 50, -1800),
-        texture: '/textures/interstellar_blackhole.png', // User's Interstellar Image
+        position: new Vector3(0, 0, -1550), // CENTERED & CLOSER (was 0, 50, -1800)
+        texture: '/textures/interstellar_blackhole.png',
         scale: 1000,
-        scaleX: 1.9, // Wide Aspect Ratio (1024x532)
+        scaleX: 1.9,
         title: 'Supermassive Black Hole',
         type: 'Black Hole',
         distance: '55 million light-years',
         constellation: 'Virgo',
         description: 'This is the first direct image of a black hole, located in Messier 87. It captures the shadow of the supermassive black hole and its accretion disk of superheated gas. The black hole has a mass 6.5 billion times that of our Sun.',
-        distanceTrigger: 120
+        distanceTrigger: 100
     },
     {
         id: 'galaxy',
-        position: new Vector3(0, 0, -2400),
+        position: new Vector3(0, 0, -1850), // CLOSER (was 0, 0, -2400)
         texture: '/textures/The Sombrero Galaxy.jpg',
         scale: 500,
-        scaleX: 1.8, // Assuming Galaxy is also wide
+        scaleX: 1.8,
         title: 'Sombrero Galaxy',
         type: 'Spiral Galaxy',
         distance: '29 million light-years',
@@ -98,7 +98,7 @@ export const LANDMARKS: LandmarkData[] = [
     }
 ];
 
-// Camera path waypoints - 5 STAGE EPIC JOURNEY (REFINED)
+// Camera path waypoints - 5 STAGE EPIC JOURNEY (REFINED & COMPACTED)
 export const WAYPOINTS: Vector3[] = [
     // 1. START 
     new Vector3(0, 0, 100),
@@ -115,8 +115,7 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(-60, 5, -550),      // SHARP LEFT TURN
     new Vector3(-40, -5, -600),     // Banking...
 
-    // 4. EYE REVEAL (SIMPLE STRAIGHT - Reverted "Look Left")
-    // Eye is at -800. Just go straight through.
+    // 4. EYE REVEAL
     new Vector3(0, 0, -700),        // Center Approach
     new Vector3(0, 0, -750),        // Straight...
     new Vector3(0, 0, -800),        // FLY THROUGH THE EYE
@@ -127,16 +126,14 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, -100, -1150),    // DEEP DIVE
     new Vector3(0, -100, -1250),    // BUTTERFLY REVEAL
 
-    // 6. TO BLACK HOLE (THE GRAVITY WELL)
-    // Unique Cinematography: Spiraling Up/Orbit approach
-    new Vector3(0, -100, -1400),    // Fly through Butterfly
-    new Vector3(50, 0, -1550),      // Bank Right & Up (Slingshot)
-    new Vector3(-20, 30, -1650),    // Swing Left (Orbiting)
-    new Vector3(0, 50, -1700),      // Aligning High...
-    new Vector3(0, 50, -1800),      // FACE THE BLACK HOLE (Massive)
+    // 6. TO BLACK HOLE (SHORTENED & CENTERED)
+    // No more orbit. Direct approach.
+    new Vector3(0, -100, -1350),    // Fly through Butterfly
+    new Vector3(0, -50, -1450),     // Rising back to center...
+    new Vector3(0, 0, -1500),       // CENTERED & LEVEL
+    new Vector3(0, 0, -1550),       // FACE THE BLACK HOLE
 
-    // 7. TO GALAXY (The Final Shot)
-    new Vector3(0, 50, -2000),      // Into the Void
-    new Vector3(0, 0, -2200),       // Level Out
-    new Vector3(0, 0, -2400)        // SOMBRERO GALAXY REVEAL
+    // 7. TO GALAXY (SHORT FINAL HOP)
+    new Vector3(0, 0, -1650),       // Fly Through
+    new Vector3(0, 0, -1850)        // SOMBRERO GALAXY REVEAL
 ];

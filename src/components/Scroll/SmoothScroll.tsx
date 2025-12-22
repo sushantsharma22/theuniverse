@@ -56,8 +56,8 @@ export default function SmoothScroll() {
 
     return (
         <div className="relative w-full z-10">
-            {/* Long scrollable area - Extended for 5-Stage Journey */}
-            <div className="h-[10000vh] w-full" />
+            {/* Long scrollable area - Compacted for Intense Finish */}
+            <div className="h-[7000vh] w-full" />
         </div>
     );
 }
