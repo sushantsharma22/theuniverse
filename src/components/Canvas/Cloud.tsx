@@ -1,25 +1,18 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// LANDMARK - Generic component for cosmic discoveries (Nebulas, etc.)
+// CLOUD STRUCTURE - Pillars of Creation with massive scale and soft mist
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { useRef, useMemo } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
-import { useScrollStore } from '@/store/scrollStore';
-import { LandmarkData } from '@/lib/constants';
 
-interface LandmarkProps {
-    data: LandmarkData;
-}
-
-export default function Landmark({ data }: LandmarkProps) {
+export default function Cloud() {
     const meshRef = useRef<THREE.Mesh>(null);
-    const texture = useTexture(data.texture);
+    const texture = useTexture('/textures/pillars_of_creation.jpg');
     const { camera } = useThree();
-    const setLandmark = useScrollStore(state => state.setLandmark);
 
     const shaderArgs = useMemo(() => ({
         uniforms: {
@@ -27,7 +20,7 @@ export default function Landmark({ data }: LandmarkProps) {
             uTime: { value: 0 },
             uOpacity: { value: 0 },
             uColor: { value: new THREE.Color('#aaddff') },
-            uMist: { value: 0 }
+            uMist: { value: 0 } // New mist density control
         },
         vertexShader: `
             varying vec2 vUv;
@@ -39,7 +32,7 @@ export default function Landmark({ data }: LandmarkProps) {
                 
                 // Slow, deep breathing movement
                 vec3 pos = position;
-                // Warping the plane slightly like a nebula (from Cloud.tsx)
+                // Warping the plane slightly like a nebula
                 float warp = sin(pos.x * 1.5 + uTime * 0.3) * sin(pos.y * 1.5 + uTime * 0.2);
                 pos.z += warp * 5.0; 
                 
@@ -78,76 +71,52 @@ export default function Landmark({ data }: LandmarkProps) {
         depthWrite: false,
     }), [texture]);
 
-    const currentScale = useRef(data.scale);
+    // Scale ref to smoothly animate size
+    const currentScale = useRef(150);
 
     useFrame((state) => {
         if (!meshRef.current) return;
 
-        // Animate shader time
+        // Animate time
         (meshRef.current.material as THREE.ShaderMaterial).uniforms.uTime.value = state.clock.elapsedTime;
 
-        // Distance logic
         const dist = camera.position.distanceTo(meshRef.current.position);
-        const originalPos = data.position;
 
-        // CINEMATIC LOGIC STATE MACHINE
-        let targetScale = data.scale;
-        let targetOpacity = 0;
-        let mistIntensity = 0;
-        let targetX = originalPos.x;
-        let uiOpacity = 0;
+        // 1. DYNAMIC SCALE - "Small to Big"
+        // Base scale 150. As we get closer (dist < 200), it grows MASSIVELY
+        // Formula: closer = bigger. 
+        // At 200m away -> scale 150
+        // At 50m away -> scale 300
+        const proximityFactor = Math.max(0, 250 - dist);
+        const targetScale = 150 + (proximityFactor * 1.2);
 
-        if (dist > 250) {
-            targetOpacity = 0;
-            setLandmark(null, 0);
-        }
-        else if (dist > 150) {
-            // APPROACH PHASE (Visible dimly)
-            // Range: 150 to 250
-            const approachProgress = 1.0 - ((dist - 150) / 100);
-            // Dynamic Scale: massive growth as we get closer (from Cloud.tsx)
-            targetScale = data.scale + (approachProgress * data.scale * 1.5);
-            targetOpacity = 0.8 * approachProgress;
-            targetX = originalPos.x;
-            setLandmark(null, 0);
-        }
-        else if (dist > 40) {
-            // FOCUS PHASE (Cinematic Moment)
-            // Adjusted distance logic to be smoother
-            const focusProgress = 1.0 - ((dist - 40) / 110);
-
-            // Standard Slide for Text
-            targetX = originalPos.x + 30;
-
-            // Continue growing massive
-            targetScale = data.scale * 3.0;
-
-            targetOpacity = 1.0;
-            mistIntensity = focusProgress * 0.5; // Slight mist adding up
-
-            // UI Fades in
-            uiOpacity = 1.0;
-            setLandmark(data, uiOpacity);
-        }
-        else {
-            // EXIT / FLY THROUGH PHASE (Inside the cloud)
-            targetX = originalPos.x; // Re-center to fly through
-
-            // Improved fade out logic from Cloud.tsx (dist / 20)
-            targetOpacity = dist / 40;
-
-            // Max Mist
-            mistIntensity = 1.0;
-            setLandmark(null, 0);
-        }
-
-        // Smooth Interpolation
-        const lerpSpeed = 0.04;
-        meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, targetX, lerpSpeed);
-
-        currentScale.current = THREE.MathUtils.lerp(currentScale.current, targetScale, lerpSpeed);
+        currentScale.current += (targetScale - currentScale.current) * 0.04;
         meshRef.current.scale.setScalar(currentScale.current);
 
+        // 2. FADE MODE - "Mist"
+        // Logic: fully visible at distance, but as we fly INTO it (dist < 60), it fades out softly
+        let targetOpacity = 0;
+        let mistIntensity = 0;
+
+        if (dist > 300) {
+            targetOpacity = 0; // Too far
+        } else if (dist > 100) {
+            // Approach: Fade in gradually
+            // 300 -> 0 opacity
+            // 100 -> 0.8 opacity
+            targetOpacity = 0.8 * (1.0 - (dist - 100) / 200);
+            mistIntensity = 0;
+        } else if (dist > 20) {
+            // Close: Full glory
+            targetOpacity = 0.9;
+            // Mist increases as we get close
+            mistIntensity = (100 - dist) / 80;
+        } else {
+            // Inside/Passing: Fade out
+            targetOpacity = dist / 20;
+        }
+
+        // Smooth opacity transition
         const mat = meshRef.current.material as THREE.ShaderMaterial;
         mat.uniforms.uOpacity.value = THREE.MathUtils.lerp(mat.uniforms.uOpacity.value, targetOpacity, 0.05);
         mat.uniforms.uMist.value = mistIntensity;
@@ -157,7 +126,7 @@ export default function Landmark({ data }: LandmarkProps) {
     });
 
     return (
-        <mesh ref={meshRef} position={data.position}>
+        <mesh ref={meshRef} position={[0, 0, -260]}>
             <planeGeometry args={[1, 1, 64, 64]} />
             <primitive object={new THREE.ShaderMaterial(shaderArgs)} attach="material" />
         </mesh>
