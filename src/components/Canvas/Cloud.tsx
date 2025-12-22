@@ -1,7 +1,7 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// CLOUD STRUCTURE - Pillars of Creation with glass/nebula effect
+// CLOUD STRUCTURE - Pillars of Creation with massive scale and soft mist
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { useRef, useMemo } from 'react';
@@ -19,7 +19,8 @@ export default function Cloud() {
             uTexture: { value: texture },
             uTime: { value: 0 },
             uOpacity: { value: 0 },
-            uColor: { value: new THREE.Color('#aaddff') }
+            uColor: { value: new THREE.Color('#aaddff') },
+            uMist: { value: 0 } // New mist density control
         },
         vertexShader: `
             varying vec2 vUv;
@@ -29,9 +30,11 @@ export default function Cloud() {
             void main() {
                 vUv = uv;
                 
-                // Subtle breathing movement
+                // Slow, deep breathing movement
                 vec3 pos = position;
-                pos.z += sin(pos.x * 2.0 + uTime * 0.5) * 2.0;
+                // Warping the plane slightly like a nebula
+                float warp = sin(pos.x * 1.5 + uTime * 0.3) * sin(pos.y * 1.5 + uTime * 0.2);
+                pos.z += warp * 5.0; 
                 
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
             }
@@ -40,22 +43,26 @@ export default function Cloud() {
             uniform sampler2D uTexture;
             uniform float uOpacity;
             uniform vec3 uColor;
+            uniform float uMist;
             varying vec2 vUv;
 
             void main() {
                 vec4 texColor = texture2D(uTexture, vUv);
                 
                 // Glass/Cloud effect
-                // Mix texture with a soft color tint
-                vec3 finalColor = mix(texColor.rgb, uColor, 0.2);
+                vec3 finalColor = mix(texColor.rgb, uColor, 0.15);
                 
-                // Soft edges
+                // Radial fade for soft edges
                 float dist = distance(vUv, vec2(0.5));
-                float alpha = texColor.a * (1.0 - smoothstep(0.3, 0.5, dist));
+                float edgeFade = 1.0 - smoothstep(0.2, 0.5, dist);
                 
-                // Boost brightness for "glowing" look
-                finalColor *= 1.2;
+                // Mist interaction - texture gets "softer" with more mist
+                float alpha = texColor.a * edgeFade;
                 
+                // Boost brightness for "internal glow"
+                finalColor *= 1.3 + uMist * 0.5;
+                
+                // Final alpha fade
                 gl_FragColor = vec4(finalColor, alpha * uOpacity);
             }
         `,
@@ -64,34 +71,63 @@ export default function Cloud() {
         depthWrite: false,
     }), [texture]);
 
+    // Scale ref to smoothly animate size
+    const currentScale = useRef(150);
+
     useFrame((state) => {
         if (!meshRef.current) return;
 
         // Animate time
         (meshRef.current.material as THREE.ShaderMaterial).uniforms.uTime.value = state.clock.elapsedTime;
 
-        // Fade in based on distance
         const dist = camera.position.distanceTo(meshRef.current.position);
 
-        // Visibility logic
+        // 1. DYNAMIC SCALE - "Small to Big"
+        // Base scale 150. As we get closer (dist < 200), it grows MASSIVELY
+        // Formula: closer = bigger. 
+        // At 200m away -> scale 150
+        // At 50m away -> scale 300
+        const proximityFactor = Math.max(0, 250 - dist);
+        const targetScale = 150 + (proximityFactor * 1.2);
+
+        currentScale.current += (targetScale - currentScale.current) * 0.04;
+        meshRef.current.scale.setScalar(currentScale.current);
+
+        // 2. FADE MODE - "Mist"
+        // Logic: fully visible at distance, but as we fly INTO it (dist < 60), it fades out softly
         let targetOpacity = 0;
-        if (dist < 150) {
-            // Fade in as we get closer
-            targetOpacity = Math.min(1.0, (150 - dist) / 50);
+        let mistIntensity = 0;
+
+        if (dist > 300) {
+            targetOpacity = 0; // Too far
+        } else if (dist > 100) {
+            // Approach: Fade in gradually
+            // 300 -> 0 opacity
+            // 100 -> 0.8 opacity
+            targetOpacity = 0.8 * (1.0 - (dist - 100) / 200);
+            mistIntensity = 0;
+        } else if (dist > 20) {
+            // Close: Full glory
+            targetOpacity = 0.9;
+            // Mist increases as we get close
+            mistIntensity = (100 - dist) / 80;
+        } else {
+            // Inside/Passing: Fade out
+            targetOpacity = dist / 20;
         }
 
-        // Lerp opacity
-        const currentOpacity = (meshRef.current.material as THREE.ShaderMaterial).uniforms.uOpacity.value;
-        (meshRef.current.material as THREE.ShaderMaterial).uniforms.uOpacity.value =
-            THREE.MathUtils.lerp(currentOpacity, targetOpacity, 0.05);
+        // Smooth opacity transition
+        const mat = meshRef.current.material as THREE.ShaderMaterial;
+        mat.uniforms.uOpacity.value = THREE.MathUtils.lerp(mat.uniforms.uOpacity.value, targetOpacity, 0.05);
+        mat.uniforms.uMist.value = mistIntensity;
 
         // Always face camera
         meshRef.current.lookAt(camera.position);
     });
 
     return (
-        <mesh ref={meshRef} position={[0, 0, -280]} scale={[100, 100, 1]}>
-            <planeGeometry args={[1, 1, 32, 32]} />
+        <mesh ref={meshRef} position={[0, 0, -260]}>
+            <planeGeometry args={[1, 1, 64, 64]} />
             <primitive object={new THREE.ShaderMaterial(shaderArgs)} attach="material" />
         </mesh>
     );
