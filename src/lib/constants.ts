@@ -246,59 +246,76 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -100),
     new Vector3(0, 0, -350),        // BIG BANG (centered)
 
-    // VOID: Sharp RIGHT + DOWN turn
-    new Vector3(40, -30, -500),     // Start turning RIGHT + DOWN
-    new Vector3(100, -60, -650),    // Peak of turn
-    new Vector3(60, -40, -800),     // Coming back to center
-    new Vector3(0, 0, -950),        // CARBON NEBULA (centered)
+    // Turn in void, then CENTER before Carbon Nebula
+    new Vector3(40, -30, -500),     // Turn RIGHT + DOWN
+    new Vector3(80, -50, -650),     // Peak
+    new Vector3(30, -20, -780),     // Coming back
+    new Vector3(0, 0, -880),        // CENTERED before image
+    new Vector3(0, 0, -950),        // CARBON NEBULA (pass through center)
+    new Vector3(0, 0, -1020),       // CENTERED after image
 
-    // VOID: Sharp LEFT + UP turn
-    new Vector3(-50, 40, -1100),    // Start turning LEFT + UP
-    new Vector3(-120, 80, -1250),   // Peak of turn
-    new Vector3(-60, 50, -1400),    // Coming back to center
-    new Vector3(0, 0, -1550),       // STARBIRTH (centered)
+    // Turn in void, then CENTER before Starbirth
+    new Vector3(-50, 40, -1150),    // Turn LEFT + UP
+    new Vector3(-100, 70, -1280),   // Peak
+    new Vector3(-40, 30, -1420),    // Coming back
+    new Vector3(0, 0, -1480),       // CENTERED before image
+    new Vector3(0, 0, -1550),       // STARBIRTH (pass through center)
+    new Vector3(0, 0, -1620),       // CENTERED after image
 
-    // VOID: DEEP DIVE DOWN
-    new Vector3(0, -30, -1700),     // Start diving
-    new Vector3(0, -100, -1850),    // Peak of dive
-    new Vector3(0, -60, -2000),     // Coming back up
-    new Vector3(0, 0, -2150),       // PILLARS (centered)
+    // Turn in void, then CENTER before Pillars
+    new Vector3(0, -40, -1750),     // Dive DOWN
+    new Vector3(0, -80, -1880),     // Peak
+    new Vector3(0, -30, -2020),     // Coming back
+    new Vector3(0, 0, -2080),       // CENTERED before image
+    new Vector3(0, 0, -2150),       // PILLARS (pass through center)
+    new Vector3(0, 0, -2220),       // CENTERED after image
 
-    // VOID: Sharp RIGHT + UP turn
-    new Vector3(50, 40, -2350),     // Start turning RIGHT + UP
-    new Vector3(100, 80, -2500),    // Peak of turn
-    new Vector3(60, 50, -2650),     // Coming back to center
-    new Vector3(0, 0, -2750),       // SATURN (centered)
+    // Turn in void, then CENTER before Saturn
+    new Vector3(50, 40, -2380),     // Turn RIGHT + UP
+    new Vector3(90, 70, -2520),     // Peak
+    new Vector3(40, 30, -2640),     // Coming back
+    new Vector3(0, 0, -2700),       // CENTERED before image
+    new Vector3(0, 0, -2750),       // SATURN (pass through center)
+    new Vector3(0, 0, -2820),       // CENTERED after image
 
-    // VOID: Sharp LEFT + DOWN turn
-    new Vector3(-40, -30, -2900),   // Start turning LEFT + DOWN
-    new Vector3(-100, -60, -3100),  // Peak of turn
-    new Vector3(-50, -30, -3250),   // Coming back to center
-    new Vector3(0, 0, -3350),       // EARTH (centered)
+    // Turn in void, then CENTER before Earth
+    new Vector3(-40, -30, -2950),   // Turn LEFT + DOWN
+    new Vector3(-80, -60, -3100),   // Peak
+    new Vector3(-30, -20, -3230),   // Coming back
+    new Vector3(0, 0, -3290),       // CENTERED before image
+    new Vector3(0, 0, -3350),       // EARTH (pass through center)
+    new Vector3(0, 0, -3420),       // CENTERED after image
 
-    // VOID: Sharp RIGHT + UP turn
-    new Vector3(40, 40, -3550),     // Start turning RIGHT + UP
-    new Vector3(80, 80, -3750),     // Peak of turn
-    new Vector3(40, 40, -3880),     // Coming back to center
-    new Vector3(0, 0, -3950),       // EYE OF GOD (centered)
+    // Turn in void, then CENTER before Eye of God
+    new Vector3(40, 40, -3580),     // Turn RIGHT + UP
+    new Vector3(70, 70, -3720),     // Peak
+    new Vector3(30, 30, -3850),     // Coming back
+    new Vector3(0, 0, -3900),       // CENTERED before image
+    new Vector3(0, 0, -3950),       // EYE OF GOD (pass through center)
+    new Vector3(0, 0, -4020),       // CENTERED after image
 
-    // VOID: Sharp LEFT + DOWN turn
-    new Vector3(-40, -30, -4150),   // Start turning LEFT + DOWN
-    new Vector3(-80, -80, -4350),   // Peak of turn
-    new Vector3(-40, -40, -4480),   // Coming back to center
-    new Vector3(0, 0, -4550),       // BUTTERFLY (centered)
+    // Turn in void, then CENTER before Butterfly
+    new Vector3(-40, -30, -4180),   // Turn LEFT + DOWN
+    new Vector3(-70, -65, -4320),   // Peak
+    new Vector3(-30, -25, -4440),   // Coming back
+    new Vector3(0, 0, -4500),       // CENTERED before image
+    new Vector3(0, 0, -4550),       // BUTTERFLY (pass through center)
+    new Vector3(0, 0, -4620),       // CENTERED after image
 
-    // VOID: Sharp RIGHT + UP turn
-    new Vector3(50, 50, -4750),     // Start turning RIGHT + UP
-    new Vector3(100, 80, -4950),    // Peak of turn
-    new Vector3(50, 40, -5080),     // Coming back to center
-    new Vector3(0, 0, -5150),       // SOMBRERO (centered)
+    // Turn in void, then CENTER before Sombrero
+    new Vector3(50, 50, -4780),     // Turn RIGHT + UP
+    new Vector3(90, 75, -4920),     // Peak
+    new Vector3(40, 35, -5050),     // Coming back
+    new Vector3(0, 0, -5100),       // CENTERED before image
+    new Vector3(0, 0, -5150),       // SOMBRERO (pass through center)
+    new Vector3(0, 0, -5220),       // CENTERED after image
 
-    // VOID: ONE TURN between Sombrero and Black Hole
-    new Vector3(40, 30, -5300),     // Start turning
-    new Vector3(70, 60, -5450),     // Peak of turn
-    new Vector3(40, 30, -5600),     // Coming back to center
-    new Vector3(0, 0, -5750),       // BLACK HOLE (centered)
+    // ONE TURN between Sombrero and Black Hole, then CENTER
+    new Vector3(40, 30, -5350),     // Turn
+    new Vector3(65, 55, -5480),     // Peak
+    new Vector3(30, 25, -5620),     // Coming back
+    new Vector3(0, 0, -5700),       // CENTERED before image
+    new Vector3(0, 0, -5750),       // BLACK HOLE (pass through center)
 
     // VOID: Straight
     new Vector3(0, 0, -5950),
