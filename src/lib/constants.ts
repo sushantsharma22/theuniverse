@@ -34,6 +34,9 @@ export interface LandmarkData {
     visibilityRange?: number; // Distance at which landmark starts fading in (Default: 400)
 }
 
+
+const BASE_PATH = '/theuniverse';
+
 export const LANDMARKS: LandmarkData[] = [
     // ═══════════════════════════════════════════════════════════════════════════
     // STAGE 1: THE BEGINNING
@@ -41,7 +44,7 @@ export const LANDMARKS: LandmarkData[] = [
     {
         id: 'big_bang',
         position: new Vector3(0, 0, -350),
-        texture: '/textures/big bang.jpg',
+        texture: `${BASE_PATH}/textures/big bang.jpg`,
         scale: 200,
         title: 'The Big Bang',
         type: 'Cosmic Origin',
@@ -57,7 +60,7 @@ export const LANDMARKS: LandmarkData[] = [
     {
         id: 'carbon_nebula',
         position: new Vector3(0, 0, -950),
-        texture: '/textures/carbnebula.jpg',
+        texture: `${BASE_PATH}/textures/carbnebula.jpg`,
         scale: 250,
         title: 'Carbon Nebula',
         type: 'Molecular Cloud',
@@ -73,7 +76,7 @@ export const LANDMARKS: LandmarkData[] = [
     {
         id: 'starbirth',
         position: new Vector3(0, 0, -1550),
-        texture: '/textures/starbirth.jpg',
+        texture: `${BASE_PATH}/textures/starbirth.jpg`,
         scale: 280,
         title: 'Seagull Nebula',
         type: 'Star-Forming Region',
@@ -89,7 +92,7 @@ export const LANDMARKS: LandmarkData[] = [
     {
         id: 'pillars',
         position: new Vector3(0, 0, -2150),
-        texture: '/textures/pillars_of_creation.jpg',
+        texture: `${BASE_PATH}/textures/pillars_of_creation.jpg`,
         scale: 300,
         title: 'Pillars of Creation',
         type: 'Emission Nebula',
@@ -105,7 +108,7 @@ export const LANDMARKS: LandmarkData[] = [
     {
         id: 'saturn',
         position: new Vector3(0, 0, -2750),
-        texture: '/textures/saturn.jpg',
+        texture: `${BASE_PATH}/textures/saturn.jpg`,
         scale: 180,
         title: 'Saturn',
         type: 'Gas Giant',
@@ -121,7 +124,7 @@ export const LANDMARKS: LandmarkData[] = [
     {
         id: 'earth',
         position: new Vector3(0, 0, -3350),
-        texture: '/textures/earth.jpg',
+        texture: `${BASE_PATH}/textures/earth.jpg`,
         scale: 150,
         title: 'Earth',
         type: 'Terrestrial Planet',
@@ -137,7 +140,7 @@ export const LANDMARKS: LandmarkData[] = [
     {
         id: 'eye_of_god',
         position: new Vector3(0, 0, -3950),
-        texture: '/textures/eye_of_god.png',
+        texture: `${BASE_PATH}/textures/eye_of_god.png`,
         scale: 350,
         title: 'Eye of God',
         type: 'Planetary Nebula',
@@ -153,7 +156,7 @@ export const LANDMARKS: LandmarkData[] = [
     {
         id: 'butterfly',
         position: new Vector3(0, 0, -4550),
-        texture: '/textures/Butterfly_nebula.jpg',
+        texture: `${BASE_PATH}/textures/Butterfly_nebula.jpg`,
         scale: 380,
         title: 'Butterfly Nebula',
         type: 'Bipolar Nebula',
@@ -169,7 +172,7 @@ export const LANDMARKS: LandmarkData[] = [
     {
         id: 'sombrero',
         position: new Vector3(0, 0, -5150),
-        texture: '/textures/The Sombrero Galaxy.jpg',
+        texture: `${BASE_PATH}/textures/The Sombrero Galaxy.jpg`,
         scale: 500,
         scaleX: 1.8,
         title: 'Sombrero Galaxy',
@@ -186,7 +189,7 @@ export const LANDMARKS: LandmarkData[] = [
     {
         id: 'black_hole',
         position: new Vector3(0, 0, -5750),
-        texture: '/textures/blackhole.jpg',
+        texture: `${BASE_PATH}/textures/blackhole.jpg`,
         scale: 400,
         scaleX: 1.78,
         title: 'Black Hole M87',
@@ -203,7 +206,7 @@ export const LANDMARKS: LandmarkData[] = [
     {
         id: 'quasar',
         position: new Vector3(0, 0, -6350),
-        texture: '/textures/quasar.jpg',
+        texture: `${BASE_PATH}/textures/quasar.jpg`,
         scale: 420,
         scaleX: 1.78,
         title: 'Quasar',
@@ -220,7 +223,7 @@ export const LANDMARKS: LandmarkData[] = [
     {
         id: 'wormhole',
         position: new Vector3(0, 0, -6950),
-        texture: '/textures/wormhole.png',
+        texture: `${BASE_PATH}/textures/wormhole.png`,
         scale: 500,
         scaleX: 1.78,
         title: 'Wormhole',
@@ -232,6 +235,7 @@ export const LANDMARKS: LandmarkData[] = [
         visibilityRange: 700
     }
 ];
+
 
 // Position where the universe ends and "The End" appears
 export const UNIVERSE_END_POSITION = -7200;
