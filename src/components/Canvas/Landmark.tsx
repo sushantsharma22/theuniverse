@@ -83,9 +83,9 @@ export default function Landmark({ data }: LandmarkProps) {
 
         // CINEMATIC LOGIC STATE MACHINE
         // 1. Far Away (> 400): Invisible/Small
-        // 2. Approach (150 - 400): Growing, Centered
-        // 3. Focus Zone (60 - 150): Slide Right, Text Left, Full Size
-        // 4. Fly Through (< 60): Re-center, Fade Out, Fly Through
+        // 2. Approach (100 - 400): Growing, Centered, Dimly Visible
+        // 3. Focus Zone (20 - 100): Full Size, Centered, massive growth
+        // 4. Fly Through (< 20): Fade Out, Fly Through
 
         let targetScale = data.scale;
         let targetOpacity = 0;
@@ -93,43 +93,50 @@ export default function Landmark({ data }: LandmarkProps) {
         let targetX = originalPos.x;
         let uiOpacity = 0;
 
-        if (dist > 200) {
+        if (dist > 400) {
+            // Far away but starting to appear
             targetOpacity = 0;
-            setLandmark(null, 0); // Ensure UI is hidden
+            setLandmark(null, 0);
         }
-        else if (dist > 150) {
-            // APPROACH PHASE
-            // Grow from base scale to 2x base scale
-            // Range: 150 to 200
-            const approachProgress = 1.0 - ((dist - 150) / 50);
-            targetScale = data.scale + (approachProgress * data.scale * 1.5);
-            targetOpacity = 0.8 * approachProgress;
+        else if (dist > 100) {
+            // APPROACH PHASE - Long visibility
+            // Visible from 400 down to 100
+            const approachProgress = 1.0 - ((dist - 100) / 300);
+
+            // Gradual growth
+            targetScale = data.scale + (approachProgress * data.scale * 1.0);
+            targetOpacity = 0.6 * approachProgress; // Dim approach
+            targetX = originalPos.x; // STRICTLY CENTERED
+            setLandmark(null, 0);
+        }
+        else if (dist > 20) {
+            // FOCUS PHASE - "Huge" and "Fully on Screen"
+            // Visible from 100 down to 20
+            const focusProgress = 1.0 - ((dist - 20) / 80);
+
+            // Massive Scale at the end
+            targetScale = data.scale * (2.0 + focusProgress * 2.0); // Up to 4x size
+            targetOpacity = 1.0; // Fully visible
+
+            // Keep Centered (User requested "middle creation")
             targetX = originalPos.x;
-            setLandmark(null, 0); // Ensure UI is hidden during approach
-        }
-        else if (dist > 60) {
-            // FOCUS PHASE (Cinematic Moment)
-            // Slide to Right (+30 units) so text can be on Left
-            targetX = originalPos.x + 40;
-            targetScale = data.scale * 3.5; // Massive
-            targetOpacity = 1.0;
 
             // UI Fades in
             uiOpacity = 1.0;
             setLandmark(data, uiOpacity);
         }
         else {
-            // EXIT / FLY THROUGH PHASE
-            targetX = originalPos.x; // Back to center to fly through
-            targetOpacity = dist / 60; // Fade out as we get very close
-            mistIntensity = (60 - dist) / 50; // Mist increases
-            setLandmark(null, 0); // Hide UI
+            // EXIT / FLY THROUGH PHASE (Very close)
+            targetX = originalPos.x;
+            targetOpacity = dist / 20; // Rapid fade only at very end
+            mistIntensity = (20 - dist) / 20;
+            setLandmark(null, 0);
         }
 
         // Smooth Interpolation for Cinematic Feel
         const lerpSpeed = 0.04;
 
-        // Position X (Using simple lerp for smooth slide)
+        // Position X (Using simple lerp)
         meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, targetX, lerpSpeed);
 
         // Scale
