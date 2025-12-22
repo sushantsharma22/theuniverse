@@ -1,40 +1,32 @@
 'use client';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// CAMERA RIG - Move through stars with scroll (left, right, center)
+// CAMERA RIG - Straight flight through space
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { CatmullRomCurve3, Vector3 } from 'three';
-import * as THREE from 'three';
+import { Vector3 } from 'three';
 import { useScrollStore } from '@/store/scrollStore';
-import { WAYPOINTS } from '@/lib/constants';
 
 export default function CameraRig() {
     const { camera } = useThree();
     const progress = useScrollStore(state => state.progress);
 
-    // Create smooth camera path from shared constants
-    const curve = useRef(new CatmullRomCurve3(WAYPOINTS, false, 'catmullrom', 0.5));
-
-    // Smooth position tracking
-    // Start at the first waypoint position
-    const currentPos = useRef(new THREE.Vector3(0, 0, 0));
+    // Initial look target (straight ahead)
+    const lookTarget = useRef(new Vector3(0, 0, -6000));
 
     useFrame(() => {
-        // Get target position on curve
-        const t = Math.min(Math.max(progress, 0), 1);
-        const targetPos = curve.current.getPointAt(t);
+        // LINEAR FLIGHT:
+        // Move forward on Z axis based on scroll progress
+        // 0 -> -5000
+        const zPos = 0 - (progress * 5000);
 
-        // Smooth interpolation
-        currentPos.current.lerp(targetPos, 0.04);
-        camera.position.copy(currentPos.current);
+        // Strict centering
+        camera.position.set(0, 0, zPos);
 
-        // Look ahead on the path
-        const lookT = Math.min(t + 0.05, 1);
-        const lookTarget = curve.current.getPointAt(lookT);
-        camera.lookAt(lookTarget);
+        // Always look straight ahead
+        camera.lookAt(lookTarget.current);
     });
 
     return null;
