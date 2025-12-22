@@ -56,8 +56,8 @@ export default function SmoothScroll() {
 
     return (
         <div className="relative w-full z-10">
-            {/* Long scrollable area - Extended for multiple landmarks */}
-            <div className="h-[3000vh] w-full" />
+            {/* Long scrollable area - Optimized for fast pacing */}
+            <div className="h-[1800vh] w-full" />
         </div>
     );
 }

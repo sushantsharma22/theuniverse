@@ -35,7 +35,7 @@ export interface LandmarkData {
 export const LANDMARKS: LandmarkData[] = [
     {
         id: 'pillars',
-        position: new Vector3(0, 0, -320),
+        position: new Vector3(0, 0, -200), // Moved closer from -320
         texture: '/textures/pillars_of_creation.png',
         scale: 150,
         title: 'Pillars of Creation',
@@ -47,7 +47,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'eye_of_god',
-        position: new Vector3(0, 0, -650),
+        position: new Vector3(0, 0, -420), // Moved closer from -650
         texture: '/textures/eye_of_god.png',
         scale: 200,
         title: 'Eye of God',
@@ -62,20 +62,13 @@ export const LANDMARKS: LandmarkData[] = [
 // Camera path waypoints - smooth curve through space
 export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, 100),        // START
-    new Vector3(-8, 5, 70),
-    new Vector3(6, -4, 40),
-    new Vector3(-5, 6, 10),
-    new Vector3(7, -5, -20),
-    new Vector3(-6, 4, -50),
-    new Vector3(5, -6, -80),
-    new Vector3(-4, 5, -110),
-    new Vector3(6, -4, -140),
-    new Vector3(-5, 6, -170),
-    new Vector3(4, -5, -200),
-    new Vector3(0, 0, -240),      // Pillars approach
-    new Vector3(5, 8, -280),      // Flying past Pillars
-    new Vector3(-6, -4, -350),    // Deep space transit
-    new Vector3(8, -6, -420),
-    new Vector3(-7, 5, -490),
-    new Vector3(0, 0, -560)       // Eye of God approach
+    new Vector3(-5, 5, 60),        // compressed curve
+    new Vector3(5, -3, 20),
+    new Vector3(-4, 4, -20),
+    new Vector3(4, -4, -60),
+    new Vector3(0, 0, -100),       // Approaching Pillars (-200)
+    new Vector3(3, 3, -240),       // Flying past Pillars
+    new Vector3(-4, -4, -290),     // Transit
+    new Vector3(4, 4, -340),       // Transit
+    new Vector3(0, 0, -400)        // Approaching Eye (-420)
 ];
