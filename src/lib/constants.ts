@@ -37,12 +37,24 @@ export const LANDMARKS: LandmarkData[] = [
         id: 'pillars',
         position: new Vector3(0, 0, -320),
         texture: '/textures/pillars_of_creation.png',
-        scale: 150, // Base scale
+        scale: 150,
         title: 'Pillars of Creation',
         type: 'Emission Nebula',
         distance: '6,500 light-years',
         constellation: 'Serpens',
         description: 'The Pillars of Creation are vast trunks of interstellar gas and dust in the Eagle Nebula (Messier 16). They are active stellar nurseries where new stars are being born, simultaneously eroded by the intense ultraviolet light from nearby massive stars. The leftmost pillar is about four light-years in length.',
+        distanceTrigger: 70
+    },
+    {
+        id: 'eye_of_god',
+        position: new Vector3(0, 0, -650),
+        texture: '/textures/eye_of_god.png',
+        scale: 200,
+        title: 'Eye of God',
+        type: 'Planetary Nebula',
+        distance: '650 light-years',
+        constellation: 'Aquarius',
+        description: 'The Helix Nebula, often referred to as the Eye of God, is a large planetary nebula located in the constellation Aquarius. It is one of the closest to Earth of all the bright planetary nebulae. The estimated age is 10,600 years, based on its expansion rate.',
         distanceTrigger: 70
     }
 ];
@@ -60,5 +72,10 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(6, -4, -140),
     new Vector3(-5, 6, -170),
     new Vector3(4, -5, -200),
-    new Vector3(0, 0, -240)        // END
+    new Vector3(0, 0, -240),      // Pillars approach
+    new Vector3(5, 8, -280),      // Flying past Pillars
+    new Vector3(-6, -4, -350),    // Deep space transit
+    new Vector3(8, -6, -420),
+    new Vector3(-7, 5, -490),
+    new Vector3(0, 0, -560)       // Eye of God approach
 ];
