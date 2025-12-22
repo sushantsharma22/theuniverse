@@ -71,19 +71,19 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'black_hole',
-        position: new Vector3(0, 50, -1800), // New Discovery
+        position: new Vector3(0, 50, -1800),
         texture: '/textures/firstblackhole.jpg',
-        scale: 400,
+        scale: 1000, // MASSIVE (User requested "Huge")
         title: 'Supermassive Black Hole',
         type: 'Black Hole',
         distance: '55 million light-years',
         constellation: 'Virgo',
         description: 'This is the first direct image of a black hole, located in Messier 87. It captures the shadow of the supermassive black hole and its accretion disk of superheated gas. The black hole has a mass 6.5 billion times that of our Sun.',
-        distanceTrigger: 90
+        distanceTrigger: 120
     },
     {
         id: 'galaxy',
-        position: new Vector3(0, 0, -2400), // Final Frontier
+        position: new Vector3(0, 0, -2400),
         texture: '/textures/The Sombrero Galaxy.jpg',
         scale: 500,
         title: 'Sombrero Galaxy',
@@ -95,7 +95,7 @@ export const LANDMARKS: LandmarkData[] = [
     }
 ];
 
-// Camera path waypoints - 5 STAGE EPIC JOURNEY
+// Camera path waypoints - 5 STAGE EPIC JOURNEY (REFINED)
 export const WAYPOINTS: Vector3[] = [
     // 1. START 
     new Vector3(0, 0, 100),
@@ -110,29 +110,31 @@ export const WAYPOINTS: Vector3[] = [
     // 3. TRANSIT TO EYE
     new Vector3(0, 0, -450),        // Fly Through
     new Vector3(-60, 5, -550),      // SHARP LEFT TURN
-    new Vector3(-40, -5, -650),     // Banking...
-    new Vector3(0, 0, -750),        // Eye Reveal Approach
-    new Vector3(0, 0, -800),        // EYE FOCUS
+    new Vector3(-40, -5, -600),     // Banking...
 
-    // 4. "LOOK LEFT / SHEER SIZE" MOMENT (At the Eye)
-    new Vector3(0, 0, -820),        // Close to Eye
-    new Vector3(-30, 0, -820),      // PAN LEFT (Look at size)
-    new Vector3(0, 0, -820),        // PAN BACK CENTER
-    new Vector3(0, 0, -900),        // Fly Through Straight
+    // 4. "LOOK LEFT / SHEER SIZE" MOMENT (BEFORE THE EYE)
+    // Eye is at -800. We look at it from -700 to appreciate size.
+    new Vector3(0, 0, -700),        // Approach Center
+    new Vector3(-35, 0, -700),      // PAN LEFT (Look at it looming)
+    new Vector3(0, 0, -720),        // Center back
+    new Vector3(0, 0, -800),        // FLY THROUGH THE EYE
 
     // 5. TO BUTTERFLY
+    new Vector3(0, 0, -900),        // Straight out
     new Vector3(0, -20, -1000),     // Start Dive
     new Vector3(0, -100, -1150),    // DEEP DIVE
     new Vector3(0, -100, -1250),    // BUTTERFLY REVEAL
-    new Vector3(0, -100, -1350),    // Fly Through Base
 
-    // 6. TO BLACK HOLE (Rise Up)
-    new Vector3(0, 0, -1500),       // Rise back to plane
-    new Vector3(40, 20, -1650),     // Bank Right/Up
-    new Vector3(0, 50, -1800),      // BLACK HOLE REVEAL (High Angle)
+    // 6. TO BLACK HOLE (THE GRAVITY WELL)
+    // Unique Cinematography: Spiraling Up/Orbit approach
+    new Vector3(0, -100, -1400),    // Fly through Butterfly
+    new Vector3(50, 0, -1550),      // Bank Right & Up (Slingshot)
+    new Vector3(-20, 30, -1650),    // Swing Left (Orbiting)
+    new Vector3(0, 50, -1700),      // Aligning High...
+    new Vector3(0, 50, -1800),      // FACE THE BLACK HOLE (Massive)
 
-    // 7. TO GALAXY (Straight Shot)
-    new Vector3(0, 50, -2000),      // Fly Through
+    // 7. TO GALAXY (The Final Shot)
+    new Vector3(0, 50, -2000),      // Into the Void
     new Vector3(0, 0, -2200),       // Level Out
     new Vector3(0, 0, -2400)        // SOMBRERO GALAXY REVEAL
 ];
