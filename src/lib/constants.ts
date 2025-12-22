@@ -35,7 +35,7 @@ export interface LandmarkData {
 export const LANDMARKS: LandmarkData[] = [
     {
         id: 'pillars',
-        position: new Vector3(0, 0, -350), // Unchanged (Start pacing is good)
+        position: new Vector3(0, 0, -350),
         texture: '/textures/pillars_of_creation.jpg',
         scale: 150,
         title: 'Pillars of Creation',
@@ -47,7 +47,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'eye_of_god',
-        position: new Vector3(0, 0, -800), // Shifted closer (was -1150)
+        position: new Vector3(0, 0, -800),
         texture: '/textures/eye_of_god.png',
         scale: 250,
         title: 'Eye of God',
@@ -59,7 +59,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'butterfly',
-        position: new Vector3(0, -100, -1250), // Shifted closer (was -1950)
+        position: new Vector3(0, -100, -1250),
         texture: '/textures/Butterfly_nebula.jpg',
         scale: 300,
         title: 'Butterfly Nebula',
@@ -68,44 +68,71 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Scorpius',
         description: 'The Butterfly Nebula (NGC 6302) exhibits a complex, bipolar structure reminiscent of butterfly wings. Its central star is one of the hottest known, with a surface temperature exceeding 250,000 degrees Celsius, driving the high-energy expansion of the nebula.',
         distanceTrigger: 80
+    },
+    {
+        id: 'black_hole',
+        position: new Vector3(0, 50, -1800), // New Discovery
+        texture: '/textures/firstblackhole.jpg',
+        scale: 400,
+        title: 'Supermassive Black Hole',
+        type: 'Black Hole',
+        distance: '55 million light-years',
+        constellation: 'Virgo',
+        description: 'This is the first direct image of a black hole, located in Messier 87. It captures the shadow of the supermassive black hole and its accretion disk of superheated gas. The black hole has a mass 6.5 billion times that of our Sun.',
+        distanceTrigger: 90
+    },
+    {
+        id: 'galaxy',
+        position: new Vector3(0, 0, -2400), // Final Frontier
+        texture: '/textures/The Sombrero Galaxy.jpg',
+        scale: 500,
+        title: 'Sombrero Galaxy',
+        type: 'Spiral Galaxy',
+        distance: '29 million light-years',
+        constellation: 'Virgo',
+        description: 'The Sombrero Galaxy (M104) is a spiral galaxy in the constellation Virgo. It has a bright nucleus, an unusually large central bulge, and a prominent dust lane in its inclined disk, giving it the appearance of a sombrero.',
+        distanceTrigger: 100
     }
 ];
 
-// Camera path waypoints - SCRIPTED CINEMA (COMPRESSED GAPS)
+// Camera path waypoints - 5 STAGE EPIC JOURNEY
 export const WAYPOINTS: Vector3[] = [
-    // 1. START (Unchanged)
+    // 1. START 
     new Vector3(0, 0, 100),
     new Vector3(0, 0, -50),
 
-    // 2. TURN (Unchanged)
+    // 2. TURN TO PILLARS
     new Vector3(60, -2, -200),      // SHARP RIGHT TURN
     new Vector3(40, 0, -250),
-
-    // 3. PILLARS REVEAL (Unchanged -350)
     new Vector3(0, 0, -300),
-    new Vector3(0, 0, -350),        // PILLARS FOCUS
+    new Vector3(0, 0, -350),        // PILLARS REVEAL
 
-    // 4. TRANSIT TO EYE (Accelerated)
+    // 3. TRANSIT TO EYE
     new Vector3(0, 0, -450),        // Fly Through
-
-    // 5. TURN TO EYE (Earlier)
-    // Eye is at -800. Reveal starts ~-650. Turn ~-600.
     new Vector3(-60, 5, -550),      // SHARP LEFT TURN
     new Vector3(-40, -5, -650),     // Banking...
-
-    // 6. EYE REVEAL
-    new Vector3(0, 0, -750),        // CENTERED & STRAIGHT
+    new Vector3(0, 0, -750),        // Eye Reveal Approach
     new Vector3(0, 0, -800),        // EYE FOCUS
 
-    // 7. TRANSIT TO NEBULA (Accelerated)
-    new Vector3(0, 0, -900),        // Fly Through
+    // 4. "LOOK LEFT / SHEER SIZE" MOMENT (At the Eye)
+    new Vector3(0, 0, -820),        // Close to Eye
+    new Vector3(-30, 0, -820),      // PAN LEFT (Look at size)
+    new Vector3(0, 0, -820),        // PAN BACK CENTER
+    new Vector3(0, 0, -900),        // Fly Through Straight
 
-    // 8. DIVE (Earlier)
-    // Butterfly at -1250. Dive start ~-1000.
+    // 5. TO BUTTERFLY
     new Vector3(0, -20, -1000),     // Start Dive
     new Vector3(0, -100, -1150),    // DEEP DIVE
+    new Vector3(0, -100, -1250),    // BUTTERFLY REVEAL
+    new Vector3(0, -100, -1350),    // Fly Through Base
 
-    // 9. BUTTERFLY REVEAL
-    new Vector3(0, -100, -1200),    // Straight leveling...
-    new Vector3(0, -100, -1250)     // BUTTERFLY FOCUS
+    // 6. TO BLACK HOLE (Rise Up)
+    new Vector3(0, 0, -1500),       // Rise back to plane
+    new Vector3(40, 20, -1650),     // Bank Right/Up
+    new Vector3(0, 50, -1800),      // BLACK HOLE REVEAL (High Angle)
+
+    // 7. TO GALAXY (Straight Shot)
+    new Vector3(0, 50, -2000),      // Fly Through
+    new Vector3(0, 0, -2200),       // Level Out
+    new Vector3(0, 0, -2400)        // SOMBRERO GALAXY REVEAL
 ];

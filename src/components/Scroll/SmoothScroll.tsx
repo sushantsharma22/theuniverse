@@ -56,8 +56,8 @@ export default function SmoothScroll() {
 
     return (
         <div className="relative w-full z-10">
-            {/* Long scrollable area - Compressed for Snappy Transit (No Waiting) */}
-            <div className="h-[5500vh] w-full" />
+            {/* Long scrollable area - Extended for 5-Stage Journey */}
+            <div className="h-[10000vh] w-full" />
         </div>
     );
 }
