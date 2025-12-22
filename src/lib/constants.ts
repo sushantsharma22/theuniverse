@@ -35,7 +35,7 @@ export interface LandmarkData {
 export const LANDMARKS: LandmarkData[] = [
     {
         id: 'pillars',
-        position: new Vector3(0, 0, -200), // Moved closer from -320
+        position: new Vector3(0, 0, -320),
         texture: '/textures/pillars_of_creation.png',
         scale: 150,
         title: 'Pillars of Creation',
@@ -47,9 +47,9 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'eye_of_god',
-        position: new Vector3(0, 0, -420), // Moved closer from -650
+        position: new Vector3(0, 0, -750), // Much deeper for separation
         texture: '/textures/eye_of_god.png',
-        scale: 200,
+        scale: 250,
         title: 'Eye of God',
         type: 'Planetary Nebula',
         distance: '650 light-years',
@@ -59,16 +59,24 @@ export const LANDMARKS: LandmarkData[] = [
     }
 ];
 
-// Camera path waypoints - smooth curve through space
+// Camera path waypoints - Choreographed Journey
 export const WAYPOINTS: Vector3[] = [
-    new Vector3(0, 0, 100),        // START
-    new Vector3(-5, 5, 60),        // compressed curve
-    new Vector3(5, -3, 20),
-    new Vector3(-4, 4, -20),
-    new Vector3(4, -4, -60),
-    new Vector3(0, 0, -100),       // Approaching Pillars (-200)
-    new Vector3(3, 3, -240),       // Flying past Pillars
-    new Vector3(-4, -4, -290),     // Transit
-    new Vector3(4, 4, -340),       // Transit
-    new Vector3(0, 0, -400)        // Approaching Eye (-420)
+    new Vector3(0, 0, 100),         // START
+    new Vector3(-10, 5, 50),        // Left Weave
+    new Vector3(10, -5, 0),         // Right Weave
+    new Vector3(-5, 5, -50),        // Center/Left Adjustment
+
+    // APPROACHING PILLARS (Go Right)
+    new Vector3(15, -2, -150),      // Drifting Right
+    new Vector3(8, 0, -250),        // Aligning from Right
+    new Vector3(0, 0, -320),        // PILLARS FOCUS (Center)
+
+    // THROUGH PILLARS & TRANSIT (Go Left -> Straight)
+    new Vector3(0, 0, -380),        // Fly Through
+    new Vector3(-15, 5, -450),      // Drift Left (Deep Space)
+    new Vector3(-10, -5, -550),     // Holding Left/Down
+
+    // APPROACHING EYE (Straighten Out)
+    new Vector3(0, 0, -650),        // Center/Straight
+    new Vector3(0, 0, -750)         // EYE FOCUS
 ];
