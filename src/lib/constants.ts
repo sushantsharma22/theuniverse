@@ -246,87 +246,77 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -100),
     new Vector3(0, 0, -350),        // BIG BANG (centered)
 
-    // TURN happens EARLY, camera centers BEFORE visibility range (600 units before landmark)
-    // Carbon Nebula at z=-950: visible at z=-350, so be centered by z=-350
-    new Vector3(30, -20, -180),     // Turn RIGHT + DOWN
-    new Vector3(50, -35, -250),     // Peak of turn
-    new Vector3(20, -15, -320),     // Coming back to center
-    new Vector3(0, 0, -350),        // CENTERED - landmark starts appearing here
-    new Vector3(0, 0, -650),        // CENTERED through visibility range
+    // BIG BANG - straight approach
+    new Vector3(0, 0, -350),        // BIG BANG - pass through center
+
+    // STRAIGHT to Carbon Nebula, THEN turn
+    new Vector3(0, 0, -650),        // Approaching
     new Vector3(0, 0, -950),        // CARBON NEBULA - pass through center
+    new Vector3(25, -20, -1050),    // Turn AFTER passing nebula
+    new Vector3(45, -35, -1150),    // Peak of turn
+    new Vector3(25, -20, -1250),    // Coming back
 
-    // Starbirth at z=-1550: visible at z=-950, so be centered by z=-950
-    new Vector3(-30, 25, -980),     // Turn LEFT + UP
-    new Vector3(-55, 45, -1050),    // Peak
-    new Vector3(-25, 20, -1150),    // Coming back
-    new Vector3(0, 0, -1200),       // CENTERED - landmark starts appearing
-    new Vector3(0, 0, -1400),       // CENTERED through visibility range
+    // STRAIGHT to Starbirth, THEN turn
+    new Vector3(0, 0, -1400),       // Approaching straight
     new Vector3(0, 0, -1550),       // STARBIRTH - pass through center
+    new Vector3(-25, 25, -1650),    // Turn AFTER passing
+    new Vector3(-45, 40, -1750),    // Peak
+    new Vector3(-25, 20, -1850),    // Coming back
 
-    // Pillars at z=-2150: visible at z=-1550, so be centered by z=-1550
-    new Vector3(0, -30, -1580),     // Dive DOWN
-    new Vector3(0, -50, -1680),     // Peak
-    new Vector3(0, -20, -1780),     // Coming back
-    new Vector3(0, 0, -1850),       // CENTERED - landmark starts appearing
-    new Vector3(0, 0, -2000),       // CENTERED through visibility range
+    // STRAIGHT to Pillars, THEN turn
+    new Vector3(0, 0, -2000),       // Approaching straight
     new Vector3(0, 0, -2150),       // PILLARS - pass through center
+    new Vector3(0, -25, -2250),     // Dive AFTER passing
+    new Vector3(0, -40, -2350),     // Peak
+    new Vector3(0, -20, -2450),     // Coming back
 
-    // Saturn at z=-2750: visible at z=-2250, so be centered by z=-2250
-    new Vector3(35, 30, -2180),     // Turn RIGHT + UP
-    new Vector3(55, 50, -2280),     // Peak
-    new Vector3(25, 20, -2380),     // Coming back
-    new Vector3(0, 0, -2450),       // CENTERED - landmark starts appearing
-    new Vector3(0, 0, -2600),       // CENTERED through visibility range
+    // STRAIGHT to Saturn, THEN turn
+    new Vector3(0, 0, -2600),       // Approaching straight
     new Vector3(0, 0, -2750),       // SATURN - pass through center
+    new Vector3(30, 25, -2850),     // Turn AFTER passing
+    new Vector3(50, 40, -2950),     // Peak
+    new Vector3(25, 20, -3050),     // Coming back
 
-    // Earth at z=-3350: visible at z=-2850, so be centered by z=-2850
-    new Vector3(-30, -25, -2780),   // Turn LEFT + DOWN
-    new Vector3(-50, -40, -2880),   // Peak
-    new Vector3(-20, -15, -2980),   // Coming back
-    new Vector3(0, 0, -3050),       // CENTERED - landmark starts appearing
-    new Vector3(0, 0, -3200),       // CENTERED through visibility range
+    // STRAIGHT to Earth, THEN turn
+    new Vector3(0, 0, -3200),       // Approaching straight
     new Vector3(0, 0, -3350),       // EARTH - pass through center
+    new Vector3(-25, -20, -3450),   // Turn AFTER passing
+    new Vector3(-40, -35, -3550),   // Peak
+    new Vector3(-20, -15, -3650),   // Coming back
 
-    // Eye of God at z=-3950: visible at z=-3350, so be centered by z=-3350
-    new Vector3(30, 30, -3380),     // Turn RIGHT + UP
-    new Vector3(50, 50, -3480),     // Peak
-    new Vector3(20, 20, -3580),     // Coming back
-    new Vector3(0, 0, -3650),       // CENTERED - landmark starts appearing
-    new Vector3(0, 0, -3800),       // CENTERED through visibility range
+    // STRAIGHT to Eye of God, THEN turn
+    new Vector3(0, 0, -3800),       // Approaching straight
     new Vector3(0, 0, -3950),       // EYE OF GOD - pass through center
+    new Vector3(25, 25, -4050),     // Turn AFTER passing
+    new Vector3(40, 40, -4150),     // Peak
+    new Vector3(20, 20, -4250),     // Coming back
 
-    // Butterfly at z=-4550: visible at z=-3950, so be centered by z=-3950
-    new Vector3(-30, -25, -3980),   // Turn LEFT + DOWN
-    new Vector3(-50, -45, -4080),   // Peak
-    new Vector3(-20, -18, -4180),   // Coming back
-    new Vector3(0, 0, -4250),       // CENTERED - landmark starts appearing
-    new Vector3(0, 0, -4400),       // CENTERED through visibility range
+    // STRAIGHT to Butterfly, THEN turn
+    new Vector3(0, 0, -4400),       // Approaching straight
     new Vector3(0, 0, -4550),       // BUTTERFLY - pass through center
+    new Vector3(-25, -20, -4650),   // Turn AFTER passing
+    new Vector3(-40, -35, -4750),   // Peak
+    new Vector3(-20, -18, -4850),   // Coming back
 
-    // Sombrero at z=-5150: visible at z=-4550, so be centered by z=-4550
-    new Vector3(35, 35, -4580),     // Turn RIGHT + UP
-    new Vector3(55, 50, -4680),     // Peak
-    new Vector3(20, 20, -4780),     // Coming back
-    new Vector3(0, 0, -4850),       // CENTERED - landmark starts appearing
-    new Vector3(0, 0, -5000),       // CENTERED through visibility range
+    // STRAIGHT to Sombrero, THEN turn
+    new Vector3(0, 0, -5000),       // Approaching straight
     new Vector3(0, 0, -5150),       // SOMBRERO - pass through center
+    new Vector3(25, 20, -5250),     // Turn AFTER passing (user requested turn here)
+    new Vector3(40, 35, -5350),     // Peak
+    new Vector3(20, 15, -5450),     // Coming back
 
-    // Black Hole at z=-5750: visible at z=-5150, so be centered by z=-5150
-    new Vector3(30, 25, -5180),     // Turn between Sombrero and Black Hole
-    new Vector3(50, 45, -5280),     // Peak
-    new Vector3(20, 15, -5380),     // Coming back
-    new Vector3(0, 0, -5450),       // CENTERED - black hole starts appearing
-    new Vector3(0, 0, -5600),       // CENTERED through visibility
+    // STRAIGHT to Black Hole
+    new Vector3(0, 0, -5600),       // Approaching straight
     new Vector3(0, 0, -5750),       // BLACK HOLE - pass through center
 
     // STRAIGHT from here - Quasar, Wormhole, End
     new Vector3(0, 0, -5950),
     new Vector3(0, 0, -6150),
-    new Vector3(0, 0, -6350),       // QUASAR (centered)
+    new Vector3(0, 0, -6350),       // QUASAR - pass through center
 
     new Vector3(0, 0, -6550),
     new Vector3(0, 0, -6750),
-    new Vector3(0, 0, -6950),       // WORMHOLE (centered)
+    new Vector3(0, 0, -6950),       // WORMHOLE - pass through center
 
     // INTO THE VOID - Flash + End
     new Vector3(0, 0, -7050),
