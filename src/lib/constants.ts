@@ -129,13 +129,14 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, -100, -1150),    // DEEP DIVE
     new Vector3(0, -100, -1250),    // BUTTERFLY REVEAL
 
-    // 6. TO GALAXY (Extended Transit)
-    new Vector3(0, -100, -1450),    // Fly through Butterfly
-    new Vector3(0, -20, -1550),     // RISING BACK TO CENTER...
-    new Vector3(0, 0, -1700),       // VOID TRAVEL (Longer)
-    new Vector3(0, 0, -2000),       // SOMBRERO GALAXY REVEAL
+    // 6. TO GALAXY (Specific Timing: Void -> Rise -> Reveal)
+    new Vector3(0, -100, -1450),    // Void Scroll 1 (Deep)
+    new Vector3(0, -100, -1650),    // Void Scroll 2 (Deep - "2 scrolls in starfield")
+    new Vector3(0, 0, -1800),       // Scroll 3 (UPWARDS to Center)
+    new Vector3(0, 0, -2000),       // SOMBRERO GALAXY REVEAL (Visible slowing closing)
 
-    // 7. TO BLACK HOLE (Final Deep Shot)
-    new Vector3(0, 0, -2300),       // Fly Through Galaxy
-    new Vector3(0, 0, -2600)        // BLACK HOLE REVEAL
+    // 7. TO BLACK HOLE (Gap -> Final Boss)
+    new Vector3(0, 0, -2100),       // Fly Through Galaxy
+    new Vector3(0, 0, -2300),       // Void Gap Scroll 1
+    new Vector3(0, 0, -2600)        // BLACK HOLE REVEAL (2-3 scrolls later)
 ];
