@@ -13,7 +13,7 @@ export default function InfoPanel() {
 
     // Don't render if opacity is too low or no landmark
     // Also hide for 'wormhole' and 'ashes_of_first_stars' as per user request
-    if (!activeLandmark || landmarkOpacity < 0.05 || activeLandmark.id === 'wormhole' || activeLandmark.id === 'ashes_of_first_stars') return null;
+    if (!activeLandmark || landmarkOpacity < 0.05 || activeLandmark.id === 'ashes_of_first_stars') return null;
 
     return (
         <AnimatePresence mode="wait">
