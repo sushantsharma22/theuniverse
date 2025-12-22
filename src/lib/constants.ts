@@ -73,7 +73,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'galaxy',
-        position: new Vector3(0, 0, -1600), // CLOSER (Decrease gap from Nebula)
+        position: new Vector3(0, 0, -2000), // SYMMETRIC GAP (750u from Nebula)
         texture: '/textures/The Sombrero Galaxy.jpg',
         scale: 500,
         scaleX: 1.8,
@@ -83,11 +83,11 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Virgo',
         description: 'The Sombrero Galaxy (M104) is a spiral galaxy in the constellation Virgo. It has a bright nucleus, an unusually large central bulge, and a prominent dust lane in its inclined disk, giving it the appearance of a sombrero.',
         distanceTrigger: 100,
-        visibilityRange: 450 // REDUCED: Prevent overlapping with Nebula
+        visibilityRange: 600 // Starts appearing after ~150u of void travel
     },
     {
         id: 'black_hole',
-        position: new Vector3(0, 0, -2800), // DEEP SPACE FINALE (Massive gap)
+        position: new Vector3(0, 0, -2800), // SYMMETRIC GAP (800u from Galaxy)
         texture: '/textures/blackhole_v2.jpg',
         scale: 400,
         scaleX: 1.78,
@@ -97,13 +97,13 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Virgo',
         description: 'This is the first direct image of a black hole, located in Messier 87. It captures the shadow of the supermassive black hole and its accretion disk of superheated gas. The black hole has a mass 6.5 billion times that of our Sun.',
         distanceTrigger: 100,
-        visibilityRange: 600 // REDUCED FIX: Ensure it is INVISIBLE while at Galaxy
+        visibilityRange: 700 // Starts appearing after ~100u of void travel
     }
 ];
 
-// Camera path waypoints - 5 STAGE EPIC JOURNEY (POLISHED SPACING)
+// Camera path waypoints - 5 STAGE EPIC JOURNEY (SYMMETRIC PACING)
 export const WAYPOINTS: Vector3[] = [
-    // 1. START
+    // 1. START 
     new Vector3(0, 0, 100),
     new Vector3(0, 0, -50),
 
@@ -129,14 +129,15 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, -100, -1150),    // DEEP DIVE
     new Vector3(0, -100, -1250),    // BUTTERFLY REVEAL
 
-    // 6. TO GALAXY (SHORTER GAP)
-    new Vector3(0, -100, -1350),    // Fly through Butterfly
-    new Vector3(0, -20, -1450),     // RISING BACK TO CENTER (Earlier Rise)
-    new Vector3(0, 0, -1600),       // SOMBRERO GALAXY REVEAL (Closer)
+    // 6. TO GALAXY (2-3 Scrolls Gap)
+    new Vector3(0, -100, -1450),    // Void Scroll 1 (Deep)
+    new Vector3(0, -100, -1650),    // Void Scroll 2 (Deep)
+    new Vector3(0, 0, -1800),       // Scroll 3 (UPWARDS to Center)
+    new Vector3(0, 0, -2000),       // SOMBRERO GALAXY REVEAL
 
-    // 7. TO BLACK HOLE (MASSIVE GAP)
-    new Vector3(0, 0, -1750),       // Fly Through Galaxy
-    new Vector3(0, 0, -2100),       // Long Void 1
-    new Vector3(0, 0, -2400),       // Long Void 2
-    new Vector3(0, 0, -2800)        // BLACK HOLE REVEAL (Finale)
+    // 7. TO BLACK HOLE (2-3 Scrolls Gap)
+    new Vector3(0, 0, -2200),       // Void Scroll 1
+    new Vector3(0, 0, -2400),       // Void Scroll 2
+    new Vector3(0, 0, -2600),       // Void Scroll 3
+    new Vector3(0, 0, -2800)        // BLACK HOLE REVEAL
 ];
