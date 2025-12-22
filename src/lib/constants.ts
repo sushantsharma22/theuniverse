@@ -87,7 +87,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'black_hole',
-        position: new Vector3(0, 0, -2800), // SYMMETRIC GAP (800u from Galaxy)
+        position: new Vector3(0, 0, -2600), // REDUCED GAP (600u from Galaxy - "1 scroll less")
         texture: '/textures/blackhole_v2.jpg',
         scale: 400,
         scaleX: 1.78,
@@ -97,7 +97,7 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Virgo',
         description: 'This is the first direct image of a black hole, located in Messier 87. It captures the shadow of the supermassive black hole and its accretion disk of superheated gas. The black hole has a mass 6.5 billion times that of our Sun.',
         distanceTrigger: 100,
-        visibilityRange: 700 // Starts appearing after ~100u of void travel
+        visibilityRange: 700
     }
 ];
 
@@ -135,9 +135,8 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -1800),       // Scroll 3 (UPWARDS to Center)
     new Vector3(0, 0, -2000),       // SOMBRERO GALAXY REVEAL
 
-    // 7. TO BLACK HOLE (2-3 Scrolls Gap)
+    // 7. TO BLACK HOLE (Reduced 1 Scroll Gap)
     new Vector3(0, 0, -2200),       // Void Scroll 1
     new Vector3(0, 0, -2400),       // Void Scroll 2
-    new Vector3(0, 0, -2600),       // Void Scroll 3
-    new Vector3(0, 0, -2800)        // BLACK HOLE REVEAL
+    new Vector3(0, 0, -2600)        // BLACK HOLE REVEAL (Finale)
 ];
