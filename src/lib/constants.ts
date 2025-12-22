@@ -65,7 +65,7 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Centaurus',
         description: 'Molecular clouds like this Carbon Nebula are the raw materials of the cosmos. Rich in carbon compounds and heavy elements forged in ancient stars, these clouds contain the building blocks for new stars, planets, and eventually life itself.',
         distanceTrigger: 100,
-        visibilityRange: 600
+        visibilityRange: 300
     },
     // ═══════════════════════════════════════════════════════════════════════════
     // STAGE 3: STAR FORMATION
@@ -81,7 +81,7 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Monoceros',
         description: 'The Seagull Nebula is an active stellar nursery where new stars are being born. Gravity pulls together gas and dust, igniting nuclear fusion and giving birth to brilliant new suns that will shine for billions of years.',
         distanceTrigger: 100,
-        visibilityRange: 600
+        visibilityRange: 300
     },
     // ═══════════════════════════════════════════════════════════════════════════
     // STAGE 4: STELLAR NURSERY
@@ -97,7 +97,7 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Serpens',
         description: 'The Pillars of Creation are vast trunks of interstellar gas and dust in the Eagle Nebula. They are active stellar nurseries where new stars are being born, simultaneously eroded by the intense ultraviolet light from nearby massive stars.',
         distanceTrigger: 100,
-        visibilityRange: 600
+        visibilityRange: 300
     },
     // ═══════════════════════════════════════════════════════════════════════════
     // STAGE 5: PLANETARY SYSTEMS
@@ -113,7 +113,7 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Solar System',
         description: 'Saturn, the jewel of our solar system, represents the formation of planetary systems around newborn stars. Its magnificent rings, composed of ice and rock, demonstrate the complex dynamics that sculpt worlds over billions of years.',
         distanceTrigger: 80,
-        visibilityRange: 500
+        visibilityRange: 300
     },
     // ═══════════════════════════════════════════════════════════════════════════
     // STAGE 6: LIFE-BEARING WORLD
@@ -129,7 +129,7 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Solar System',
         description: 'Earth, our pale blue dot, is the only known world harboring life. Born from cosmic dust, shaped by geology, and transformed by biology, it represents the pinnacle of cosmic evolution—matter becoming aware of itself.',
         distanceTrigger: 80,
-        visibilityRange: 500
+        visibilityRange: 300
     },
     // ═══════════════════════════════════════════════════════════════════════════
     // STAGE 7: STAR DEATH (Planetary Nebula)
@@ -145,7 +145,7 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Aquarius',
         description: 'The Helix Nebula, often called the Eye of God, is the remnant of a dying star. As stars like our Sun exhaust their fuel, they shed their outer layers, creating these beautiful cosmic structures that seed the universe with heavy elements.',
         distanceTrigger: 100,
-        visibilityRange: 600
+        visibilityRange: 300
     },
     // ═══════════════════════════════════════════════════════════════════════════
     // STAGE 8: TRANSFORMATION
@@ -161,7 +161,7 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Scorpius',
         description: 'The Butterfly Nebula represents cosmic transformation. Its central star, one of the hottest known at 250,000°C, drives the expansion of these delicate wings of gas, demonstrating the violent beauty of stellar death.',
         distanceTrigger: 100,
-        visibilityRange: 600
+        visibilityRange: 300
     },
     // ═══════════════════════════════════════════════════════════════════════════
     // STAGE 9: GALACTIC STRUCTURE
@@ -178,7 +178,7 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Virgo',
         description: 'The Sombrero Galaxy contains hundreds of billions of stars organized into a majestic spiral structure. It represents the mature phase of galactic evolution, where countless stellar life cycles have played out over cosmic time.',
         distanceTrigger: 100,
-        visibilityRange: 700
+        visibilityRange: 300
     },
     // ═══════════════════════════════════════════════════════════════════════════
     // STAGE 10: GRAVITATIONAL DEATH
@@ -195,7 +195,7 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Virgo',
         description: 'This is the first direct image of a black hole, located in galaxy M87. With a mass 6.5 billion times our Sun, it represents the ultimate fate of massive stars—gravity so intense that not even light can escape.',
         distanceTrigger: 100,
-        visibilityRange: 700
+        visibilityRange: 300
     },
     // ═══════════════════════════════════════════════════════════════════════════
     // STAGE 11: COSMIC LIGHTHOUSE
@@ -212,7 +212,7 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Ursa Major',
         description: 'Quasars are the brightest objects in the universe, powered by supermassive black holes consuming matter at incredible rates. They outshine entire galaxies, serving as cosmic lighthouses visible across billions of light-years.',
         distanceTrigger: 100,
-        visibilityRange: 700
+        visibilityRange: 300
     },
     // ═══════════════════════════════════════════════════════════════════════════
     // STAGE 12: THE BEYOND - FINAL STAGE
@@ -229,7 +229,7 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Unknown',
         description: 'A wormhole, or Einstein-Rosen bridge, is a theoretical passage through space-time. It represents the ultimate frontier—a gateway to other universes, distant galaxies, or perhaps the next cycle of cosmic creation.',
         distanceTrigger: 100,
-        visibilityRange: 700
+        visibilityRange: 300
     }
 ];
 
@@ -247,78 +247,104 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -350),        // BIG BANG (centered)
 
 
+
     // BIG BANG - straight approach
     new Vector3(0, 0, -350),        // BIG BANG - pass through center
-    new Vector3(0, 0, -450),        // Buffer straight
+    new Vector3(0, 0, -450),        // Buffer straight (100u)
 
-    // STRAIGHT to Carbon Nebula, THEN turn
+    // STRAIGHT to Carbon Nebula (-600 gap)
+    // Visible start: -650 (-950 + 300)
     new Vector3(0, 0, -650),        // Approaching
     new Vector3(0, 0, -950),        // CARBON NEBULA - pass through center
-    new Vector3(0, 0, -1000),       // Buffer straight (Force Z-axis tangent)
-    new Vector3(25, -20, -1050),    // Turn AFTER passing nebula
-    new Vector3(45, -35, -1150),    // Peak of turn
-    new Vector3(25, -20, -1250),    // Coming back
+    new Vector3(0, 0, -1050),       // Buffer straight (100u)
 
-    // STRAIGHT to Starbirth, THEN turn
-    new Vector3(0, 0, -1400),       // Approaching straight
+    // TURN in Dark Void (-1050 to -1250)
+    new Vector3(25, -20, -1100),    // Turn AFTER passing
+    new Vector3(45, -35, -1150),    // Peak
+    new Vector3(25, -20, -1220),    // Coming back
+
+    // STRAIGHT to Starbirth
+    // Visible start: -1250 (-1550 + 300)
+    new Vector3(0, 0, -1250),       // Re-centered before visibility
     new Vector3(0, 0, -1550),       // STARBIRTH - pass through center
-    new Vector3(0, 0, -1600),       // Buffer straight (Force Z-axis tangent)
-    new Vector3(-25, 25, -1650),    // Turn AFTER passing
+    new Vector3(0, 0, -1650),       // Buffer straight (100u)
+
+    // TURN in Dark Void (-1650 to -1850)
+    new Vector3(-25, 25, -1700),    // Turn AFTER passing
     new Vector3(-45, 40, -1750),    // Peak
-    new Vector3(-25, 20, -1850),    // Coming back
+    new Vector3(-25, 20, -1820),    // Coming back
 
-    // STRAIGHT to Pillars, THEN turn
-    new Vector3(0, 0, -2000),       // Approaching straight
+    // STRAIGHT to Pillars
+    // Visible start: -1850
+    new Vector3(0, 0, -1850),       // Re-centered
     new Vector3(0, 0, -2150),       // PILLARS - pass through center
-    new Vector3(0, 0, -2200),       // Buffer straight (Force Z-axis tangent)
-    new Vector3(0, -25, -2250),     // Dive AFTER passing
+    new Vector3(0, 0, -2250),       // Buffer straight (100u)
+
+    // TURN in Dark Void (-2250 to -2450)
+    new Vector3(0, -25, -2300),     // Dive AFTER passing
     new Vector3(0, -40, -2350),     // Peak
-    new Vector3(0, -20, -2450),     // Coming back
+    new Vector3(0, -20, -2420),     // Coming back
 
-    // STRAIGHT to Saturn, THEN turn
-    new Vector3(0, 0, -2600),       // Approaching straight
+    // STRAIGHT to Saturn
+    // Visible start: -2450
+    new Vector3(0, 0, -2450),       // Re-centered
     new Vector3(0, 0, -2750),       // SATURN - pass through center
-    new Vector3(0, 0, -2800),       // Buffer straight (Force Z-axis tangent)
-    new Vector3(30, 25, -2850),     // Turn AFTER passing
+    new Vector3(0, 0, -2850),       // Buffer straight (100u)
+
+    // TURN in Dark Void (-2850 to -3050)
+    new Vector3(30, 25, -2900),     // Turn AFTER passing
     new Vector3(50, 40, -2950),     // Peak
-    new Vector3(25, 20, -3050),     // Coming back
+    new Vector3(25, 20, -3020),     // Coming back
 
-    // STRAIGHT to Earth, THEN turn
-    new Vector3(0, 0, -3200),       // Approaching straight
+    // STRAIGHT to Earth
+    // Visible start: -3050
+    new Vector3(0, 0, -3050),       // Re-centered
     new Vector3(0, 0, -3350),       // EARTH - pass through center
-    new Vector3(0, 0, -3400),       // Buffer straight (Force Z-axis tangent)
-    new Vector3(-25, -20, -3450),   // Turn AFTER passing
+    new Vector3(0, 0, -3450),       // Buffer straight (100u)
+
+    // TURN in Dark Void (-3450 to -3650)
+    new Vector3(-25, -20, -3500),   // Turn AFTER passing
     new Vector3(-40, -35, -3550),   // Peak
-    new Vector3(-20, -15, -3650),   // Coming back
+    new Vector3(-20, -15, -3620),   // Coming back
 
-    // STRAIGHT to Eye of God, THEN turn
-    new Vector3(0, 0, -3800),       // Approaching straight
+    // STRAIGHT to Eye of God
+    // Visible start: -3650
+    new Vector3(0, 0, -3650),       // Re-centered
     new Vector3(0, 0, -3950),       // EYE OF GOD - pass through center
-    new Vector3(0, 0, -4000),       // Buffer straight (Force Z-axis tangent)
-    new Vector3(25, 25, -4050),     // Turn AFTER passing
+    new Vector3(0, 0, -4050),       // Buffer straight (100u)
+
+    // TURN in Dark Void (-4050 to -4250)
+    new Vector3(25, 25, -4100),     // Turn AFTER passing
     new Vector3(40, 40, -4150),     // Peak
-    new Vector3(20, 20, -4250),     // Coming back
+    new Vector3(20, 20, -4220),     // Coming back
 
-    // STRAIGHT to Butterfly, THEN turn
-    new Vector3(0, 0, -4400),       // Approaching straight
+    // STRAIGHT to Butterfly
+    // Visible start: -4250
+    new Vector3(0, 0, -4250),       // Re-centered
     new Vector3(0, 0, -4550),       // BUTTERFLY - pass through center
-    new Vector3(0, 0, -4600),       // Buffer straight (Force Z-axis tangent)
-    new Vector3(-25, -20, -4650),   // Turn AFTER passing
-    new Vector3(-40, -35, -4750),   // Peak
-    new Vector3(-20, -18, -4850),   // Coming back
+    new Vector3(0, 0, -4650),       // Buffer straight (100u)
 
-    // STRAIGHT to Sombrero, THEN turn
-    new Vector3(0, 0, -5000),       // Approaching straight
+    // TURN in Dark Void (-4650 to -4850)
+    new Vector3(-25, -20, -4700),   // Turn AFTER passing
+    new Vector3(-40, -35, -4750),   // Peak
+    new Vector3(-20, -18, -4820),   // Coming back
+
+    // STRAIGHT to Sombrero
+    // Visible start: -4850
+    new Vector3(0, 0, -4850),       // Re-centered
     new Vector3(0, 0, -5150),       // SOMBRERO - pass through center
-    new Vector3(0, 0, -5200),       // Buffer straight (Force Z-axis tangent)
-    new Vector3(25, 20, -5250),     // Turn AFTER passing
+    new Vector3(0, 0, -5250),       // Buffer straight (100u)
+
+    // TURN in Dark Void (-5250 to -5450)
+    new Vector3(25, 20, -5300),     // Turn AFTER passing
     new Vector3(40, 35, -5350),     // Peak
-    new Vector3(20, 15, -5450),     // Coming back
+    new Vector3(20, 15, -5420),     // Coming back
 
     // STRAIGHT to Black Hole
-    new Vector3(0, 0, -5600),       // Approaching straight
+    // Visible start: -5450
+    new Vector3(0, 0, -5450),       // Re-centered
     new Vector3(0, 0, -5750),       // BLACK HOLE - pass through center
-    new Vector3(0, 0, -5800),       // Buffer straight
+    new Vector3(0, 0, -5850),       // Buffer straight
 
     // STRAIGHT from here - Quasar, Wormhole, End
     new Vector3(0, 0, -5950),
@@ -334,3 +360,4 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -7150),
     new Vector3(0, 0, -7200)        // UNIVERSE END
 ];
+
