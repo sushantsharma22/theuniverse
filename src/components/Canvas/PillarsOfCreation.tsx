@@ -34,21 +34,26 @@ export default function PillarsOfCreation() {
     const starGeo = useMemo(() => {
         const geometry = new THREE.BufferGeometry();
         const positions = new Float32Array(500 * 3);
-        for (let i = 0; i < 500 * 3; i++) {
-            positions[i] = (Math.random() - 0.5) * 200; // Spread within nebula
+        const sizes = new Float32Array(500); // Varying sizes for sparkles
+
+        for (let i = 0; i < 500 * 3; i += 3) {
+            // Spread within the nebula volume (roughly 150x200x100)
+            positions[i] = (Math.random() - 0.5) * 160;   // X: -80 to 80
+            positions[i + 1] = (Math.random() - 0.5) * 220; // Y: -110 to 110
+            positions[i + 2] = (Math.random() - 0.5) * 60;  // Z: -30 to 30 (thickness)
+
+            sizes[i / 3] = Math.random() * 2.0;
         }
         geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
         return geometry;
     }, []);
 
-    useFrame(() => {
+    useFrame((state) => {
         if (!groupRef.current) return;
 
         // 1. BILLBOARD LOGIC (Always face camera)
         groupRef.current.lookAt(camera.position);
-        // Lock X and Z rotation to prevent flipping, only rotate Y if needed? 
-        // Actually for billboard on straight path, simple lookAt is best.
-        // User requested: "Lock rotation on X and Y" implies pure billboard might be enough if camera is stable.
 
         // 2. SCROLL LOGIC
         // Ranges:
@@ -71,28 +76,27 @@ export default function PillarsOfCreation() {
         } else if (progress >= 0.15 && progress < 0.40) {
             // APPROACHING (Zoom In)
             const p = (progress - 0.15) / 0.25; // 0 -> 1
-            targetZ = -5000 + (p * 4800);       // -5000 -> -200
-            targetScale = 0.1 + (p * 2.9);      // 0.1 -> 3.0
-            baseOpacity = p * 0.85;
+            // Smooth easing for cinematic feel
+            const easeP = p * p * (3 - 2 * p);
+
+            targetZ = -5000 + (easeP * 4800);       // -5000 -> -200
+            targetScale = 0.1 + (easeP * 2.9);      // 0.1 -> 3.0
+            baseOpacity = easeP * 0.9;              // Increased opacity for vividness
 
         } else if (progress >= 0.40 && progress < 0.50) {
             // AT PILLARS (Stable)
             targetZ = -200;
             targetScale = 3.0;
-            baseOpacity = 0.85;
+            baseOpacity = 0.9;
 
         } else if (progress >= 0.50 && progress < 0.65) {
             // LEAVING (Zoom Out/Away)
             const p = (progress - 0.50) / 0.15; // 0 -> 1
-            targetZ = -200 - (p * 4800);        // -200 -> -5000 (Forward? moving past?) 
-            // User script says: -200 - (p * 4800) -> -5000. This moves it FURTHER away (behind?) or restarts?
-            // "Leaving... Zoom out". 
-            // In linear space, usually objects pass BEHIND camera (z > 0). 
-            // But this effect moves it deep into negative Z again? 
-            // Ah, maybe the user wants it to recede?
-            // I will follow the specific logic: z goes from -200 to -5000.
-            targetScale = 3.0 - (p * 2.9);      // 3.0 -> 0.1
-            baseOpacity = 0.85 * (1 - p);
+            const easeP = p * p; // Accelerate out
+
+            targetZ = -200 - (easeP * 4800);        // -200 -> -5000
+            targetScale = 3.0 - (easeP * 2.9);      // 3.0 -> 0.1
+            baseOpacity = 0.9 * (1 - easeP);
 
         } else {
             // Done
@@ -101,15 +105,36 @@ export default function PillarsOfCreation() {
             baseOpacity = 0;
         }
 
-        // Apply Position & Scale to Group (keeps everything centered)
+        // Apply Position & Scale to Group
         groupRef.current.position.set(0, 0, targetZ);
         groupRef.current.scale.set(targetScale, targetScale, targetScale);
 
-        // Update Opacities
-        if (glowRef.current) (glowRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity * 0.15;
-        if (mainRef.current) (mainRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity * 0.7;
-        if (wispRef.current) (wispRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity * 0.4;
-        if (starsRef.current) (starsRef.current.material as THREE.PointsMaterial).opacity = baseOpacity * 0.8;
+        // Volumetric Layer Animation (Subtle breathing/rotation)
+        const time = state.clock.getElapsedTime();
+
+        if (wispRef.current) {
+            wispRef.current.rotation.z = Math.sin(time * 0.1) * 0.05; // Gentle sway
+            wispRef.current.scale.setScalar(1.0 + Math.sin(time * 0.2) * 0.02); // Breathing
+        }
+
+        // Update Opacities & Colors for "Glassmorphism" feel
+        // Layer 1: Glow (Deep Red/Orange)
+        if (glowRef.current) {
+            (glowRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity * 0.3; // Increased
+        }
+        // Layer 2: Main (Crisp)
+        if (mainRef.current) {
+            (mainRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity * 0.8;
+        }
+        // Layer 3: Wisps (Blue/Ethereal)
+        if (wispRef.current) {
+            (wispRef.current.material as THREE.MeshBasicMaterial).opacity = baseOpacity * 0.5;
+        }
+        // Layer 4: Stars (Sparkle)
+        if (starsRef.current) {
+            (starsRef.current.material as THREE.PointsMaterial).opacity = baseOpacity;
+            // Twinkle effect could go here if shader used, but basic points are fine
+        }
     });
 
     const matProps = {
@@ -122,29 +147,36 @@ export default function PillarsOfCreation() {
 
     return (
         <group ref={groupRef}>
-            {/* Layer 1: Glow (Back) */}
+            {/* Layer 1: Volumetric Glow (Back) - Larger, softer */}
             <mesh ref={glowRef} position={[0, 0, -50]}>
-                <planeGeometry args={[180, 240]} />
-                <meshBasicMaterial {...matProps} opacity={0} color="#aa4444" />
+                <planeGeometry args={[200, 260]} />
+                <meshBasicMaterial {...matProps} opacity={0} color="#ff4422" />
             </mesh>
 
-            {/* Layer 2: Main Pillars (Center) */}
+            {/* Layer 2: Main Structure (Center) - Sharp */}
             <mesh ref={mainRef} position={[0, 0, 0]}>
                 <planeGeometry args={[150, 200]} />
                 <meshBasicMaterial {...matProps} opacity={0} color="#ffffff" />
             </mesh>
 
-            {/* Layer 3: Wisps (Front) */}
-            <mesh ref={wispRef} position={[0, 0, 50]}>
-                <planeGeometry args={[100, 120]} />
-                <meshBasicMaterial {...matProps} opacity={0} color="#aaaaff" />
+            {/* Layer 2.5: Duplicate Main for Intensity (Glassy core) */}
+            <mesh position={[0, 0, 5]}>
+                <planeGeometry args={[145, 195]} />
+                <meshBasicMaterial {...matProps} opacity={0} color="#aaaaff" blending={THREE.ScreenBlending} />
             </mesh>
 
-            {/* Layer 4: Nebula Stars (Twinkling particles inside) */}
+
+            {/* Layer 3: Ethereal Wisps (Front) - Blue/Cyan tint */}
+            <mesh ref={wispRef} position={[0, 0, 40]}>
+                <planeGeometry args={[110, 130]} />
+                <meshBasicMaterial {...matProps} opacity={0} color="#88ccff" />
+            </mesh>
+
+            {/* Layer 4: Nebula Stars */}
             <points ref={starsRef} geometry={starGeo}>
                 <pointsMaterial
-                    color="#ffaa66"
-                    size={3}
+                    color="#ffddee"
+                    size={2}
                     transparent
                     opacity={0}
                     blending={THREE.AdditiveBlending}

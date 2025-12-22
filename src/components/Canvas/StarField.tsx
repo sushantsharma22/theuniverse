@@ -27,8 +27,8 @@ export default function StarField() {
 
             const x = radius * Math.cos(theta);
             const y = radius * Math.sin(theta);
-            // Z spans the entire journey
-            const z = 150 - Math.random() * 500;
+            // Z spans the entire deep space journey (camera goes to -5000)
+            const z = 500 - Math.random() * 7000;
 
             const scale = 0.2 + Math.random() * 0.8;
             matrix.makeScale(scale, scale, scale);

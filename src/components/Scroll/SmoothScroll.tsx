@@ -56,8 +56,8 @@ export default function SmoothScroll() {
 
     return (
         <div className="relative w-full z-10">
-            {/* Long scrollable area - 12 full screen heights for the journey */}
-            <div className="h-[1200vh] w-full" />
+            {/* Long scrollable area - Slower pace (30 screens) */}
+            <div className="h-[3000vh] w-full" />
         </div>
     );
 }
