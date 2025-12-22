@@ -272,10 +272,10 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -350),        // BIG BANG - pass through center
     new Vector3(0, 0, -450),        // Buffer straight (100u)
 
-    // UPWARD TURN (User Request: "going upwards camera")
-    new Vector3(0, 40, -550),       // Start rising
-    new Vector3(0, 60, -675),       // Peak height (Smoother arc)
-    new Vector3(0, 20, -800),       // Descent
+    // SHARP UPWARD TURN
+    new Vector3(0, 80, -550),       // Start rising SHARPLY
+    new Vector3(0, 120, -675),      // Peak height (SHARPER arc)
+    new Vector3(0, 40, -800),       // Descent
 
     // STRAIGHT to Carbon Nebula - EXTENDED RUNWAY
     new Vector3(0, 0, -850),        // *** TOUCHDOWN TO ZERO EARLY ***
@@ -284,12 +284,11 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -1000),       // Buffer AFTER (Force Z-axis tangent)
 
     // ═══════════════════════════════════════════════════════════════════════════
-    // NEW SEGMENT: To "Ashes of the First Stars" (-1550)
+    // SHARP TURN: Down-Right
     // ═══════════════════════════════════════════════════════════════════════════
-    // Turn
-    new Vector3(25, -20, -1100),    // Turn AFTER passing Carbon Nebula
-    new Vector3(45, -35, -1150),    // Peak
-    new Vector3(25, -20, -1250),    // Coming back
+    new Vector3(60, -50, -1100),    // Sharp turn RIGHT & DOWN
+    new Vector3(100, -80, -1150),   // Peak
+    new Vector3(50, -40, -1250),    // Coming back
 
     // STRAIGHT to Ashes of First Stars
     new Vector3(0, 0, -1400),       // Approaching straight
@@ -298,107 +297,112 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -1600),       // Buffer AFTER
 
     // ═══════════════════════════════════════════════════════════════════════════
-    // SHIFTED SEGMENTS: All Z-coordinates below are shifted by -600 units
+    // SHARP TURN: Up-Left
     // ═══════════════════════════════════════════════════════════════════════════
+    new Vector3(-60, 60, -1700),    // Turn LEFT & UP
+    new Vector3(-100, 90, -1750),   // Peak
+    new Vector3(-50, 50, -1850),    // Coming back
 
-    // Turn
-    new Vector3(-25, 25, -1700),    // Turn AFTER passing
-    new Vector3(-45, 40, -1750),    // Peak
-    new Vector3(-25, 20, -1850),    // Coming back
-
-    // STRAIGHT to Starbirth (was -1550, now -2150)
+    // STRAIGHT to Starbirth
     new Vector3(0, 0, -2000),       // Approaching straight
     new Vector3(0, 0, -2100),       // Buffer BEFORE
     new Vector3(0, 0, -2150),       // STARBIRTH - pass through center
     new Vector3(0, 0, -2200),       // Buffer AFTER
 
-    // Turn
-    new Vector3(0, -25, -2300),     // Turn
-    new Vector3(0, -40, -2350),     // Peak
-    new Vector3(0, -20, -2450),     // Coming back
+    // SHARP TURN: Down only
+    new Vector3(0, -70, -2300),     // Dive DOWN
+    new Vector3(0, -100, -2350),    // Peak
+    new Vector3(0, -50, -2450),     // Coming back
 
-    // STRAIGHT to Pillars (was -2150, now -2750)
+    // STRAIGHT to Pillars
     new Vector3(0, 0, -2600),       // Approaching straight
     new Vector3(0, 0, -2700),       // Buffer BEFORE
     new Vector3(0, 0, -2750),       // PILLARS - pass through center
     new Vector3(0, 0, -2800),       // Buffer AFTER
 
-    // Turn
-    new Vector3(30, 25, -2900),     // Turn
-    new Vector3(50, 40, -2950),     // Peak
-    new Vector3(25, 20, -3050),     // Coming back
+    // SHARP TURN: Up-Right
+    new Vector3(70, 60, -2900),     // Turn RIGHT & UP
+    new Vector3(110, 90, -2950),    // Peak
+    new Vector3(60, 50, -3050),     // Coming back
 
-    // STRAIGHT to Saturn (was -2750, now -3350)
+    // STRAIGHT to Saturn
     new Vector3(0, 0, -3200),       // Approaching straight
     new Vector3(0, 0, -3300),       // Buffer BEFORE
     new Vector3(0, 0, -3350),       // SATURN - pass through center
     new Vector3(0, 0, -3400),       // Buffer AFTER
 
-    // Turn
-    new Vector3(-25, -20, -3500),   // Turn
-    new Vector3(-40, -35, -3550),   // Peak
-    new Vector3(-20, -15, -3650),   // Coming back
+    // SHARP TURN: Down-Left
+    new Vector3(-60, -50, -3500),   // Turn LEFT & DOWN
+    new Vector3(-90, -80, -3550),   // Peak
+    new Vector3(-50, -40, -3650),   // Coming back
 
-    // STRAIGHT to Earth (was -3350, now -3950)
+    // STRAIGHT to Earth
     new Vector3(0, 0, -3800),       // Approaching straight
     new Vector3(0, 0, -3900),       // Buffer BEFORE
     new Vector3(0, 0, -3950),       // EARTH - pass through center
     new Vector3(0, 0, -4000),       // Buffer AFTER
 
-    // Turn
-    new Vector3(25, 25, -4100),     // Turn
-    new Vector3(40, 40, -4150),     // Peak
-    new Vector3(20, 20, -4250),     // Coming back
+    // SHARP TURN: Up only
+    new Vector3(0, 70, -4100),      // Rise UP
+    new Vector3(0, 100, -4150),     // Peak
+    new Vector3(0, 50, -4250),      // Coming back
 
-    // STRAIGHT to Eye of God (was -3950, now -4550)
+    // STRAIGHT to Eye of God
     new Vector3(0, 0, -4400),       // Approaching straight
     new Vector3(0, 0, -4500),       // Buffer BEFORE
     new Vector3(0, 0, -4550),       // EYE OF GOD - pass through center
     new Vector3(0, 0, -4600),       // Buffer AFTER
 
-    // Turn
-    new Vector3(0, -25, -4700),     // Turn
-    new Vector3(0, -40, -4750),     // Peak
-    new Vector3(0, -20, -4850),     // Coming back
+    // SHARP TURN: Right only
+    new Vector3(80, 0, -4700),      // Turn RIGHT
+    new Vector3(120, 0, -4750),     // Peak
+    new Vector3(60, 0, -4850),      // Coming back
 
-    // STRAIGHT to Butterfly (was -4550, now -5150)
+    // STRAIGHT to Butterfly
     new Vector3(0, 0, -5000),       // Approaching straight
     new Vector3(0, 0, -5100),       // Buffer BEFORE
     new Vector3(0, 0, -5150),       // BUTTERFLY - pass through center
     new Vector3(0, 0, -5200),       // Buffer AFTER
 
-    // FIXED: STRAIGHT LINE between Butterfly and Sombrero
-    new Vector3(0, 0, -5300),       // VOID: Straight
-    new Vector3(0, 0, -5450),       // VOID: Straight
-    new Vector3(0, 0, -5600),       // VOID: Straight
+    // SHARP TURN: Left only
+    new Vector3(-80, 0, -5300),     // Turn LEFT
+    new Vector3(-120, 0, -5400),    // Peak
+    new Vector3(-60, 0, -5500),     // Coming back
 
-    // STRAIGHT to Sombrero (was -5150, now -5750)
+    // STRAIGHT to Sombrero
+    new Vector3(0, 0, -5650),       // Approaching
     new Vector3(0, 0, -5700),       // Buffer BEFORE
     new Vector3(0, 0, -5750),       // SOMBRERO - pass through center
     new Vector3(0, 0, -5800),       // Buffer AFTER
 
-    // Turn between Sombrero and Black Hole
-    new Vector3(25, 20, -5900),     // Turn
-    new Vector3(40, 35, -5950),     // Peak
-    new Vector3(20, 15, -6050),     // Coming back
+    // SHARP TURN: Down-Right
+    new Vector3(60, -50, -5900),    // Turn RIGHT & DOWN
+    new Vector3(90, -80, -5950),    // Peak
+    new Vector3(50, -40, -6050),    // Coming back
 
-    // STRAIGHT to Black Hole (was -5750, now -6350)
+    // STRAIGHT to Black Hole
     new Vector3(0, 0, -6200),       // Approaching
     new Vector3(0, 0, -6300),       // Buffer BEFORE
     new Vector3(0, 0, -6350),       // BLACK HOLE - pass through center
     new Vector3(0, 0, -6400),       // Buffer AFTER
 
-    // STRAIGHT from here - Quasar, Wormhole, End
-    new Vector3(0, 0, -6550),
-    new Vector3(0, 0, -6750),
-    new Vector3(0, 0, -6950),       // QUASAR (was -6350) - pass through center
+    // SHARP TURN: Up-Left (final dramatic turn before Quasar)
+    new Vector3(-50, 40, -6500),    // Turn LEFT & UP
+    new Vector3(-80, 70, -6600),    // Peak
+    new Vector3(-40, 30, -6700),    // Coming back
 
-    new Vector3(0, 0, -7150),
-    new Vector3(0, 0, -7350),
-    new Vector3(0, 0, -7550),       // WORMHOLE (was -6950) - pass through center
+    // STRAIGHT to Quasar
+    new Vector3(0, 0, -6850),       // Approaching
+    new Vector3(0, 0, -6950),       // QUASAR - pass through center
+    new Vector3(0, 0, -7050),       // Buffer AFTER
+
+    // STRAIGHT to Wormhole (final stretch, no turns)
+    new Vector3(0, 0, -7200),
+    new Vector3(0, 0, -7400),
+    new Vector3(0, 0, -7550),       // WORMHOLE - pass through center
 
     // INTO THE VOID - Flash + End
     new Vector3(0, 0, -7650),
     new Vector3(0, 0, -7750),
-    new Vector3(0, 0, -7800)        // UNIVERSE END (was -7200)
+    new Vector3(0, 0, -7800)        // UNIVERSE END
 ];
