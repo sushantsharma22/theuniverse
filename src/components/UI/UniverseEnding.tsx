@@ -11,10 +11,10 @@ export default function UniverseEnding() {
 
     useEffect(() => {
         // Check if camera has passed the universe end position
-        if (cameraZ < UNIVERSE_END_POSITION + 100) {
+        if (cameraZ < UNIVERSE_END_POSITION + 200) {
             setShowEnding(true);
-            // Fade in the ending
-            const fadeProgress = Math.min(1, (UNIVERSE_END_POSITION + 100 - cameraZ) / 100);
+            // Fade in the ending smoothly
+            const fadeProgress = Math.min(1, (UNIVERSE_END_POSITION + 200 - cameraZ) / 200);
             setOpacity(fadeProgress);
         } else {
             setShowEnding(false);
@@ -26,48 +26,81 @@ export default function UniverseEnding() {
 
     return (
         <div
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center pointer-events-none"
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center"
             style={{
                 backgroundColor: `rgba(0, 0, 0, ${opacity})`,
-                transition: 'background-color 0.5s ease'
+                pointerEvents: opacity > 0.8 ? 'auto' : 'none'
             }}
         >
             <div
-                className="text-center"
-                style={{ opacity }}
+                className="text-center px-8 max-w-2xl"
+                style={{
+                    opacity,
+                    transform: `translateY(${(1 - opacity) * 30}px)`,
+                    transition: 'transform 0.3s ease-out'
+                }}
             >
-                {/* THE END */}
+                {/* THE END - Large and dramatic */}
                 <h1
-                    className="text-6xl md:text-8xl font-thin tracking-[0.3em] text-white mb-8"
+                    className="text-8xl md:text-[10rem] font-thin text-white mb-16"
                     style={{
-                        fontFamily: 'serif',
-                        textShadow: '0 0 30px rgba(255,255,255,0.3)'
+                        fontFamily: 'Georgia, "Times New Roman", serif',
+                        textShadow: '0 0 80px rgba(255,255,255,0.15), 0 0 160px rgba(255,255,255,0.08)',
+                        letterSpacing: '0.25em',
+                        fontWeight: 100
                     }}
                 >
-                    THE END
+                    The End
                 </h1>
+
+                {/* Subtle separator */}
+                <div
+                    className="w-40 h-[1px] mx-auto mb-14"
+                    style={{
+                        background: 'linear-gradient(to right, transparent, rgba(150,150,150,0.5), transparent)'
+                    }}
+                />
 
                 {/* Waiting message */}
                 <p
-                    className="text-lg md:text-xl text-gray-400 tracking-widest mb-4 italic"
-                    style={{ fontFamily: 'serif' }}
+                    className="text-2xl md:text-3xl text-gray-300 mb-4"
+                    style={{
+                        fontFamily: 'Georgia, serif',
+                        fontStyle: 'italic',
+                        letterSpacing: '0.1em',
+                        fontWeight: 300
+                    }}
                 >
                     Waiting for new big bang
                 </p>
                 <p
-                    className="text-base md:text-lg text-gray-500 tracking-wide mb-12"
-                    style={{ fontFamily: 'serif' }}
+                    className="text-xl md:text-2xl text-gray-400 mb-24"
+                    style={{
+                        fontFamily: 'Georgia, serif',
+                        letterSpacing: '0.08em',
+                        fontWeight: 300
+                    }}
                 >
                     and creation of another universe
                 </p>
 
-                {/* Separator line */}
-                <div className="w-24 h-px bg-gray-600 mx-auto mb-8" />
+                {/* Small separator */}
+                <div
+                    className="w-20 h-[1px] mx-auto mb-10"
+                    style={{
+                        background: 'rgba(100,100,100,0.4)'
+                    }}
+                />
 
                 {/* Beginning of the end */}
                 <p
-                    className="text-sm text-gray-600 tracking-[0.2em] uppercase"
-                    style={{ fontFamily: 'sans-serif' }}
+                    className="text-sm md:text-base text-gray-500"
+                    style={{
+                        fontFamily: 'system-ui, sans-serif',
+                        letterSpacing: '0.4em',
+                        textTransform: 'uppercase',
+                        fontWeight: 400
+                    }}
                 >
                     This is the beginning of the end
                 </p>
