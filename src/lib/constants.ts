@@ -71,11 +71,27 @@ export const LANDMARKS: LandmarkData[] = [
         visibilityRange: 600
     },
     // ═══════════════════════════════════════════════════════════════════════════
-    // STAGE 3: STAR FORMATION
+    // STAGE 3: THE FIRST ASHES (New Addition)
+    // ═══════════════════════════════════════════════════════════════════════════
+    {
+        id: 'ashes_of_first_stars',
+        position: new Vector3(0, 0, -1550),
+        texture: `${BASE_PATH}/textures/theashesofthefirststar.jpg`,
+        scale: 280,
+        title: 'Ashes of the First Stars',
+        type: 'Primeval Quasar',
+        distance: '12.8 billion light-years',
+        constellation: 'Ursa Major',
+        description: 'Information about the very first generation of stars has been one of the Universe\'s best-kept secrets. When the first stars ended their lives as supernovae, the explosions expelled gas into space. These \'ashes\' contained heavier elements such as oxygen, carbon, silicon, and iron created in the nuclear furnaces within the centres of stars.',
+        distanceTrigger: 100,
+        visibilityRange: 600
+    },
+    // ═══════════════════════════════════════════════════════════════════════════
+    // STAGE 4: STAR FORMATION
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'starbirth',
-        position: new Vector3(0, 0, -1550),
+        position: new Vector3(0, 0, -2150),
         texture: `${BASE_PATH}/textures/starbirth.jpg`,
         scale: 280,
         title: 'Seagull Nebula',
@@ -87,11 +103,11 @@ export const LANDMARKS: LandmarkData[] = [
         visibilityRange: 600
     },
     // ═══════════════════════════════════════════════════════════════════════════
-    // STAGE 4: STELLAR NURSERY
+    // STAGE 5: STELLAR NURSERY
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'pillars',
-        position: new Vector3(0, 0, -2150),
+        position: new Vector3(0, 0, -2750),
         texture: `${BASE_PATH}/textures/pillars_of_creation.jpg`,
         scale: 300,
         title: 'Pillars of Creation',
@@ -103,11 +119,11 @@ export const LANDMARKS: LandmarkData[] = [
         visibilityRange: 600
     },
     // ═══════════════════════════════════════════════════════════════════════════
-    // STAGE 5: PLANETARY SYSTEMS
+    // STAGE 6: PLANETARY SYSTEMS
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'saturn',
-        position: new Vector3(0, 0, -2750),
+        position: new Vector3(0, 0, -3350),
         texture: `${BASE_PATH}/textures/saturn.jpg`,
         scale: 180,
         title: 'Saturn',
@@ -119,11 +135,11 @@ export const LANDMARKS: LandmarkData[] = [
         visibilityRange: 500
     },
     // ═══════════════════════════════════════════════════════════════════════════
-    // STAGE 6: LIFE-BEARING WORLD
+    // STAGE 7: LIFE-BEARING WORLD
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'earth',
-        position: new Vector3(0, 0, -3350),
+        position: new Vector3(0, 0, -3950),
         texture: `${BASE_PATH}/textures/earth.jpg`,
         scale: 150,
         title: 'Earth',
@@ -135,11 +151,11 @@ export const LANDMARKS: LandmarkData[] = [
         visibilityRange: 500
     },
     // ═══════════════════════════════════════════════════════════════════════════
-    // STAGE 7: STAR DEATH (Planetary Nebula)
+    // STAGE 8: STAR DEATH (Planetary Nebula)
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'eye_of_god',
-        position: new Vector3(0, 0, -3950),
+        position: new Vector3(0, 0, -4550),
         texture: `${BASE_PATH}/textures/eye_of_god.png`,
         scale: 350,
         title: 'Eye of God',
@@ -151,11 +167,11 @@ export const LANDMARKS: LandmarkData[] = [
         visibilityRange: 600
     },
     // ═══════════════════════════════════════════════════════════════════════════
-    // STAGE 8: TRANSFORMATION
+    // STAGE 9: TRANSFORMATION
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'butterfly',
-        position: new Vector3(0, 0, -4550),
+        position: new Vector3(0, 0, -5150),
         texture: `${BASE_PATH}/textures/Butterfly_nebula.jpg`,
         scale: 380,
         title: 'Butterfly Nebula',
@@ -167,11 +183,11 @@ export const LANDMARKS: LandmarkData[] = [
         visibilityRange: 600
     },
     // ═══════════════════════════════════════════════════════════════════════════
-    // STAGE 9: GALACTIC STRUCTURE
+    // STAGE 10: GALACTIC STRUCTURE
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'sombrero',
-        position: new Vector3(0, 0, -5150),
+        position: new Vector3(0, 0, -5750),
         texture: `${BASE_PATH}/textures/The Sombrero Galaxy.jpg`,
         scale: 500,
         scaleX: 1.8,
@@ -184,11 +200,11 @@ export const LANDMARKS: LandmarkData[] = [
         visibilityRange: 700
     },
     // ═══════════════════════════════════════════════════════════════════════════
-    // STAGE 10: GRAVITATIONAL DEATH
+    // STAGE 11: GRAVITATIONAL DEATH
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'black_hole',
-        position: new Vector3(0, 0, -5750),
+        position: new Vector3(0, 0, -6350),
         texture: `${BASE_PATH}/textures/blackhole.jpg`,
         scale: 400,
         scaleX: 1.78,
@@ -201,11 +217,11 @@ export const LANDMARKS: LandmarkData[] = [
         visibilityRange: 700
     },
     // ═══════════════════════════════════════════════════════════════════════════
-    // STAGE 11: COSMIC LIGHTHOUSE
+    // STAGE 12: COSMIC LIGHTHOUSE
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'quasar',
-        position: new Vector3(0, 0, -6350),
+        position: new Vector3(0, 0, -6950),
         texture: `${BASE_PATH}/textures/quasar.jpg`,
         scale: 420,
         scaleX: 1.78,
@@ -218,11 +234,11 @@ export const LANDMARKS: LandmarkData[] = [
         visibilityRange: 700
     },
     // ═══════════════════════════════════════════════════════════════════════════
-    // STAGE 12: THE BEYOND - FINAL STAGE
+    // STAGE 13: THE BEYOND - FINAL STAGE
     // ═══════════════════════════════════════════════════════════════════════════
     {
         id: 'wormhole',
-        position: new Vector3(0, 0, -6950),
+        position: new Vector3(0, 0, -7550),
         texture: `${BASE_PATH}/textures/wormhole.png`,
         scale: 500,
         scaleX: 1.78,
@@ -238,8 +254,9 @@ export const LANDMARKS: LandmarkData[] = [
 
 
 // Position where the universe ends and "The End" appears
-export const UNIVERSE_END_POSITION = -7200;
+export const UNIVERSE_END_POSITION = -7800;
 
+// ═══════════════════════════════════════════════════════════════════════════
 // ═══════════════════════════════════════════════════════════════════════════
 // CAMERA WAYPOINTS - Sharp turns in STARFIELD, centered at each landmark
 // Pattern: Leave landmark → Sharp turn in void → Gradually center → Next landmark
@@ -266,104 +283,122 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, 0, -950),        // CARBON NEBULA - pass through center
     new Vector3(0, 0, -1000),       // Buffer AFTER (Force Z-axis tangent)
 
+    // ═══════════════════════════════════════════════════════════════════════════
+    // NEW SEGMENT: To "Ashes of the First Stars" (-1550)
+    // ═══════════════════════════════════════════════════════════════════════════
     // Turn
-    new Vector3(25, -20, -1100),    // Turn AFTER passing
+    new Vector3(25, -20, -1100),    // Turn AFTER passing Carbon Nebula
     new Vector3(45, -35, -1150),    // Peak
     new Vector3(25, -20, -1250),    // Coming back
 
-    // STRAIGHT to Starbirth
+    // STRAIGHT to Ashes of First Stars
     new Vector3(0, 0, -1400),       // Approaching straight
     new Vector3(0, 0, -1500),       // Buffer BEFORE
-    new Vector3(0, 0, -1550),       // STARBIRTH - pass through center
+    new Vector3(0, 0, -1550),       // ASHES - pass through center
     new Vector3(0, 0, -1600),       // Buffer AFTER
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // SHIFTED SEGMENTS: All Z-coordinates below are shifted by -600 units
+    // ═══════════════════════════════════════════════════════════════════════════
 
     // Turn
     new Vector3(-25, 25, -1700),    // Turn AFTER passing
     new Vector3(-45, 40, -1750),    // Peak
     new Vector3(-25, 20, -1850),    // Coming back
 
-    // STRAIGHT to Pillars
+    // STRAIGHT to Starbirth (was -1550, now -2150)
     new Vector3(0, 0, -2000),       // Approaching straight
     new Vector3(0, 0, -2100),       // Buffer BEFORE
-    new Vector3(0, 0, -2150),       // PILLARS - pass through center
+    new Vector3(0, 0, -2150),       // STARBIRTH - pass through center
     new Vector3(0, 0, -2200),       // Buffer AFTER
 
     // Turn
-    new Vector3(0, -25, -2300),     // Dive AFTER passing
+    new Vector3(0, -25, -2300),     // Turn
     new Vector3(0, -40, -2350),     // Peak
     new Vector3(0, -20, -2450),     // Coming back
 
-    // STRAIGHT to Saturn
+    // STRAIGHT to Pillars (was -2150, now -2750)
     new Vector3(0, 0, -2600),       // Approaching straight
     new Vector3(0, 0, -2700),       // Buffer BEFORE
-    new Vector3(0, 0, -2750),       // SATURN - pass through center
+    new Vector3(0, 0, -2750),       // PILLARS - pass through center
     new Vector3(0, 0, -2800),       // Buffer AFTER
 
     // Turn
-    new Vector3(30, 25, -2900),     // Turn AFTER passing
+    new Vector3(30, 25, -2900),     // Turn
     new Vector3(50, 40, -2950),     // Peak
     new Vector3(25, 20, -3050),     // Coming back
 
-    // STRAIGHT to Earth
+    // STRAIGHT to Saturn (was -2750, now -3350)
     new Vector3(0, 0, -3200),       // Approaching straight
     new Vector3(0, 0, -3300),       // Buffer BEFORE
-    new Vector3(0, 0, -3350),       // EARTH - pass through center
+    new Vector3(0, 0, -3350),       // SATURN - pass through center
     new Vector3(0, 0, -3400),       // Buffer AFTER
 
     // Turn
-    new Vector3(-25, -20, -3500),   // Turn AFTER passing
+    new Vector3(-25, -20, -3500),   // Turn
     new Vector3(-40, -35, -3550),   // Peak
     new Vector3(-20, -15, -3650),   // Coming back
 
-    // STRAIGHT to Eye of God
+    // STRAIGHT to Earth (was -3350, now -3950)
     new Vector3(0, 0, -3800),       // Approaching straight
     new Vector3(0, 0, -3900),       // Buffer BEFORE
-    new Vector3(0, 0, -3950),       // EYE OF GOD - pass through center
+    new Vector3(0, 0, -3950),       // EARTH - pass through center
     new Vector3(0, 0, -4000),       // Buffer AFTER
 
     // Turn
-    new Vector3(25, 25, -4100),     // Turn AFTER passing
+    new Vector3(25, 25, -4100),     // Turn
     new Vector3(40, 40, -4150),     // Peak
     new Vector3(20, 20, -4250),     // Coming back
 
-    // STRAIGHT to Butterfly
+    // STRAIGHT to Eye of God (was -3950, now -4550)
     new Vector3(0, 0, -4400),       // Approaching straight
     new Vector3(0, 0, -4500),       // Buffer BEFORE
-    new Vector3(0, 0, -4550),       // BUTTERFLY - pass through center
+    new Vector3(0, 0, -4550),       // EYE OF GOD - pass through center
     new Vector3(0, 0, -4600),       // Buffer AFTER
 
-    // FIXED: STRAIGHT LINE between Butterfly and Sombrero (User Request)
-    new Vector3(0, 0, -4700),       // VOID: Straight
-    new Vector3(0, 0, -4850),       // VOID: Straight
-    new Vector3(0, 0, -5000),       // VOID: Straight
+    // Turn
+    new Vector3(0, -25, -4700),     // Turn
+    new Vector3(0, -40, -4750),     // Peak
+    new Vector3(0, -20, -4850),     // Coming back
 
-    // STRAIGHT to Sombrero
+    // STRAIGHT to Butterfly (was -4550, now -5150)
+    new Vector3(0, 0, -5000),       // Approaching straight
     new Vector3(0, 0, -5100),       // Buffer BEFORE
-    new Vector3(0, 0, -5150),       // SOMBRERO - pass through center
+    new Vector3(0, 0, -5150),       // BUTTERFLY - pass through center
     new Vector3(0, 0, -5200),       // Buffer AFTER
 
-    // Turn between Sombrero and Black Hole (Requested)
-    new Vector3(25, 20, -5300),     // Turn AFTER passing
-    new Vector3(40, 35, -5350),     // Peak
-    new Vector3(20, 15, -5450),     // Coming back
+    // FIXED: STRAIGHT LINE between Butterfly and Sombrero
+    new Vector3(0, 0, -5300),       // VOID: Straight
+    new Vector3(0, 0, -5450),       // VOID: Straight
+    new Vector3(0, 0, -5600),       // VOID: Straight
 
-    // STRAIGHT to Black Hole
-    new Vector3(0, 0, -5600),       // Approaching
+    // STRAIGHT to Sombrero (was -5150, now -5750)
     new Vector3(0, 0, -5700),       // Buffer BEFORE
-    new Vector3(0, 0, -5750),       // BLACK HOLE - pass through center
+    new Vector3(0, 0, -5750),       // SOMBRERO - pass through center
     new Vector3(0, 0, -5800),       // Buffer AFTER
 
-    // STRAIGHT from here - Quasar, Wormhole, End
-    new Vector3(0, 0, -5950),
-    new Vector3(0, 0, -6150),
-    new Vector3(0, 0, -6350),       // QUASAR - pass through center
+    // Turn between Sombrero and Black Hole
+    new Vector3(25, 20, -5900),     // Turn
+    new Vector3(40, 35, -5950),     // Peak
+    new Vector3(20, 15, -6050),     // Coming back
 
+    // STRAIGHT to Black Hole (was -5750, now -6350)
+    new Vector3(0, 0, -6200),       // Approaching
+    new Vector3(0, 0, -6300),       // Buffer BEFORE
+    new Vector3(0, 0, -6350),       // BLACK HOLE - pass through center
+    new Vector3(0, 0, -6400),       // Buffer AFTER
+
+    // STRAIGHT from here - Quasar, Wormhole, End
     new Vector3(0, 0, -6550),
     new Vector3(0, 0, -6750),
-    new Vector3(0, 0, -6950),       // WORMHOLE - pass through center
+    new Vector3(0, 0, -6950),       // QUASAR (was -6350) - pass through center
+
+    new Vector3(0, 0, -7150),
+    new Vector3(0, 0, -7350),
+    new Vector3(0, 0, -7550),       // WORMHOLE (was -6950) - pass through center
 
     // INTO THE VOID - Flash + End
-    new Vector3(0, 0, -7050),
-    new Vector3(0, 0, -7150),
-    new Vector3(0, 0, -7200)        // UNIVERSE END
+    new Vector3(0, 0, -7650),
+    new Vector3(0, 0, -7750),
+    new Vector3(0, 0, -7800)        // UNIVERSE END (was -7200)
 ];
