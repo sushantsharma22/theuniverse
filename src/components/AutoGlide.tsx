@@ -2,17 +2,11 @@
 
 // ═══════════════════════════════════════════════════════════════════════════
 // AUTO GLIDE - Automatic scroll animation with recording capability
+// Uses requestAnimationFrame for smooth scrolling that triggers native events
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { useEffect, useRef, useCallback } from 'react';
-import gsap from 'gsap';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { useScrollStore } from '@/store/scrollStore';
-
-// Register GSAP plugin
-if (typeof window !== 'undefined') {
-    gsap.registerPlugin(ScrollToPlugin);
-}
 
 interface AutoGlideProps {
     duration: number;
@@ -29,9 +23,11 @@ export default function AutoGlide({
     onComplete,
     onProgress
 }: AutoGlideProps) {
-    const timelineRef = useRef<gsap.core.Tween | null>(null);
+    const animationRef = useRef<number | null>(null);
     const recorderRef = useRef<MediaRecorder | null>(null);
     const chunksRef = useRef<Blob[]>([]);
+    const startTimeRef = useRef<number>(0);
+    const isRunningRef = useRef<boolean>(false);
     const setIsAutoPlaying = useScrollStore(state => state.setIsAutoPlaying);
 
     const startRecording = useCallback(() => {
@@ -45,8 +41,18 @@ export default function AutoGlide({
             }
 
             const stream = canvas.captureStream(60);
+
+            // Check for supported mime types
+            let mimeType = 'video/webm;codecs=vp9';
+            if (!MediaRecorder.isTypeSupported(mimeType)) {
+                mimeType = 'video/webm;codecs=vp8';
+                if (!MediaRecorder.isTypeSupported(mimeType)) {
+                    mimeType = 'video/webm';
+                }
+            }
+
             const recorder = new MediaRecorder(stream, {
-                mimeType: 'video/webm;codecs=vp9',
+                mimeType,
                 videoBitsPerSecond: 10000000
             });
 
@@ -72,6 +78,7 @@ export default function AutoGlide({
 
             recorder.start();
             recorderRef.current = recorder;
+            console.log('AutoGlide: Recording started');
         } catch (error) {
             console.error('AutoGlide: Recording failed', error);
         }
@@ -81,42 +88,73 @@ export default function AutoGlide({
         if (recorderRef.current && recorderRef.current.state === 'recording') {
             recorderRef.current.stop();
             recorderRef.current = null;
+            console.log('AutoGlide: Recording stopped');
         }
     }, []);
+
+    const stopAnimation = useCallback(() => {
+        isRunningRef.current = false;
+        if (animationRef.current) {
+            cancelAnimationFrame(animationRef.current);
+            animationRef.current = null;
+        }
+        stopRecording();
+        setIsAutoPlaying(false);
+    }, [stopRecording, setIsAutoPlaying]);
 
     const startAnimation = useCallback(() => {
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
         const startPos = direction === 'forward' ? 0 : docHeight;
         const endPos = direction === 'forward' ? docHeight : 0;
+        const durationMs = duration * 1000;
+
+        console.log('AutoGlide: Starting animation', {
+            direction,
+            duration,
+            startPos,
+            endPos,
+            docHeight
+        });
 
         // Set initial position
-        window.scrollTo(0, startPos);
+        window.scrollTo({ top: startPos, behavior: 'instant' });
         setIsAutoPlaying(true);
 
-        // Start recording after a brief delay
+        // Start after brief delay
         setTimeout(() => {
             startRecording();
+            startTimeRef.current = performance.now();
+            isRunningRef.current = true;
 
-            // Create GSAP animation with constant velocity (ease: "none")
-            timelineRef.current = gsap.to(window, {
-                scrollTo: { y: endPos, autoKill: false },
-                duration: duration,
-                ease: 'none', // Constant velocity - no easing
-                onUpdate: () => {
-                    if (onProgress) {
-                        const currentScroll = window.scrollY;
-                        const progress = direction === 'forward'
-                            ? currentScroll / docHeight
-                            : 1 - (currentScroll / docHeight);
-                        onProgress(progress);
-                    }
-                },
-                onComplete: () => {
+            const animate = (currentTime: number) => {
+                if (!isRunningRef.current) return;
+
+                const elapsed = currentTime - startTimeRef.current;
+                const progress = Math.min(elapsed / durationMs, 1);
+
+                // Calculate current scroll position with linear interpolation
+                const currentScroll = startPos + (endPos - startPos) * progress;
+
+                // Use instant scroll to avoid browser smooth scroll interference
+                window.scrollTo({ top: currentScroll, behavior: 'instant' });
+
+                // Report progress
+                if (onProgress) {
+                    onProgress(progress);
+                }
+
+                if (progress < 1) {
+                    animationRef.current = requestAnimationFrame(animate);
+                } else {
+                    // Animation complete
+                    console.log('AutoGlide: Animation complete');
                     stopRecording();
                     setIsAutoPlaying(false);
                     if (onComplete) onComplete();
                 }
-            });
+            };
+
+            animationRef.current = requestAnimationFrame(animate);
         }, 500);
     }, [direction, duration, startRecording, stopRecording, setIsAutoPlaying, onComplete, onProgress]);
 
@@ -126,14 +164,9 @@ export default function AutoGlide({
 
         // Cleanup on unmount
         return () => {
-            if (timelineRef.current) {
-                timelineRef.current.kill();
-                timelineRef.current = null;
-            }
-            stopRecording();
-            setIsAutoPlaying(false);
+            stopAnimation();
         };
-    }, [startAnimation, stopRecording, setIsAutoPlaying]);
+    }, [startAnimation, stopAnimation]);
 
     // This component doesn't render anything
     return null;
