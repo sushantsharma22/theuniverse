@@ -140,8 +140,10 @@ export default function Landmark({ data }: LandmarkProps) {
         // Smooth Interpolation for Cinematic Feel
         const lerpSpeed = 0.04;
 
-        // Position X (Using simple lerp)
-        meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, targetX, lerpSpeed);
+        // Position - FIXED! No interpolation - stays exactly where placed
+        // (Removed lerp that was causing sideways drift)
+        meshRef.current.position.x = originalPos.x;
+        meshRef.current.position.y = originalPos.y;
 
         // Scale
         currentScale.current = THREE.MathUtils.lerp(currentScale.current, targetScale, lerpSpeed);
