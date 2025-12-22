@@ -27,8 +27,8 @@ export default function StarField() {
 
             const x = radius * Math.cos(theta);
             const y = radius * Math.sin(theta);
-            // Z spans the entire journey
-            const z = 200 - Math.random() * 3000;
+            // Z spans the entire 11-stage cosmic journey
+            const z = 200 - Math.random() * 8000;
 
             const scale = 0.2 + Math.random() * 0.8;
             matrix.makeScale(scale, scale, scale);
