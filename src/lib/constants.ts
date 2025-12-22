@@ -73,7 +73,7 @@ export const LANDMARKS: LandmarkData[] = [
     },
     {
         id: 'galaxy',
-        position: new Vector3(0, 0, -2000), // PUSHED BACK (750u gap from Nebula)
+        position: new Vector3(0, 0, -1600), // CLOSER (Decrease gap from Nebula)
         texture: '/textures/The Sombrero Galaxy.jpg',
         scale: 500,
         scaleX: 1.8,
@@ -83,11 +83,11 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Virgo',
         description: 'The Sombrero Galaxy (M104) is a spiral galaxy in the constellation Virgo. It has a bright nucleus, an unusually large central bulge, and a prominent dust lane in its inclined disk, giving it the appearance of a sombrero.',
         distanceTrigger: 100,
-        visibilityRange: 600 // REDUCED: Only visible after clearing Nebula area
+        visibilityRange: 450 // REDUCED: Prevent overlapping with Nebula
     },
     {
         id: 'black_hole',
-        position: new Vector3(0, 0, -2600), // FINAL BOSS (Deepest)
+        position: new Vector3(0, 0, -2800), // DEEP SPACE FINALE (Massive gap)
         texture: '/textures/blackhole_v2.jpg',
         scale: 400,
         scaleX: 1.78,
@@ -97,13 +97,13 @@ export const LANDMARKS: LandmarkData[] = [
         constellation: 'Virgo',
         description: 'This is the first direct image of a black hole, located in Messier 87. It captures the shadow of the supermassive black hole and its accretion disk of superheated gas. The black hole has a mass 6.5 billion times that of our Sun.',
         distanceTrigger: 100,
-        visibilityRange: 1000
+        visibilityRange: 600 // REDUCED FIX: Ensure it is INVISIBLE while at Galaxy
     }
 ];
 
-// Camera path waypoints - 5 STAGE EPIC JOURNEY (DEEP SPACED FINALE)
+// Camera path waypoints - 5 STAGE EPIC JOURNEY (POLISHED SPACING)
 export const WAYPOINTS: Vector3[] = [
-    // 1. START 
+    // 1. START
     new Vector3(0, 0, 100),
     new Vector3(0, 0, -50),
 
@@ -129,14 +129,14 @@ export const WAYPOINTS: Vector3[] = [
     new Vector3(0, -100, -1150),    // DEEP DIVE
     new Vector3(0, -100, -1250),    // BUTTERFLY REVEAL
 
-    // 6. TO GALAXY (Specific Timing: Void -> Rise -> Reveal)
-    new Vector3(0, -100, -1450),    // Void Scroll 1 (Deep)
-    new Vector3(0, -100, -1650),    // Void Scroll 2 (Deep - "2 scrolls in starfield")
-    new Vector3(0, 0, -1800),       // Scroll 3 (UPWARDS to Center)
-    new Vector3(0, 0, -2000),       // SOMBRERO GALAXY REVEAL (Visible slowing closing)
+    // 6. TO GALAXY (SHORTER GAP)
+    new Vector3(0, -100, -1350),    // Fly through Butterfly
+    new Vector3(0, -20, -1450),     // RISING BACK TO CENTER (Earlier Rise)
+    new Vector3(0, 0, -1600),       // SOMBRERO GALAXY REVEAL (Closer)
 
-    // 7. TO BLACK HOLE (Gap -> Final Boss)
-    new Vector3(0, 0, -2100),       // Fly Through Galaxy
-    new Vector3(0, 0, -2300),       // Void Gap Scroll 1
-    new Vector3(0, 0, -2600)        // BLACK HOLE REVEAL (2-3 scrolls later)
+    // 7. TO BLACK HOLE (MASSIVE GAP)
+    new Vector3(0, 0, -1750),       // Fly Through Galaxy
+    new Vector3(0, 0, -2100),       // Long Void 1
+    new Vector3(0, 0, -2400),       // Long Void 2
+    new Vector3(0, 0, -2800)        // BLACK HOLE REVEAL (Finale)
 ];
