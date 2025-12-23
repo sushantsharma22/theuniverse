@@ -27,7 +27,8 @@ export default function UniversePage() {
 
       <SmoothScroll />
 
-      <InfoPanel />
+      {/* InfoPanel removed - only start and ending text shows */}
+      {/* <InfoPanel /> */}
       <StartScreen />
       <UniverseEnding />
     </>
