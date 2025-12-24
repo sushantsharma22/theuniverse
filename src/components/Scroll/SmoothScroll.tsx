@@ -13,6 +13,17 @@ export default function SmoothScroll() {
     const updateSmoothVelocity = useScrollStore(state => state.updateSmoothVelocity);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+    // RESET SCROLL ON MOUNT
+    useEffect(() => {
+        // Prevent browser from restoring scroll position
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        // Force scroll to top
+        window.scrollTo(0, 0);
+        setProgress(0);
+    }, [setProgress]);
+
     useEffect(() => {
         // Update smooth velocity via requestAnimationFrame
         let frameId: number;
