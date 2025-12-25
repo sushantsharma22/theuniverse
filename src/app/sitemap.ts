@@ -62,6 +62,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.99, // Near-maximum for main interactive experience
     },
+    {
+      url: `${SITE_URL}/gallery`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.95, // Authority expansion - NASA imagery collection
+    },
+    {
+      url: `${SITE_URL}/scientific-data`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.95, // Authority expansion - Educational datasets
+    },
   ];
 
   // ═══════════════════════════════════════════════════════════════════════════
