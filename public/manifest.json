@@ -1,21 +1,40 @@
 {
-    "name": "The Universe | A Journey Through Space and Time",
-    "short_name": "Universe Journey",
-    "description": "An immersive journey through 13.8 billion years of cosmic history using NASA imagery.",
+    "name": "The Universe: A Verified Scientific Journey Through Space and Time",
+    "short_name": "The Universe",
+    "description": "Embark on an immersive, scientifically verified journey through 13.8 billion years of cosmic history. Experience the Big Bang, witness stellar birth, explore planetary systems, and venture into black holes—all powered by authentic NASA imagery.",
     "start_url": "/",
+    "scope": "/",
     "display": "standalone",
+    "orientation": "any",
     "background_color": "#000005",
     "theme_color": "#000005",
+    "lang": "en-US",
+    "dir": "ltr",
+    "categories": ["education", "entertainment", "science"],
+    "iarc_rating_id": "all_ages",
     "icons": [
         {
             "src": "/icon.png",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any"
         },
         {
             "src": "/icon.png",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any maskable"
         }
-    ]
+    ],
+    "screenshots": [
+        {
+            "src": "/og-image.png",
+            "sizes": "1200x630",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "The Universe - Interactive Cosmic Journey"
+        }
+    ],
+    "related_applications": [],
+    "prefer_related_applications": false
 }
