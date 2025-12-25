@@ -207,9 +207,8 @@ export const metadata: Metadata = {
   // VERIFICATION - Search Console & Analytics
   // ═══════════════════════════════════════════════════════════════════════════
   verification: {
-    google: 'your-google-verification-code',
+    google: 'QR893ncwXnusQcnOIO1dtO08evnR5Risthg1x09KxIc',
     yandex: 'your-yandex-verification-code',
-    // Add your verification codes here
   },
   
   // ═══════════════════════════════════════════════════════════════════════════

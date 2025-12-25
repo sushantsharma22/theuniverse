@@ -134,6 +134,9 @@ export const learningResourceSchema = {
     'Planetary Science',
     'General Relativity',
     'Quantum Cosmology',
+    'Black Hole Physics',
+    'Nebula Classification',
+    'Interstellar Medium',
   ],
   
   educationalUse: [
@@ -142,6 +145,7 @@ export const learningResourceSchema = {
     'Self-Directed Learning',
     'Research Reference',
     'Academic Study',
+    'Classroom Instruction',
   ],
   
   learningResourceType: [
@@ -152,6 +156,33 @@ export const learningResourceSchema = {
   ],
   
   interactivityType: 'active',
+  typicalAgeRange: '14-99',
+  
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SOURCE ORGANIZATION - NASA Authority
+  // ═══════════════════════════════════════════════════════════════════════════
+  sourceOrganization: {
+    '@type': 'GovernmentOrganization',
+    name: 'National Aeronautics and Space Administration',
+    alternateName: 'NASA',
+    url: 'https://www.nasa.gov',
+    sameAs: [
+      'https://en.wikipedia.org/wiki/NASA',
+      'https://twitter.com/NASA',
+      'https://www.facebook.com/NASA',
+      'https://www.instagram.com/nasa/',
+      'https://www.youtube.com/NASA',
+    ],
+    logo: 'https://www.nasa.gov/wp-content/themes/nasa/assets/images/nasa-logo.svg',
+    description: 'NASA explores the unknown in air and space, innovates for the benefit of humanity, and inspires the world through discovery.',
+  },
+  
+  // Provider organization
+  provider: {
+    '@type': 'Organization',
+    name: SITE_NAME,
+    url: SITE_URL,
+  },
   
   // ═══════════════════════════════════════════════════════════════════════════
   // ABOUT - Core Scientific Topics
