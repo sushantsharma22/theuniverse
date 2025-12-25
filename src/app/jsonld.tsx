@@ -246,7 +246,12 @@ export const learningResourceSchema = {
       '@type': 'Dataset',
       name: 'NASA Open Data Portal',
       url: 'https://data.nasa.gov',
-      description: 'Official NASA scientific datasets and imagery',
+      description: 'The official NASA Open Data Portal provides comprehensive access to over 32,000 datasets including astronomical imagery, mission data, climate observations, and scientific research. This authoritative resource contains verified data from NASA missions, space telescopes, and planetary exploration programs spanning decades of space exploration.',
+      creator: {
+        '@type': 'GovernmentOrganization',
+        name: 'National Aeronautics and Space Administration',
+        url: 'https://www.nasa.gov',
+      },
       publisher: {
         '@type': 'GovernmentOrganization',
         name: 'National Aeronautics and Space Administration',
@@ -258,7 +263,12 @@ export const learningResourceSchema = {
       '@type': 'Dataset',
       name: 'Hubble Space Telescope Archive',
       url: 'https://archive.stsci.edu',
-      description: 'Complete archive of Hubble observations and imagery',
+      description: 'The Hubble Space Telescope Archive contains the complete repository of astronomical observations captured by the Hubble Space Telescope since its launch in 1990. This comprehensive scientific database includes over 1.5 million observations covering galaxies, nebulae, stars, and planets with unprecedented clarity and detail.',
+      creator: {
+        '@type': 'Organization',
+        name: 'Space Telescope Science Institute',
+        url: 'https://www.stsci.edu',
+      },
       publisher: {
         '@type': 'Organization',
         name: 'Space Telescope Science Institute',
@@ -269,22 +279,35 @@ export const learningResourceSchema = {
       '@type': 'Dataset',
       name: 'James Webb Space Telescope Data',
       url: 'https://webbtelescope.org/images',
-      description: 'Latest infrared observations from JWST',
+      description: 'The James Webb Space Telescope provides revolutionary infrared observations revealing the earliest galaxies, star-forming regions, exoplanet atmospheres, and cosmic structures invisible to optical telescopes. This cutting-edge dataset represents the most advanced astronomical observations available, capturing phenomena from 13.5 billion years ago.',
+      creator: {
+        '@type': 'GovernmentOrganization',
+        name: 'NASA',
+        url: 'https://www.nasa.gov',
+      },
       publisher: {
         '@type': 'GovernmentOrganization',
         name: 'NASA',
         url: 'https://www.nasa.gov',
       },
+      license: 'https://www.nasa.gov/nasa-brand-center/images-and-media/',
     },
     {
       '@type': 'Dataset',
       name: 'Event Horizon Telescope Collaboration Data',
       url: 'https://eventhorizontelescope.org',
-      description: 'First direct images of black holes',
+      description: 'The Event Horizon Telescope Collaboration achieved a historic breakthrough by capturing the first direct images of supermassive black holes. This groundbreaking dataset includes observations of M87* and Sagittarius A*, revealing the shadow and photon ring of black holes with unprecedented resolution.',
+      creator: {
+        '@type': 'Organization',
+        name: 'Event Horizon Telescope Collaboration',
+        url: 'https://eventhorizontelescope.org',
+      },
       publisher: {
         '@type': 'Organization',
         name: 'Event Horizon Telescope Collaboration',
+        url: 'https://eventhorizontelescope.org',
       },
+      license: 'https://creativecommons.org/licenses/by/4.0/',
     },
   ],
   
@@ -358,6 +381,17 @@ export const datasetSchema = {
     '@type': 'Dataset',
     name: 'NASA Open Data',
     url: 'https://data.nasa.gov',
+    description: 'The NASA Open Data initiative provides public access to comprehensive datasets including space mission telemetry, astronomical observations, Earth science measurements, and scientific research findings. This authoritative government resource ensures transparency and enables global scientific collaboration through verified, peer-reviewed data from NASA exploration programs.',
+    creator: {
+      '@type': 'GovernmentOrganization',
+      name: 'National Aeronautics and Space Administration',
+      url: 'https://www.nasa.gov',
+      sameAs: [
+        'https://twitter.com/NASA',
+        'https://www.facebook.com/NASA',
+        'https://www.instagram.com/nasa/',
+      ],
+    },
     publisher: {
       '@type': 'GovernmentOrganization',
       name: 'National Aeronautics and Space Administration',
@@ -368,6 +402,7 @@ export const datasetSchema = {
         'https://www.instagram.com/nasa/',
       ],
     },
+    license: 'https://www.nasa.gov/nasa-brand-center/images-and-media/',
   },
   
   // Scientific distribution
@@ -424,21 +459,11 @@ export const datasetSchema = {
   
   // Included landmarks as data points
   hasPart: LANDMARK_SCHEMA_DATA.map((landmark) => ({
-    '@type': 'DataCatalog',
+    '@type': 'Dataset',
     name: landmark.title,
     description: landmark.description,
-    additionalProperty: [
-      {
-        '@type': 'PropertyValue',
-        name: 'objectType',
-        value: landmark.type,
-      },
-      {
-        '@type': 'PropertyValue',
-        name: 'distance',
-        value: landmark.distance,
-      },
-    ],
+    additionalType: landmark.type,
+    spatialCoverage: landmark.distance,
   })),
 };
 
