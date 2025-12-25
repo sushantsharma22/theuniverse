@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Playfair_Display } from 'next/font/google';
 import './globals.css';
+import JsonLd from './jsonld';
 
 const geist = Geist({
   subsets: ['latin'],
@@ -41,6 +42,7 @@ export const metadata: Metadata = {
     description: 'Experience 13.8 billion years of cosmic history',
     images: ['/og-image.jpg'],
   },
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({
@@ -51,6 +53,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable} ${playfair.variable}`}>
       <body className="bg-[#000005] text-white overflow-x-hidden">
+        <JsonLd />
         {children}
       </body>
     </html>
