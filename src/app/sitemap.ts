@@ -47,20 +47,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const currentDate = new Date();
   
   // ═══════════════════════════════════════════════════════════════════════════
-  // CORE PAGES - Highest priority
+  // CORE PAGES - Maximum priority locked at 1.0
   // ═══════════════════════════════════════════════════════════════════════════
   const corePages: MetadataRoute.Sitemap = [
     {
       url: SITE_URL,
       lastModified: currentDate,
       changeFrequency: 'weekly',
-      priority: 1.0,
+      priority: 1.0, // LOCKED - Maximum authority for root domain
     },
     {
       url: `${SITE_URL}/journey`,
       lastModified: currentDate,
       changeFrequency: 'weekly',
-      priority: 0.98,
+      priority: 0.99, // Near-maximum for main interactive experience
     },
   ];
 
@@ -74,6 +74,42 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'weekly' as const,
     priority: landmark.priority,
   }));
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SCIENTIFIC IMAGE ASSETS - For image search indexing
+  // ═══════════════════════════════════════════════════════════════════════════
+  const imageAssets: MetadataRoute.Sitemap = [
+    {
+      url: `${SITE_URL}/textures/big%20bang.jpg`,
+      lastModified: currentDate,
+      changeFrequency: 'yearly',
+      priority: 0.75,
+    },
+    {
+      url: `${SITE_URL}/textures/pillars_of_creation.jpg`,
+      lastModified: currentDate,
+      changeFrequency: 'yearly',
+      priority: 0.75,
+    },
+    {
+      url: `${SITE_URL}/textures/blackhole.jpg`,
+      lastModified: currentDate,
+      changeFrequency: 'yearly',
+      priority: 0.75,
+    },
+    {
+      url: `${SITE_URL}/textures/earth.jpg`,
+      lastModified: currentDate,
+      changeFrequency: 'yearly',
+      priority: 0.70,
+    },
+    {
+      url: `${SITE_URL}/textures/saturn.jpg`,
+      lastModified: currentDate,
+      changeFrequency: 'yearly',
+      priority: 0.70,
+    },
+  ];
 
   // ═══════════════════════════════════════════════════════════════════════════
   // TOPIC PAGES - Medium priority for semantic coverage
@@ -113,6 +149,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...corePages,
     ...landmarkPages,
+    ...imageAssets,
     ...topicPages,
     ...staticPages,
   ];

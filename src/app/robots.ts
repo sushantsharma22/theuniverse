@@ -36,7 +36,18 @@ export default function robots(): MetadataRoute.Robots {
       },
       {
         userAgent: 'Googlebot-Image',
-        allow: ['/textures/', '/images/', '/*.jpg', '/*.png', '/*.webp'],
+        allow: [
+          '/',
+          '/textures/',
+          '/textures/*.jpg',
+          '/textures/*.png',
+          '/textures/*.webp',
+          '/images/',
+          '/*.jpg',
+          '/*.png',
+          '/*.webp',
+        ],
+        // Explicitly index scientific imagery as educational diagrams
       },
       {
         userAgent: 'Googlebot-Video',

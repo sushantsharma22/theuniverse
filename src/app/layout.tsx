@@ -103,10 +103,10 @@ export const metadata: Metadata = {
   publisher: SITE_NAME,
   
   // ═══════════════════════════════════════════════════════════════════════════
-  // CLASSIFICATION - Educational & Scientific
+  // CLASSIFICATION - Educational & Scientific (God-Mode)
   // ═══════════════════════════════════════════════════════════════════════════
-  category: 'Education',
-  classification: 'Scientific Resource',
+  category: 'science',
+  classification: 'educational simulation',
   
   // ═══════════════════════════════════════════════════════════════════════════
   // ROBOTS & INDEXING
@@ -126,13 +126,20 @@ export const metadata: Metadata = {
   },
   
   // ═══════════════════════════════════════════════════════════════════════════
-  // CANONICAL URL - Consolidate ranking power
+  // CANONICAL URL & ALTERNATES - Deep-link optimization
   // ═══════════════════════════════════════════════════════════════════════════
   alternates: {
     canonical: SITE_URL,
     languages: {
       'en-US': SITE_URL,
+      'en-GB': SITE_URL,
       'x-default': SITE_URL,
+    },
+    media: {
+      'only screen and (max-width: 768px)': `${SITE_URL}/?mobile=true`,
+    },
+    types: {
+      'application/ld+json': `${SITE_URL}/schema.json`,
     },
   },
   
