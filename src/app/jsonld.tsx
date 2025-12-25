@@ -4,6 +4,8 @@
 // Consolidated LearningResource + Dataset Schema for Scientific Authority
 // ═══════════════════════════════════════════════════════════════════════════
 
+import React from 'react';
+
 const SITE_URL = 'https://exploreuniverse.dev';
 const SITE_NAME = 'The Universe';
 const SITE_DESCRIPTION = 'An immersive, scientifically accurate journey through 13.8 billion years of cosmic history. Experience the Big Bang, stellar evolution, planetary formation, and the ultimate fate of the cosmos through verified NASA imagery and data.';
