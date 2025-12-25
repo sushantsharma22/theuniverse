@@ -274,6 +274,7 @@ export const learningResourceSchema = {
         name: 'Space Telescope Science Institute',
         url: 'https://www.stsci.edu',
       },
+      license: 'https://creativecommons.org/licenses/by/4.0/',
     },
     {
       '@type': 'Dataset',
