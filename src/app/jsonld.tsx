@@ -464,6 +464,12 @@ export const datasetSchema = {
     description: landmark.description,
     additionalType: landmark.type,
     spatialCoverage: landmark.distance,
+    creator: {
+      '@type': 'Organization',
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    license: 'https://creativecommons.org/licenses/by/4.0/',
   })),
 };
 
