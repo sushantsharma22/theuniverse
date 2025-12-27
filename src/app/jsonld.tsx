@@ -162,7 +162,7 @@ export const learningResourceSchema = {
   // SOURCE ORGANIZATION - NASA Authority
   // ═══════════════════════════════════════════════════════════════════════════
   sourceOrganization: {
-    '@type': 'GovernmentOrganization',
+    '@type': 'Organization',
     name: 'National Aeronautics and Space Administration',
     alternateName: 'NASA',
     url: 'https://www.nasa.gov',
@@ -248,12 +248,12 @@ export const learningResourceSchema = {
       url: 'https://data.nasa.gov',
       description: 'The official NASA Open Data Portal provides comprehensive access to over 32,000 datasets including astronomical imagery, mission data, climate observations, and scientific research. This authoritative resource contains verified data from NASA missions, space telescopes, and planetary exploration programs spanning decades of space exploration.',
       creator: {
-        '@type': 'GovernmentOrganization',
+        '@type': 'Organization',
         name: 'National Aeronautics and Space Administration',
         url: 'https://www.nasa.gov',
       },
       publisher: {
-        '@type': 'GovernmentOrganization',
+        '@type': 'Organization',
         name: 'National Aeronautics and Space Administration',
         url: 'https://www.nasa.gov',
       },
@@ -282,12 +282,12 @@ export const learningResourceSchema = {
       url: 'https://webbtelescope.org/images',
       description: 'The James Webb Space Telescope provides revolutionary infrared observations revealing the earliest galaxies, star-forming regions, exoplanet atmospheres, and cosmic structures invisible to optical telescopes. This cutting-edge dataset represents the most advanced astronomical observations available, capturing phenomena from 13.5 billion years ago.',
       creator: {
-        '@type': 'GovernmentOrganization',
+        '@type': 'Organization',
         name: 'NASA',
         url: 'https://www.nasa.gov',
       },
       publisher: {
-        '@type': 'GovernmentOrganization',
+        '@type': 'Organization',
         name: 'NASA',
         url: 'https://www.nasa.gov',
       },
@@ -384,7 +384,7 @@ export const datasetSchema = {
     url: 'https://data.nasa.gov',
     description: 'The NASA Open Data initiative provides public access to comprehensive datasets including space mission telemetry, astronomical observations, Earth science measurements, and scientific research findings. This authoritative government resource ensures transparency and enables global scientific collaboration through verified, peer-reviewed data from NASA exploration programs.',
     creator: {
-      '@type': 'GovernmentOrganization',
+      '@type': 'Organization',
       name: 'National Aeronautics and Space Administration',
       url: 'https://www.nasa.gov',
       sameAs: [
@@ -394,7 +394,7 @@ export const datasetSchema = {
       ],
     },
     publisher: {
-      '@type': 'GovernmentOrganization',
+      '@type': 'Organization',
       name: 'National Aeronautics and Space Administration',
       url: 'https://www.nasa.gov',
       sameAs: [
